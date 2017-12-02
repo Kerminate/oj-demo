@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <navigate></navigate>
     <img src="./assets/logo.png">
     <router-view/>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header'
+import Navigate from '@/components/Navigate.vue'
 
 export default {
   name: 'app',
   components: {
-    Header
+    Navigate
   }
 }
 </script>
