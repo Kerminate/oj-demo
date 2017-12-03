@@ -64,6 +64,7 @@
 
 <script>
 import Navigate from '@/components/Navigate.vue'
+import axios from 'axios'
 
 export default {
   data () {
@@ -84,41 +85,11 @@ export default {
       ],
       type: '',
       content: '',
-      tableData: [
-        {
-          isdone: true,
-          pid: 751,
-          title: 'A + B',
-          accepted: 183,
-          submit: 381,
-          tags: ['easy']
-        },
-        {
-          isdone: true,
-          pid: 752,
-          title: 'String and SubString',
-          accepted: 43,
-          submit: 83,
-          tags: []
-        },
-        {
-          isdone: true,
-          pid: 1392,
-          title: 'Zero is Forbidden ',
-          accepted: 59,
-          submit: 132,
-          tags: []
-        },
-        {
-          isdone: true,
-          pid: 1393,
-          title: 'Explore the earth',
-          accepted: 2,
-          submit: 4,
-          tags: []
-        }
-      ]
+      tableData: []
     }
+  },
+  created () {
+    this.getProblems()
   },
   methods: {
     handleEdit (index, row) {
@@ -126,6 +97,18 @@ export default {
     },
     handleDelete (index, row) {
       console.log(index, row)
+    },
+    getProblems () {
+      axios.get('../../mock/problems.json').then((response) => {
+        if (response.status === 200) {
+          this.tableData = response.data.problems
+        } else {
+          this.$message({
+            type: 'info',
+            message: '获取数据失败'
+          })
+        }
+      })
     }
   },
   components: {
@@ -140,11 +123,13 @@ export default {
   .eltable
     margin-left: 8%
     width: 84%
+    margin-bottom: 20px
   .el-table th
     padding: 8px 0
   .el-table td
     padding: 2px 0
   .size
-    font-size: 20px
+    font-size: 24px
     color: #B12CCC
+    cursor: pointer
 </style>

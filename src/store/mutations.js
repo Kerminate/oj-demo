@@ -16,7 +16,9 @@ const mutations = {
   [types.LOGOUT]: (state) => {
     // 登出的时候要清除token
     state.token = null
+    state.username = null
     window.sessionStorage.removeItem('token')
+    window.sessionStorage.removeItem('username')
   },
   [types.USERNAME]: (state, data) => {
     // 把用户名存起来

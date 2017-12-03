@@ -59,6 +59,8 @@ export default {
               type: 'success',
               message: '登录成功'
             })
+            let username = this.loginForm.username
+            this.$store.dispatch('UserName', username)
           } else {
             this.$message({
               type: 'info',
