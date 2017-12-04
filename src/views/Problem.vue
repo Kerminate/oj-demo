@@ -64,7 +64,7 @@
 
 <script>
 import Navigate from '@/components/Navigate.vue'
-import axios from 'axios'
+import api from '@/axios.js'
 
 export default {
   data () {
@@ -99,9 +99,10 @@ export default {
       console.log(index, row)
     },
     getProblems () {
-      axios.get('../../mock/problems.json').then((response) => {
+      api.getProblems().then((response) => {
         if (response.status === 200) {
-          this.tableData = response.data.problems
+          console.log(response)
+          this.tableData = response.data.result
         } else {
           this.$message({
             type: 'info',
