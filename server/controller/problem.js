@@ -4,7 +4,7 @@ const Problem = require('../model/problems.js')
 const findProblemList = (opt) => {
   let filter = {}
   let page = opt.page
-  let pageSize = 10
+  let pageSize = opt.pageSize
   if (opt.type) {
     filter[opt.type] = opt.content
     page = 1
@@ -41,7 +41,20 @@ const countProblem = (opt) => {
   })
 }
 
-// 获取所取题目信息
+// 返回一道题目
+const findInfo = (opt) => {
+  return new Promise((resolve, reject) => {
+    Problem.findOne({pid: opt}, (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
+// 返回题目列表
 const getFindProblemList = async (ctx) => {
   let doc = await findProblemList(ctx.request.body)
   ctx.status = 200
@@ -61,7 +74,18 @@ const getCountProblem = async (ctx) => {
   }
 }
 
+// 返回一道题目
+const getFindInfo = async (ctx) => {
+  let doc = await findInfo(ctx.response.body)
+  ctx.status = 200
+  ctx.body = {
+    success: true,
+    result: doc
+  }
+}
+
 module.exports = {
   getFindProblemList,
-  getCountProblem
+  getCountProblem,
+  getFindInfo
 }

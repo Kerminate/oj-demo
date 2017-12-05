@@ -70,5 +70,9 @@ export default {
   // 获取题目数量
   countProblem (data) {
     return instance.post('/problem/count', data)
+  },
+  // 获取题目信息
+  getProblemInfo (data) {
+    return instance.get('/problem/info', data)
   }
 }

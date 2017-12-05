@@ -1,14 +1,14 @@
 <template lang="html">
   <div>
-    <navigate></navigate>
-    <el-row class="main" align="middle">
-      <el-col :offset="2" :span="6">
+    <el-row class="pro-main" align="middle">
+      <el-col :span="8">
         <el-pagination
           background
           :current-page.sync="currentPage"
           @current-change="handleCurrentChange"
           layout="prev, pager, next"
-          :total="sumProblem">
+          :total="sumProblem"
+          :page-size="pageSize">
         </el-pagination>
       </el-col>
       <el-col :offset="8" :span="2">
@@ -22,7 +22,7 @@
           </el-option>
         </el-select>
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <el-input v-model="content" placeholder="请输入内容" size="small"></el-input>
       </el-col>
       <el-col :span="1.5">
@@ -42,7 +42,9 @@
       </el-table-column>
       <el-table-column label="Title" align="center">
         <template slot-scope="scope">
-          <el-button type="text">{{ scope.row.title }}</el-button>
+          <router-link :to="{ name: 'ProblemInfo', params: { pid: scope.row.pid } }">
+            <el-button type="text">{{ scope.row.title }}</el-button>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="Submit" align="center">
@@ -90,7 +92,8 @@ export default {
       content: '',
       tableData: [],
       currentPage: 1,
-      sumProblem: 1
+      sumProblem: 1,
+      pageSize: 4
     }
   },
   created () {
@@ -106,7 +109,8 @@ export default {
     },
     getProblems () {
       let opt = {
-        page: this.currentPage
+        page: this.currentPage,
+        pageSize: this.pageSize
       }
       if (this.content !== '') {
         opt.type = this.type
@@ -169,11 +173,9 @@ export default {
 </script>
 
 <style lang="stylus">
-  .main
+  .pro-main
     margin-bottom: 20px
   .eltable
-    margin-left: 8%
-    width: 84%
     margin-bottom: 20px
   .el-table th
     padding: 8px 0

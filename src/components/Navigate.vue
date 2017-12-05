@@ -5,7 +5,9 @@
         <el-menu :default-active="left" class="el-menu-demo" mode="horizontal">
           <el-menu-item index="1">Home</el-menu-item>
           <el-menu-item index="2">Discuss</el-menu-item>
-          <el-menu-item index="3">Problems</el-menu-item>
+          <el-menu-item index="3">
+            <router-link :to="{ name: 'Problem', params: {} }">Problems</router-link>
+          </el-menu-item>
           <el-menu-item index="4">Status</el-menu-item>
           <el-menu-item index="5">Ranklist</el-menu-item>
           <el-menu-item index="6">Contests</el-menu-item>
@@ -97,6 +99,8 @@ export default {
 </script>
 
 <style lang="stylus">
+  a
+    text-decoration: none
   .container
     box-shadow: 0 2px 3px hsla(0,0%,4%,.1)
     margin-bottom: 30px
