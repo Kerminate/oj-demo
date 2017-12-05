@@ -6,7 +6,9 @@ const problemSchema = db.Schema({
   isdone: Boolean,
   pid: {
     type: String,
-    index: true
+    index: {
+      unique: true
+    }
   },
   title: String,
   accepted: Number,

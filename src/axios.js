@@ -63,8 +63,12 @@ export default {
   delUser (data) {
     return instance.post('/user/delUser', data)
   },
-  // 获取题目
-  getProblems () {
-    return instance.get('/problem')
+  // 获取题目列表
+  getProblems (data) {
+    return instance.post('/problem/list', data)
+  },
+  // 获取题目数量
+  countProblem (data) {
+    return instance.post('/problem/count', data)
   }
 }

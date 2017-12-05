@@ -1,8 +1,9 @@
-const ProblemController = require('../controller/problem-list.js')
+const ProblemController = require('../controller/problem.js')
 const Router = require('koa-router')
 
 const problemRouter = new Router()
 
-problemRouter.get('/', ProblemController.GetAllProblems)
+problemRouter.post('/list', ProblemController.getFindProblemList)
+problemRouter.post('/count', ProblemController.getCountProblem)
 
 module.exports = problemRouter

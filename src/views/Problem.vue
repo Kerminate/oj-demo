@@ -5,8 +5,10 @@
       <el-col :offset="2" :span="6">
         <el-pagination
           background
+          :current-page.sync="currentPage"
+          @current-change="handleCurrentChange"
           layout="prev, pager, next"
-          :total="100">
+          :total="sumProblem">
         </el-pagination>
       </el-col>
       <el-col :offset="8" :span="2">
@@ -15,7 +17,8 @@
             v-for="item in options"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
+            :value="item.value"
+            @change="select">
           </el-option>
         </el-select>
       </el-col>
@@ -23,7 +26,7 @@
         <el-input v-model="content" placeholder="请输入内容" size="small"></el-input>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="primary" size="small">Search</el-button>
+        <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
       </el-col>
     </el-row>
     <el-table :data="tableData" class="eltable">
@@ -55,7 +58,7 @@
       </el-table-column>
       <el-table-column label="Tags" align="center">
         <template slot-scope="scope">
-          <el-tag size="small" v-for="(item, index) in scope.row.tags">{{ item }}</el-tag>
+          <el-tag size="small" v-for="(item, index) in scope.row.tags" :key="index">{{ item }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -71,25 +74,28 @@ export default {
     return {
       options: [
         {
-          value: '选项1',
+          value: 'pid',
           label: 'Pid'
         },
         {
-          value: '选项2',
+          value: 'title',
           label: 'Title'
         },
         {
-          value: '选项3',
+          value: 'tag',
           label: 'Tag'
         }
       ],
-      type: '',
+      type: 'pid',
       content: '',
-      tableData: []
+      tableData: [],
+      currentPage: 1,
+      sumProblem: 1
     }
   },
   created () {
     this.getProblems()
+    this.count()
   },
   methods: {
     handleEdit (index, row) {
@@ -99,10 +105,20 @@ export default {
       console.log(index, row)
     },
     getProblems () {
-      api.getProblems().then((response) => {
-        if (response.status === 200) {
-          console.log(response)
-          this.tableData = response.data.result
+      let opt = {
+        page: this.currentPage
+      }
+      if (this.content !== '') {
+        opt.type = this.type
+        if (this.type === 'pid') {
+          opt.content = parseInt(this.content)
+        } else {
+          opt.content = this.content
+        }
+      }
+      api.getProblems(opt).then(({ data }) => {
+        if (data.success) {
+          this.tableData = data.result
         } else {
           this.$message({
             type: 'info',
@@ -110,6 +126,40 @@ export default {
           })
         }
       })
+    },
+    count () {
+      let opt = {}
+      if (this.content !== '') {
+        opt.type = this.type
+        if (this.type === 'pid') {
+          opt.content = parseInt(this.content)
+        } else {
+          opt.content = this.content
+        }
+      }
+      api.countProblem(opt).then(({ data }) => {
+        if (data.success) {
+          this.sumProblem = data.result
+          console.log(data.result)
+        } else {
+          this.$message({
+            type: 'info',
+            message: '获取题目数量失败'
+          })
+        }
+      })
+    },
+    handleCurrentChange (val) {
+      this.currentPage = val
+      this.getProblems()
+    },
+    select () {
+      this.content = ''
+      console.log(this.content)
+    },
+    search () {
+      this.getProblems()
+      this.count()
     }
   },
   components: {
