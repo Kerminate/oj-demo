@@ -5,9 +5,11 @@
         <el-pagination
           background
           :current-page.sync="currentPage"
+          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          layout="prev, pager, next"
+          layout=" sizes, prev, pager, next, jumper"
           :total="sumProblem"
+          :page-sizes="[4, 8, 10, 20, 30]"
           :page-size="pageSize">
         </el-pagination>
       </el-col>
@@ -144,7 +146,7 @@ export default {
       api.countProblem(opt).then(({ data }) => {
         if (data.success) {
           this.sumProblem = data.result
-          console.log(data.result)
+          this.currentPage = 1
         } else {
           this.$message({
             type: 'info',
@@ -155,6 +157,10 @@ export default {
     },
     handleCurrentChange (val) {
       this.currentPage = val
+      this.getProblems()
+    },
+    handleSizeChange (val) {
+      this.pageSize = val
       this.getProblems()
     },
     select () {

@@ -18,5 +18,3 @@ mongoose.connection.on('error', () => {
 mongoose.connection.on('disconnected', () => {
   console.log('MongoDB connected disconnected.')
 })
-
-module.exports = mongoose

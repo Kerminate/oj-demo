@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-const db = require('../config/db.js')
 
-const userSchema = db.Schema({
+const userSchema = mongoose.Schema({
   username: String,
   nickname: String,
   password: String,

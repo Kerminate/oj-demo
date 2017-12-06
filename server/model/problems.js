@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate') // 分页
-const db = require('../config/db.js')
 
-const problemSchema = db.Schema({
+const problemSchema = mongoose.Schema({
   isdone: Boolean,
   pid: {
     type: String,
