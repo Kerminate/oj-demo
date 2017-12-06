@@ -10,7 +10,7 @@ app.use(bodyparser())
 const user = require('./server/routes/user.js')
 const problem = require('./server/routes/problem.js')
 
-router.use('/session', user.routes(), user.allowedMethods()) // allowedMethods:当前接口运行的method
+router.use('/user', user.routes(), user.allowedMethods()) // allowedMethods:当前接口运行的method
 router.use('/problem', problem.routes(), problem.allowedMethods())
 
 app.use(router.routes()).use(router.allowedMethods())

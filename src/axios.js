@@ -49,19 +49,19 @@ axios.interceptors.request.use = instance.interceptors.request.use
 export default {
   // 用户注册
   userRegister (data) {
-    return instance.post('/session/register', data)
+    return instance.post('/user/register', data)
   },
   // 用户登录
   userLogin (data) {
-    return instance.post('/session/login', data)
+    return instance.post('/user/login', data)
   },
   // 获取用户
   getUser () {
-    return instance.get('/session/info')
+    return instance.get('/user/info')
   },
   // 删除用户
   delUser (data) {
-    return instance.post('/session/delUser', data)
+    return instance.post('/user/delUser', data)
   },
   // 获取题目列表
   getProblems (data) {

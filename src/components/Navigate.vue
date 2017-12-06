@@ -16,11 +16,13 @@
       </el-col>
       <el-col :span="6">
         <el-menu class="el-menu-demo head" mode="horizontal">
-          <el-button class="login" type="text" @click="openLogin">{{ this.loginText }}</el-button>
-          <el-button class="register" type="text" @click="openRegister">{{ this.registerText }}</el-button>
+          <el-button v-if="!this.username" class="login" type="text" @click="execLogin">Login</el-button>
+          <el-button v-if="!this.username" class="register" type="text" @click="execRegister">Register</el-button>
+          <el-button v-if="this.username" class="login" type="text" @click="">{{ this.username }}</el-button>
+          <el-button v-if="this.username" class="register" type="text" @click="execLogin">Logout</el-button>
           <el-button v-if="this.username === 'admin'" class="admin" type="text">admin</el-button>
-          <login :ifShow="dialogVisible1" @closeLogin="closeLogin"></login>
-          <register :ifShow="dialogVisible2" @closeRegister="closeRegister"></register>
+          <login :ifShow="loginDialog" @closeLogin="closeLogin"></login>
+          <register :ifShow="registerDialog" @closeRegister="closeRegister"></register>
         </el-menu>
       </el-col>
     </el-row>
@@ -30,7 +32,7 @@
 <script>
 import Login from './Login.vue'
 import Register from './Register.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -41,9 +43,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      username: 'username'
-    }),
+    ...mapGetters([
+      'username',
+      'loginDialog',
+      'registerDialog'
+    ]),
     loginText () {
       if (this.username) {
         return this.username
@@ -60,6 +64,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      execLogin: 'SHOW_LOGIN',
+      execRegister: 'SHOW_REGISTER'
+    }),
     openLogin () {
       if (this.username) {
       } else {

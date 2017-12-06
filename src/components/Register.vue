@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-dialog title="Register" :visible.sync="ifShow" center :before-close="handleClose" :close-on-click-modal="false">
+  <el-dialog title="Register" :visible.sync="registerDialog" center :before-close="closeDialog" :close-on-click-modal="false">
     <el-row>
       <el-col :offset="1" :span="20">
         <el-form :model="regForm" :rules="rules" label-width="120px" ref="loginForm">
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 import api from '@/axios.js'
 
 export default {
@@ -79,7 +80,15 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'registerDialog'
+    ])
+  },
   methods: {
+    ...mapMutations({
+      closeDialog: 'SHOW_REGISTER'
+    }),
     handleClose () {
       this.$emit('closeRegister')
     },
