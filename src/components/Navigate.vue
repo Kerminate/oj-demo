@@ -16,13 +16,13 @@
       </el-col>
       <el-col :span="6">
         <el-menu class="el-menu-demo head" mode="horizontal">
-          <el-button v-if="!this.username" class="login" type="text" @click="execLogin">Login</el-button>
-          <el-button v-if="!this.username" class="register" type="text" @click="execRegister">Register</el-button>
-          <el-button v-if="this.username" class="login" type="text" @click="">{{ this.username }}</el-button>
-          <el-button v-if="this.username" class="register" type="text" @click="execLogin">Logout</el-button>
-          <el-button v-if="this.username === 'admin'" class="admin" type="text">admin</el-button>
-          <login :ifShow="loginDialog" @closeLogin="closeLogin"></login>
-          <register :ifShow="registerDialog" @closeRegister="closeRegister"></register>
+          <el-button v-show="!username" class="login" type="text" @click="execLogin">Login</el-button>
+          <el-button v-show="!username" class="register" type="text" @click="execRegister">Register</el-button>
+          <el-button v-show="username" class="login" type="text">{{ this.username }}</el-button>
+          <el-button v-show="username" class="register" type="text" @click="logout">Logout</el-button>
+          <el-button v-show="username === 'admin'" class="admin" type="text">admin</el-button>
+          <login :ifShow="loginDialog" @closeLogin="execLogin"></login>
+          <register :ifShow="registerDialog" @closeRegister="execRegister"></register>
         </el-menu>
       </el-col>
     </el-row>
@@ -37,9 +37,7 @@ import { mapGetters, mapMutations } from 'vuex'
 export default {
   data () {
     return {
-      left: '1',
-      dialogVisible1: false,
-      dialogVisible2: false
+      left: '1'
     }
   },
   computed: {
@@ -47,56 +45,20 @@ export default {
       'username',
       'loginDialog',
       'registerDialog'
-    ]),
-    loginText () {
-      if (this.username) {
-        return this.username
-      } else {
-        return 'Login'
-      }
-    },
-    registerText () {
-      if (this.username) {
-        return 'Logout'
-      } else {
-        return 'Register'
-      }
-    }
+    ])
   },
   methods: {
     ...mapMutations({
       execLogin: 'SHOW_LOGIN',
       execRegister: 'SHOW_REGISTER'
     }),
-    openLogin () {
-      if (this.username) {
-      } else {
-        this.dialogVisible1 = true
-      }
-    },
-    closeLogin () {
-      this.dialogVisible1 = false
-    },
-    openRegister () {
-      if (this.username) {
-        this.$store.dispatch('UserLogout')
-        if (!this.username) {
-          this.$message({
-            type: 'success',
-            message: '登出成功'
-          })
-        } else {
-          this.$message({
-            type: 'info',
-            message: '登出失败'
-          })
-        }
-      } else {
-        this.dialogVisible2 = true
-      }
-    },
-    closeRegister () {
-      this.dialogVisible2 = false
+    logout () {
+      this.$store.dispatch('UserLogout').then(() => {
+        this.$message({
+          type: 'success',
+          message: '退出成功'
+        })
+      })
     }
   },
   components: {

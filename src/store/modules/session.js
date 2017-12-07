@@ -19,10 +19,10 @@ const getters = {
 
 // mutations
 const mutations = {
-  [types.LOGIN]: (state, data) => {
+  [types.LOGIN]: (state, payload) => {
     // 更改token的值
-    state.token = data
-    window.sessionStorage.setItem('token', data)
+    state.token = payload
+    window.sessionStorage.setItem('token', payload)
   },
   [types.LOGOUT]: (state) => {
     // 登出的时候要清除token
@@ -31,10 +31,10 @@ const mutations = {
     window.sessionStorage.removeItem('token')
     window.sessionStorage.removeItem('username')
   },
-  [types.USERNAME]: (state, data) => {
+  [types.USERNAME]: (state, payload) => {
     // 把用户名存起来
-    state.username = data
-    window.sessionStorage.setItem('username', data)
+    state.username = payload
+    window.sessionStorage.setItem('username', payload)
   },
   [types.SHOW_LOGIN]: (state) => {
     state.loginDialog = !state.loginDialog
@@ -47,42 +47,26 @@ const mutations = {
 // actions
 const actions = {
   UserLogin ({ commit }, opt) {
-    api.userLogin(opt)
-      .then(({ data }) => { // 解构赋值拿到data
-        // 账号不存在
-        if (data.info === false) {
-          // this.$message({
-          //   type: 'info',
-          //   message: '账号不存在'
-          // })
-          return false
-        }
-        // 账号存在
+    return new Promise((resolve, reject) => {
+      api.userLogin(opt).then(({ data }) => { // 解构赋值拿到data
+        resolve(data)
         if (data.success) {
-          // this.$message({
-          //   type: 'success',
-          //   message: '登录成功'
-          // })
           let token = data.token
           let username = data.username
           commit(types.LOGIN, token)
           commit(types.USERNAME, username)
           commit(types.SHOW_LOGIN)
-          // this.$store.dispatch('UserLogin', token)
-          // this.$store.dispatch('UserName', username)
-        } else {
-          // this.$message({
-          //   type: 'info',
-          //   message: '密码错误！'
-          // })
         }
+      }, err => {
+        reject(err)
       })
+    })
   },
-  // UserLogin ({ commit }, data) {
-  //   commit(types.LOGIN, data)
-  // },
   UserLogout ({ commit }) {
-    commit(types.LOGOUT)
+    return new Promise((resolve, reject) => {
+      commit(types.LOGOUT)
+      resolve()
+    })
   },
   UserName ({ commit }, data) {
     commit(types.USERNAME, data)

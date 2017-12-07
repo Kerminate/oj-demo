@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-dialog title="Register" :visible.sync="registerDialog" center :before-close="closeDialog" :close-on-click-modal="false">
+  <el-dialog title="Register" :visible.sync="registerDialog" center :before-close="execDialog" :close-on-click-modal="false">
     <el-row>
       <el-col :offset="1" :span="20">
         <el-form :model="regForm" :rules="rules" label-width="120px" ref="loginForm">
@@ -87,11 +87,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      closeDialog: 'SHOW_REGISTER'
+      execDialog: 'SHOW_REGISTER'
     }),
-    handleClose () {
-      this.$emit('closeRegister')
-    },
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
@@ -116,7 +113,6 @@ export default {
           return false
         }
       })
-      this.$emit('closeRegister')
     }
   }
 }
