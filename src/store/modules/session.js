@@ -68,8 +68,20 @@ const actions = {
       resolve()
     })
   },
-  UserName ({ commit }, data) {
-    commit(types.USERNAME, data)
+  UserName ({ commit }, payload) {
+    commit(types.USERNAME, payload)
+  },
+  UserRegister ({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      api.userRegister(payload).then(({ data }) => {
+        resolve(data)
+        if (data.success) {
+          commit(types.SHOW_REGISTER)
+        }
+      }, err => {
+        reject(err)
+      })
+    })
   }
 }
 

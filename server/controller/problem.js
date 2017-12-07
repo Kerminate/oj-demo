@@ -72,10 +72,7 @@ const getFindProblemList = async (ctx) => {
     }
   }
   const doc = await Problem.find(filter).sort({pid: 1}).skip((page - 1) * pageSize).limit(pageSize).exec()
-  ctx.body = {
-    success: true,
-    result: doc
-  }
+  ctx.body = doc
 }
 
 // 返回题目数量
@@ -87,25 +84,21 @@ const getCountProblem = async (ctx) => {
   }
   const doc = await Problem.find(filter).count()
   ctx.status = 200
-  ctx.body = {
-    success: true,
-    result: doc
-  }
+  ctx.body = doc
 }
 
 // 返回一道题目
-const getFindInfo = async (ctx) => {
-  let opt = ctx.request.query
+const getOneProblem = async (ctx) => {
+  let opt = parseInt(ctx.query.pid)
+  console.log(opt)
   let doc = await Problem.findOne({pid: opt}).exec()
+  console.log(doc)
   ctx.status = 200
-  ctx.body = {
-    success: true,
-    result: doc
-  }
+  ctx.body = doc
 }
 
 module.exports = {
   getFindProblemList,
   getCountProblem,
-  getFindInfo
+  getOneProblem
 }

@@ -27,7 +27,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import api from '@/axios.js'
+// import api from '@/axios.js'
 
 export default {
   props: {
@@ -95,20 +95,19 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 验证通过
-          api.userRegister(this.regForm)
-            .then(({ data }) => {
-              if (data.success) {
-                this.$message({
-                  type: 'success',
-                  message: '注册成功'
-                })
-              } else {
-                this.$message({
-                  type: 'info',
-                  message: '用户名已经存在'
-                })
-              }
-            })
+          this.$store.dispatch('UserRegister', this.regForm).then(data => {
+            if (data.success) {
+              this.$message({
+                type: 'success',
+                message: '注册成功'
+              })
+            } else {
+              this.$message({
+                type: 'info',
+                message: '用户名已经存在'
+              })
+            }
+          })
         } else { // 验证不通过
           return false
         }

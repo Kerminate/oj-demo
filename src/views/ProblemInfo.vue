@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="pro-wrap">
     <el-row type="flex" justify="center">
-      <el-col><h1>A+B</h1></el-col>
+      <el-col><h1>{{ problem.title }}</h1></el-col>
       <el-col>
         <h3>Time Limit: 1000MS</h3>
         <h3>Memory Limit: 32768KB</h3>
@@ -36,9 +36,38 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  props: {
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'problem'
+    ])
+  },
+  created () {
+    console.log(this.$route.params)
+    this.$store.dispatch('updateProblem', this.$route.params)
+    console.log(this.problem)
   }
+  // beforeRouteEnter (to, from, next) {
+  //   let param = to.params
+  //   console.log()
+  //   if (param) {
+  //     next(vm => {
+  //       vm.pid = parseInt(param.pid)
+  //     })
+  //   } else {
+  //     next()
+  //   }
+  // },
+  // mounted () {
+  //   console.log(this.pid)
+  //   this.$store.dispatch('updateProblem', this.pid)
+  // }
 }
 </script>
 

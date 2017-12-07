@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 // import actions from './actions'
 // import * as getters from './getters'
 import session from './modules/session'
+import problem from './modules/problem'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ const state = {
 export default new Vuex.Store({
   state,
   modules: {
-    session
+    session,
+    problem
   }
 })

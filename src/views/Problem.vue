@@ -31,7 +31,7 @@
         <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" class="eltable">
+    <el-table :data="problemList" class="eltable">
       <el-table-column label="#" align="center" width="50">
         <template slot-scope="scope">
           <i class="el-icon-check" v-if="scope.row.isdone"></i>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Navigate from '@/components/Navigate.vue'
 import api from '@/axios.js'
 
@@ -102,6 +103,11 @@ export default {
     this.getProblems()
     this.count()
   },
+  computed: {
+    ...mapGetters([
+      'problemList'
+    ])
+  },
   methods: {
     handleEdit (index, row) {
       console.log(index, row)
@@ -122,16 +128,7 @@ export default {
           opt.content = this.content
         }
       }
-      api.getProblems(opt).then(({ data }) => {
-        if (data.success) {
-          this.tableData = data.result
-        } else {
-          this.$message({
-            type: 'info',
-            message: '获取数据失败'
-          })
-        }
-      })
+      this.$store.dispatch('updateProblemList', opt)
     },
     count () {
       let opt = {}
@@ -144,15 +141,8 @@ export default {
         }
       }
       api.countProblem(opt).then(({ data }) => {
-        if (data.success) {
-          this.sumProblem = data.result
-          this.currentPage = 1
-        } else {
-          this.$message({
-            type: 'info',
-            message: '获取题目数量失败'
-          })
-        }
+        this.sumProblem = data
+        this.currentPage = 1
       })
     },
     handleCurrentChange (val) {

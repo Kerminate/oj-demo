@@ -1,4 +1,4 @@
-const UserController = require('../controller/user.js')
+const UserController = require('../controller/session.js')
 const Router = require('koa-router')
 
 const userRouter = new Router()

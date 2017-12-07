@@ -5,25 +5,28 @@ import ProblemInfo from '@/views/ProblemInfo.vue'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      redirect: {
-        name: 'Problem'
-      }
-    },
-    {
-      path: '/problem',
-      name: 'Problem',
-      component: Problem,
-      props: (route) => route.query
-    },
-    {
-      path: '/problem/:pid',
-      name: 'ProblemInfo',
-      component: ProblemInfo,
-      props: true
+const routes = [
+  {
+    path: '/',
+    redirect: {
+      name: 'Problem'
     }
-  ]
+  },
+  {
+    path: '/problem',
+    name: 'Problem',
+    component: Problem
+  },
+  {
+    path: '/problem/:pid',
+    name: 'ProblemInfo',
+    component: ProblemInfo
+  }
+]
+
+const router = new Router({
+  // mode: 'history',
+  routes
 })
+
+export default router
