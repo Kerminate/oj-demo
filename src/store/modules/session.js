@@ -47,20 +47,21 @@ const mutations = {
 // actions
 const actions = {
   UserLogin ({ commit }, opt) {
-    return new Promise((resolve, reject) => {
-      api.userLogin(opt).then(({ data }) => { // 解构赋值拿到data
-        resolve(data)
-        if (data.success) {
-          let token = data.token
-          let username = data.username
-          commit(types.LOGIN, token)
-          commit(types.USERNAME, username)
-          commit(types.SHOW_LOGIN)
-        }
-      }, err => {
-        reject(err)
-      })
+    // return new Promise((resolve, reject) => {
+    return api.userLogin(opt).then(({ data }) => { // 解构赋值拿到data
+      // resolve(data)
+      if (data.success) {
+        let token = data.token
+        let username = data.username
+        commit(types.LOGIN, token)
+        commit(types.USERNAME, username)
+        commit(types.SHOW_LOGIN)
+      }
+      return data
+    }).catch(err => {
+      console.log(err)
     })
+    // })
   },
   UserLogout ({ commit }) {
     return new Promise((resolve, reject) => {

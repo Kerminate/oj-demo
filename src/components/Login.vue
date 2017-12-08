@@ -64,6 +64,7 @@ export default {
           let opt = this.loginForm
           this.$store.dispatch('UserLogin', opt).then(data => {
             // 账号不存在
+            console.log(data)
             if (data.info === false) {
               this.$message({
                 type: 'info',
