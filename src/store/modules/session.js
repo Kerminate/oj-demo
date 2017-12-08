@@ -75,11 +75,11 @@ const actions = {
   },
   UserRegister ({ commit }, payload) {
     return api.userRegister(payload).then(({ data }) => {
-        resolve(data)
-        if (data.success) {
-          commit(types.SHOW_REGISTER)
-        }
-      })
+      if (data.success) {
+        commit(types.SHOW_REGISTER)
+      }
+      return data
+    })
   }
 }
 

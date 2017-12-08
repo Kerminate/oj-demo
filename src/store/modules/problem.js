@@ -32,8 +32,8 @@ const actions = {
   },
   updateProblemList ({ commit }, payload) {
     return api.getProblems(payload).then(({ data }) => {
-        commit(types.UPDATE_PROBLEM_LIST, data)
-      })
+      commit(types.UPDATE_PROBLEM_LIST, data)
+    })
   }
 }
 

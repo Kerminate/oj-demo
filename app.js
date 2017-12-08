@@ -9,6 +9,7 @@ const router = new Router()
 
 // 日志，会在控制台显示请求的方法和路由
 app.use(logger())
+
 app.use(bodyparser())
 
 const session = require('./server/routes/session.js')
