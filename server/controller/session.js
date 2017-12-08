@@ -5,44 +5,14 @@ const User = require('../model/users.js')
 const createToken = require('../token/createToken.js')
 
 // 根据用户名查找用户
-const findUser = (username) => {
-  return new Promise((resolve, reject) => {
-    User.findOne({ username }, (err, doc) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(doc)
-      }
-    })
-  })
-}
+const findUser = (username) => User.findOne({ username }).exec()
 
 // 找到所有用户
-const findAllUsers = () => {
-  return new Promise((resolve, reject) => {
-    User.find({}, (err, doc) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(doc)
-      }
-    })
-  })
-}
+const findAllUsers = () => User.find({}).exec()
 
 // 删除某个用户
-const delUser = (id) => {
-  return new Promise((resolve, reject) => {
-    User.findOneAndRemove({ _id: id }, err => {
-      if (err) {
-        reject(err)
-      } else {
-        console.log('删除用户成功！')
-        resolve()
-      }
-    })
-  })
-}
+const delUser = (id) =>
+  User.findOneAndRemove({ _id: id }).then(x => console.log('删除用户成功！'))
 
 // 登录
 const Login = async (ctx) => {
@@ -62,15 +32,7 @@ const Login = async (ctx) => {
     let token = createToken(username)
     console.log(token)
     doc.token = token
-    await new Promise((resolve, reject) => {
-      doc.save((err) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
-    })
+    await db.save()
 
     ctx.status = 200
     ctx.body = {
@@ -107,15 +69,8 @@ const Reg = async (ctx) => {
       success: false
     }
   } else {
-    await new Promise((resolve, reject) => {
-      user.save(err => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
-    })
+    await User.save()
+
     console.log('注册成功')
     ctx.status = 200
     ctx.body = {

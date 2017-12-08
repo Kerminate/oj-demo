@@ -71,7 +71,14 @@ const getFindProblemList = async (ctx) => {
       filter[opt.type] = opt.content
     }
   }
-  const doc = await Problem.find(filter).sort({pid: 1}).skip((page - 1) * pageSize).limit(pageSize).exec()
+
+  // 链式操作较多的话，个人建议分成多行的话，可读性更加
+  const doc = await Problem
+    .find(filter)
+    .sort({pid: 1})
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .exec()
   ctx.body = doc
 }
 
