@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div class="pro-wrap">
     <el-row class="pro-main" align="middle">
       <el-col :span="8">
         <el-pagination
@@ -169,16 +169,17 @@ export default {
 </script>
 
 <style lang="stylus">
-  .pro-main
-    margin-bottom: 20px
-  .eltable
-    margin-bottom: 20px
-  .el-table th
-    padding: 8px 0
-  .el-table td
-    padding: 2px 0
-  .size
-    font-size: 24px
-    color: #B12CCC
-    cursor: pointer
+  .pro-wrap
+    .pro-main
+      margin-bottom: 20px
+    .eltable
+      margin-bottom: 20px
+    .el-table th
+      padding: 8px 0
+    .el-table td
+      padding: 2px 0
+    .size
+      font-size: 24px
+      color: #B12CCC
+      cursor: pointer
 </style>

@@ -97,9 +97,7 @@ const getCountProblem = async (ctx) => {
 // 返回一道题目
 const getOneProblem = async (ctx) => {
   let opt = parseInt(ctx.query.pid)
-  console.log(opt)
   let doc = await Problem.findOne({pid: opt}).exec()
-  console.log(doc)
   ctx.status = 200
   ctx.body = doc
 }
