@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "dev:server": "NODE_ENV=development forever -w app.js"
+    "dev:server": "cross-env NODE_ENV=development forever -w app.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -39,6 +39,7 @@
     "babel-register": "^6.22.0",
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^5.1.1",
     "css-loader": "^0.28.0",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
