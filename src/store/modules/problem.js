@@ -25,19 +25,15 @@ const mutations = {
 // actions
 const actions = {
   updateProblem ({ commit }, payload) {
-    api.getProblemInfo(payload).then(({ data }) => {
+    return api.getProblemInfo(payload).then(({ data }) => {
       commit(types.UPDATE_PROBLEM, data)
       console.log(data)
     })
   },
   updateProblemList ({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      api.getProblems(payload).then(({ data }) => {
+    return api.getProblems(payload).then(({ data }) => {
         commit(types.UPDATE_PROBLEM_LIST, data)
-      }, err => {
-        reject(err)
       })
-    })
   }
 }
 

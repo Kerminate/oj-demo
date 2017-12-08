@@ -63,6 +63,7 @@ const actions = {
     })
     // })
   },
+  // UserLogout 和 UserName 应该放到 mutations 中，因为它们是明显的同步操作
   UserLogout ({ commit }) {
     return new Promise((resolve, reject) => {
       commit(types.LOGOUT)
@@ -73,16 +74,12 @@ const actions = {
     commit(types.USERNAME, payload)
   },
   UserRegister ({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      api.userRegister(payload).then(({ data }) => {
+    return api.userRegister(payload).then(({ data }) => {
         resolve(data)
         if (data.success) {
           commit(types.SHOW_REGISTER)
         }
-      }, err => {
-        reject(err)
       })
-    })
   }
 }
 
