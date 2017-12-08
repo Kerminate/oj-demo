@@ -4,7 +4,7 @@ const mongoosePaginate = require('mongoose-paginate') // 分页
 const problemSchema = mongoose.Schema({
   isdone: Boolean,
   pid: {
-    type: String,
+    type: Number,
     index: {
       unique: true
     }
