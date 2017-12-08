@@ -1,25 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Problem from '@/views/Problem.vue'
+import ProblemList from '@/views/ProblemList.vue'
 import ProblemInfo from '@/views/ProblemInfo.vue'
+import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
 const routes = [
   {
     path: '/',
-    redirect: {
-      name: 'Problem'
-    }
+    name: 'home',
+    component: Home
   },
   {
     path: '/problem',
-    name: 'Problem',
-    component: Problem
+    name: 'problemList',
+    component: ProblemList
   },
   {
     path: '/problem/:pid',
-    name: 'ProblemInfo',
+    name: 'problemInfo',
     component: ProblemInfo
   }
 ]

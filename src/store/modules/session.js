@@ -47,9 +47,7 @@ const mutations = {
 // actions
 const actions = {
   UserLogin ({ commit }, opt) {
-    // return new Promise((resolve, reject) => {
     return api.userLogin(opt).then(({ data }) => { // 解构赋值拿到data
-      // resolve(data)
       if (data.success) {
         let token = data.token
         let username = data.username
@@ -61,18 +59,8 @@ const actions = {
     }).catch(err => {
       console.log(err)
     })
-    // })
   },
   // UserLogout 和 UserName 应该放到 mutations 中，因为它们是明显的同步操作
-  UserLogout ({ commit }) {
-    return new Promise((resolve, reject) => {
-      commit(types.LOGOUT)
-      resolve()
-    })
-  },
-  UserName ({ commit }, payload) {
-    commit(types.USERNAME, payload)
-  },
   UserRegister ({ commit }, payload) {
     return api.userRegister(payload).then(({ data }) => {
       if (data.success) {

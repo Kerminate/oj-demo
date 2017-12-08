@@ -3,15 +3,18 @@
     <el-row class="container">
       <el-col :offset="2" :span="14">
         <el-menu :default-active="left" class="el-menu-demo" mode="horizontal">
-          <el-menu-item index="1">Home</el-menu-item>
-          <el-menu-item index="2">Discuss</el-menu-item>
-          <el-menu-item index="3">
-            <router-link :to="{ name: 'Problem', params: {} }">Problems</router-link>
+          <el-menu-item index="1">
+            <router-link :to="{ name: 'home', params: {} }">Home</router-link>
           </el-menu-item>
-          <el-menu-item index="4">Status</el-menu-item>
-          <el-menu-item index="5">Ranklist</el-menu-item>
-          <el-menu-item index="6">Contests</el-menu-item>
-          <el-menu-item index="7">FAQ</el-menu-item>
+          <el-menu-item index="2">News</el-menu-item>
+          <el-menu-item index="3">Discuss</el-menu-item>
+          <el-menu-item index="4">
+            <router-link :to="{ name: 'problemList', params: {} }">Problems</router-link>
+          </el-menu-item>
+          <el-menu-item index="5">Status</el-menu-item>
+          <el-menu-item index="6">Ranklist</el-menu-item>
+          <el-menu-item index="7">Contests</el-menu-item>
+          <el-menu-item index="8">FAQ</el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="6">
@@ -19,7 +22,7 @@
           <el-button v-show="!username" class="login" type="text" @click="execLogin">Login</el-button>
           <el-button v-show="!username" class="register" type="text" @click="execRegister">Register</el-button>
           <el-button v-show="username" class="login" type="text">{{ this.username }}</el-button>
-          <el-button v-show="username" class="register" type="text" @click="logout">Logout</el-button>
+          <el-button v-show="username" class="register" type="text" @click="userLogout">Logout</el-button>
           <el-button v-show="username === 'admin'" class="admin" type="text">admin</el-button>
           <login :ifShow="loginDialog" @closeLogin="execLogin"></login>
           <register :ifShow="registerDialog" @closeRegister="execRegister"></register>
@@ -50,14 +53,14 @@ export default {
   methods: {
     ...mapMutations({
       execLogin: 'SHOW_LOGIN',
-      execRegister: 'SHOW_REGISTER'
+      execRegister: 'SHOW_REGISTER',
+      logout: 'LOGOUT'
     }),
-    logout () {
-      this.$store.dispatch('UserLogout').then(() => {
-        this.$message({
-          type: 'success',
-          message: '退出成功'
-        })
+    userLogout () {
+      this.logout()
+      this.$message({
+        type: 'success',
+        message: '退出成功'
       })
     }
   },

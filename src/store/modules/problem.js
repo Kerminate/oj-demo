@@ -27,7 +27,6 @@ const actions = {
   updateProblem ({ commit }, payload) {
     return api.getProblemInfo(payload).then(({ data }) => {
       commit(types.UPDATE_PROBLEM, data)
-      console.log(data)
     })
   },
   updateProblemList ({ commit }, payload) {

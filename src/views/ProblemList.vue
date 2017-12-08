@@ -44,7 +44,7 @@
       </el-table-column>
       <el-table-column label="Title" align="center">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'ProblemInfo', params: { pid: scope.row.pid } }">
+          <router-link :to="{ name: 'problemInfo', params: { pid: scope.row.pid } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>

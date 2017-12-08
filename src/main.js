@@ -5,10 +5,13 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import './element-variables.scss'
+import 'swiper/dist/css/swiper.css'
 import { formate } from '@/util/formate'
 
 Vue.use(ElementUI)
+Vue.use(VueAwesomeSwiper)
 Vue.filter('formate', formate)
 
 Vue.config.productionTip = false
