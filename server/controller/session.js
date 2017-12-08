@@ -32,7 +32,7 @@ const Login = async (ctx) => {
     let token = createToken(username)
     console.log(token)
     doc.token = token
-    await db.save()
+    await doc.save()
 
     ctx.status = 200
     ctx.body = {
