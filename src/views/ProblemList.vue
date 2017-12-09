@@ -34,7 +34,7 @@
     <el-table :data="problemList" class="eltable">
       <el-table-column label="#" align="center" width="50">
         <template slot-scope="scope">
-          <i class="el-icon-check" v-if="scope.row.isdone"></i>
+          <i class="el-icon-check" v-show="scope.row.isdone"></i>
         </template>
       </el-table-column>
       <el-table-column label="PID" align="center">
@@ -71,7 +71,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Navigate from '@/components/Navigate.vue'
 import api from '@/axios.js'
 
 export default {
@@ -161,9 +160,6 @@ export default {
       this.getProblems()
       this.count()
     }
-  },
-  components: {
-    Navigate
   }
 }
 </script>

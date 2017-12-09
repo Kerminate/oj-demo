@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 // import * as getters from './getters'
 import session from './modules/session'
 import problem from './modules/problem'
+import news from './modules/news'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
   state,
   modules: {
     session,
-    problem
+    problem,
+    news
   }
 })

@@ -18,39 +18,6 @@
       <el-button>Submit</el-button>
       <el-button>Statistic</el-button>
     </el-row>
-    <!-- <el-row>
-      <el-col><h1>{{ problem.title }}</h1></el-col>
-    </el-row>
-    <el-row>
-      <el-col>
-        <p>Time Limit: {{ problem.time }}MS&nbsp;&nbsp;&nbsp;Memory Limit: {{ problem.memory }}KB</p>
-      </el-col>
-    </el-row>
-    <el-row type="flex" justify="start">
-      <el-col><h2>Description</h2></el-col>
-      <el-col><h3>{{ problem.description }}</h3></el-col>
-    </el-row>
-    <el-row type="flex" justify="start">
-      <el-col><h2>Input</h2></el-col>
-      <el-col><h3>{{ problem.input }}</h3></el-col>
-    </el-row>
-    <el-row type="flex" justify="start">
-      <el-col><h2>Output</h2></el-col>
-      <el-col><h3>{{ problem.output }}</h3></el-col>
-    </el-row>
-    <el-row type="flex" justify="start">
-      <el-col><h2>Sample Input</h2></el-col>
-      <el-col><h3>{{ problem.in }}</h3></el-col>
-    </el-row>
-    <el-row type="flex" justify="start">
-      <el-col><h2>Sample Output</h2></el-col>
-      <el-col><h3>{{ problem.out }}</h3></el-col>
-    </el-row>
-    <el-row type="flex" justify="start">
-      <el-col><h2>Hint</h2></el-col>
-      <el-col><h3>{{ problem.hint }}
-</h3></el-col>
-    </el-row> -->
   </div>
 </template>
 
@@ -70,21 +37,6 @@ export default {
   created () {
     this.$store.dispatch('updateProblem', this.$route.params)
   }
-  // beforeRouteEnter (to, from, next) {
-  //   let param = to.params
-  //   console.log()
-  //   if (param) {
-  //     next(vm => {
-  //       vm.pid = parseInt(param.pid)
-  //     })
-  //   } else {
-  //     next()
-  //   }
-  // },
-  // mounted () {
-  //   console.log(this.pid)
-  //   this.$store.dispatch('updateProblem', this.pid)
-  // }
 }
 </script>
 

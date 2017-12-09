@@ -9,6 +9,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import './element-variables.scss'
 import 'swiper/dist/css/swiper.css'
 import { formate } from '@/util/formate'
+import '@/common/stylus/index.styl'
 
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)

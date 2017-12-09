@@ -72,8 +72,6 @@ export default {
 </script>
 
 <style lang="stylus">
-  a
-    text-decoration: none
   .container
     box-shadow: 0 2px 3px hsla(0,0%,4%,.1)
     margin-bottom: 30px

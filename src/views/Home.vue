@@ -11,10 +11,19 @@
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
+    <div class="main">
+      <ul>
+        <li v-for="(item, index) in newsList">
+          {{ item.title }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -30,8 +39,22 @@ export default {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
         }
-      }
+      },
+      currentPage: 1,
+      pageSize: 5
     }
+  },
+  computed: {
+    ...mapGetters([
+      'newsList'
+    ])
+  },
+  created () {
+    let opt = {
+      page: this.currentPage,
+      pageSize: this.pageSize
+    }
+    this.$store.dispatch('updateNewsList', opt)
   }
 }
 </script>

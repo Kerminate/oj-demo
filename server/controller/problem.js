@@ -1,4 +1,4 @@
-const Problem = require('../model/problems.js')
+const Problem = require('../model/problem.js')
 
 // // 返回题目列表
 // const findProblemList = (opt) => {

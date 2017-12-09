@@ -1,16 +1,16 @@
-const UserController = require('../controller/session.js')
+const SessionController = require('../controller/session.js')
 const Router = require('koa-router')
 
-const userRouter = new Router()
+const sessionRouter = new Router()
 
 // checkToken作为中间件存在
 const checkToken = require('../token/checkToken.js')
 
-userRouter.post('/login', UserController.Login)
-userRouter.post('/register', UserController.Reg)
+sessionRouter.post('/login', SessionController.Login)
+sessionRouter.post('/register', SessionController.Reg)
 
 // 需要先检查权限的路由
-userRouter.get('/info', checkToken, UserController.GetAllUsers)
-userRouter.post('/del', checkToken, UserController.DelUser)
+sessionRouter.get('/info', checkToken, SessionController.GetAllUsers)
+sessionRouter.post('/del', checkToken, SessionController.DelUser)
 
-module.exports = userRouter
+module.exports = sessionRouter

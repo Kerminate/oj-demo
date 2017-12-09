@@ -74,5 +74,14 @@ export default {
   // 获取题目信息
   getProblemInfo (data) {
     return instance.get(`/problem/${data.pid}`, { params: data })
+  },
+  // 获取消息列表
+  getNews (data) {
+    console.log(data)
+    return instance.get('/news/list', { params: data })
+  },
+  // 获取消息内容
+  getNewInfo (data) {
+    return instance.get(`/news/${data.pid}`, { params: data })
   }
 }

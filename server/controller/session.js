@@ -1,7 +1,7 @@
 const moment = require('moment')
 const objectIdToTimestamp = require('objectid-to-timestamp')
 const sha1 = require('sha1')
-const User = require('../model/users.js')
+const User = require('../model/user.js')
 const createToken = require('../token/createToken.js')
 
 // 根据用户名查找用户
