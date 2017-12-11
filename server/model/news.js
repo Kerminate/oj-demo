@@ -1,10 +1,24 @@
 const mongoose = require('mongoose')
 
 const newSchema = mongoose.Schema({
-  pid: Number,
+  nid: {
+    type: Number,
+    index: {
+      unique: true
+    }
+  },
   title: String,
   content: String,
-  create_time: Date
+  status: {
+    type: Number,
+    default: 2
+  },
+  create: {
+    type: Number,
+    default: Date.now
+  }
+}, {
+  collection: 'News'
 })
 
 module.exports = mongoose.model('News', newSchema)

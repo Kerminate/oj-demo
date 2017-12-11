@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 // 连接MongoDB数据库
-mongoose.connect('mongodb://127.0.0.1:27017/oj-demo', {
+mongoose.connect('mongodb://127.0.0.1:27017/devoj', {
   useMongoClient: true
 })
 

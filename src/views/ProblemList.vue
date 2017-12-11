@@ -9,7 +9,7 @@
           @current-change="handleCurrentChange"
           layout=" sizes, prev, pager, next, jumper"
           :total="sumProblem"
-          :page-sizes="[4, 8, 10, 20, 30]"
+          :page-sizes="[10, 20, 30, 40]"
           :page-size="pageSize">
         </el-pagination>
       </el-col>
@@ -56,8 +56,8 @@
       </el-table-column>
       <el-table-column label="Ratio" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.accepted / scope.row.submit | formate }}</span>
-          (<el-button type="text">{{ scope.row.accepted }}</el-button> / <el-button style="margin-left:0px" type="text">{{ scope.row.submit }}</el-button>)
+          <span>{{ scope.row.solve / scope.row.submit | formate }}</span>
+          (<el-button type="text">{{ scope.row.solve }}</el-button> / <el-button style="margin-left:0px" type="text">{{ scope.row.submit }}</el-button>)
         </template>
       </el-table-column>
       <el-table-column label="Tags" align="center">
@@ -95,7 +95,7 @@ export default {
       tableData: [],
       currentPage: 1,
       sumProblem: 1,
-      pageSize: 4
+      pageSize: 10
     }
   },
   created () {

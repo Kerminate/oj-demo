@@ -3,7 +3,6 @@ const News = require('../model/news.js')
 // 返回消息列表
 const getNewsList = async (ctx) => {
   let filter = {}
-  console.log(ctx.query)
   let opt = ctx.request.query
   let page = parseInt(opt.page) || 1
   let pageSize = parseInt(opt.pageSize) || 5
@@ -25,8 +24,8 @@ const getNewsNumber = async (ctx) => {
 
 // 返回一道题目
 const getNewsInfo = async (ctx) => {
-  let opt = parseInt(ctx.query.pid)
-  let doc = await News.findOne({pid: opt}).exec()
+  let opt = parseInt(ctx.query.nid)
+  let doc = await News.findOne({nid: opt}).exec()
   ctx.status = 200
   ctx.body = doc
 }

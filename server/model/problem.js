@@ -25,6 +25,10 @@ const problemSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  create: {
+    type: Number,
+    default: Date.now
+  },
   description: {
     type: String,
     default: ''
@@ -49,7 +53,7 @@ const problemSchema = mongoose.Schema({
     type: String,
     default: ''
   },
-  accepted: {
+  solve: {
     type: Number,
     default: 0
   },
@@ -57,7 +61,16 @@ const problemSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
-  tages: Array
+  status: {
+    type: String,
+    default: 2
+  },
+  tages: {
+    type: [String],
+    default: []
+  }
+}, {
+  collection: 'Problem'
 })
 
 problemSchema.plugin(mongoosePaginate)

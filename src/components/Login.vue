@@ -3,11 +3,11 @@
     <el-row>
       <el-col :offset="1" :span="20">
         <el-form :model="loginForm" :rules="rules" label-width="120px" ref="loginForm">
-          <el-form-item label="username" prop="username">
-            <el-input v-model="loginForm.username"></el-input>
+          <el-form-item label="uid" prop="uid">
+            <el-input v-model="loginForm.uid"></el-input>
           </el-form-item>
-          <el-form-item label="password" prop="password">
-            <el-input v-model="loginForm.password" type="password"></el-input>
+          <el-form-item label="pwd" prop="pwd">
+            <el-input v-model="loginForm.pwd" type="password"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
@@ -32,15 +32,15 @@ export default {
   data () {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        uid: '',
+        pwd: ''
       },
       rules: {
-        username: [
+        uid: [
           { required: true, message: '用户名不能少', trigger: 'change' },
           { min: 5, max: 20, message: '用户名在5到20位之间', trigger: 'change' }
         ],
-        password: [
+        pwd: [
           { required: true, message: '请输入密码', trigger: 'change' }
         ]
       }

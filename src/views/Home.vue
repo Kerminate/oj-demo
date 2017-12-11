@@ -11,10 +11,11 @@
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
-    <div class="main">
+    <div class="message">
       <ul>
         <li v-for="(item, index) in newsList">
-          {{ item.title }}
+          <router-link :to="{ name: 'newsInfo', params: { nid: item.nid } }"><p>{{ item.title }}</p></router-link>
+          {{ item.create | timePretty }}
         </li>
       </ul>
     </div>
@@ -55,6 +56,13 @@ export default {
       pageSize: this.pageSize
     }
     this.$store.dispatch('updateNewsList', opt)
+  },
+  methods: {
+    formatTime (time) {
+      let newDate = new Date()
+      newDate.setTime(time)
+      return newDate.toLocaleDateString()
+    }
   }
 }
 </script>
@@ -63,16 +71,20 @@ export default {
   .home-wrap
     .swiper
       height: 300px
-    .slide1
-      background-image:url('../../mock/images/bg1.png')
-    .slide2
-      background-image:url('../../mock/images/bg2.png')
-    .slide3
-      background-image:url('../../mock/images/bg3.png')
-    .slide4
-      background-image:url('../../mock/images/bg4.png')
-    .slide5
-      background-image:url('../../mock/images/bg5.png')
-    .slide6
-      background-image:url('../../mock/images/bg6.png')
+      .slide1
+        background-image:url('../../mock/images/bg1.png')
+      .slide2
+        background-image:url('../../mock/images/bg2.png')
+      .slide3
+        background-image:url('../../mock/images/bg3.png')
+      .slide4
+        background-image:url('../../mock/images/bg4.png')
+      .slide5
+        background-image:url('../../mock/images/bg5.png')
+      .slide6
+        background-image:url('../../mock/images/bg6.png')
+    .message
+      text-align: left
+      li
+        margin-bottom: 10px
 </style>

@@ -30,9 +30,7 @@ const actions = {
     })
   },
   updateNewsList ({ commit }, payload) {
-    console.log(payload)
     return api.getNews(payload).then(({ data }) => {
-      console.log(data)
       commit(types.UPDATE_NEW_LIST, data)
     })
   }

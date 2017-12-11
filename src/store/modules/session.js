@@ -4,14 +4,14 @@ import api from '../../axios.js'
 // 初始化时用sessionStorage.getItem('token')，这样子刷新页面就无需重新登录
 const state = {
   token: window.sessionStorage.getItem('token'),
-  username: window.sessionStorage.getItem('username'),
+  uid: window.sessionStorage.getItem('uid'),
   loginDialog: false,
   registerDialog: false
 }
 
 // getters
 const getters = {
-  username: state => state.username,
+  uid: state => state.uid,
   token: state => state.token,
   loginDialog: state => state.loginDialog,
   registerDialog: state => state.registerDialog
@@ -27,14 +27,14 @@ const mutations = {
   [types.LOGOUT]: (state) => {
     // 登出的时候要清除token
     state.token = null
-    state.username = null
+    state.uid = null
     window.sessionStorage.removeItem('token')
-    window.sessionStorage.removeItem('username')
+    window.sessionStorage.removeItem('uid')
   },
-  [types.USERNAME]: (state, payload) => {
+  [types.UID]: (state, payload) => {
     // 把用户名存起来
-    state.username = payload
-    window.sessionStorage.setItem('username', payload)
+    state.uid = payload
+    window.sessionStorage.setItem('uid', payload)
   },
   [types.SHOW_LOGIN]: (state) => {
     state.loginDialog = !state.loginDialog
@@ -50,9 +50,9 @@ const actions = {
     return api.userLogin(opt).then(({ data }) => { // 解构赋值拿到data
       if (data.success) {
         let token = data.token
-        let username = data.username
+        let uid = data.uid
         commit(types.LOGIN, token)
-        commit(types.USERNAME, username)
+        commit(types.UID, uid)
         commit(types.SHOW_LOGIN)
       }
       return data
@@ -60,7 +60,7 @@ const actions = {
       console.log(err)
     })
   },
-  // UserLogout 和 UserName 应该放到 mutations 中，因为它们是明显的同步操作
+  // UserLogout 和 uid 应该放到 mutations 中，因为它们是明显的同步操作
   UserRegister ({ commit }, payload) {
     return api.userRegister(payload).then(({ data }) => {
       if (data.success) {

@@ -77,7 +77,6 @@ export default {
   },
   // 获取消息列表
   getNews (data) {
-    console.log(data)
     return instance.get('/news/list', { params: data })
   },
   // 获取消息内容

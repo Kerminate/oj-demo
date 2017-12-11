@@ -1,6 +1,6 @@
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
-export const USERNAME = 'USERNAME'
+export const UID = 'UID'
 export const SHOW_LOGIN = 'SHOW_LOGIN'
 export const SHOW_REGISTER = 'SHOW_REGISTER'
 export const UPDATE_PROBLEM = 'UPDATE_PROBLEM'
