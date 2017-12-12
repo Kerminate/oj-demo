@@ -11,7 +11,9 @@
           <el-menu-item index="4">
             <router-link :to="{ name: 'problemList', params: {} }">Problems</router-link>
           </el-menu-item>
-          <el-menu-item index="5">Status</el-menu-item>
+          <el-menu-item index="5">
+            <router-link :to="{ name: 'status', params: {} }">Status</router-link>
+          </el-menu-item>
           <el-menu-item index="6">Ranklist</el-menu-item>
           <el-menu-item index="7">Contests</el-menu-item>
           <el-menu-item index="8">FAQ</el-menu-item>

@@ -38,6 +38,14 @@ module.exports = {
       '/news/*': {
         target: 'http://127.0.0.1:8888',
         changeOrigin: true
+      },
+      '/status': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
+      },
+      '/status/*': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
       }
     },
 

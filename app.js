@@ -15,10 +15,12 @@ app.use(bodyparser())
 const session = require('./server/routes/session.js')
 const problem = require('./server/routes/problem.js')
 const news = require('./server/routes/news.js')
+const status = require('./server/routes/status.js')
 
 router.use('/session', session.routes(), session.allowedMethods()) // allowedMethods:当前接口运行的method
 router.use('/problem', problem.routes(), problem.allowedMethods())
 router.use('/news', news.routes(), news.allowedMethods())
+router.use('/status', status.routes(), status.allowedMethods())
 
 app.use(router.routes()).use(router.allowedMethods())
 

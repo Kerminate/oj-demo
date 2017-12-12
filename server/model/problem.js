@@ -75,4 +75,4 @@ const problemSchema = mongoose.Schema({
 
 problemSchema.plugin(mongoosePaginate)
 
-module.exports = mongoose.model('Problem_list', problemSchema)
+module.exports = mongoose.model('Problemlist', problemSchema)

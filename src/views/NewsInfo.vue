@@ -3,7 +3,7 @@
     <h1>{{ news.title }}</h1>
     <h3>{{ news.create | timePretty }}</h3>
     <hr>
-    <div v-html="news.content"></div>
+    <div class="news-cont" v-html="news.content"></div>
   </div>
 </template>
 
@@ -22,5 +22,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="stylus">
+  .news
+    .news-cont
+      text-align: left
 </style>

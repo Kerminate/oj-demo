@@ -15,7 +15,7 @@ const getNewsList = async (ctx) => {
 }
 
 // 返回消息数量
-const getNewsNumber = async (ctx) => {
+const countNews = async (ctx) => {
   let filter = {}
   const doc = await News.find(filter).count()
   ctx.status = 200
@@ -32,6 +32,6 @@ const getNewsInfo = async (ctx) => {
 
 module.exports = {
   getNewsList,
-  getNewsNumber,
+  countNews,
   getNewsInfo
 }

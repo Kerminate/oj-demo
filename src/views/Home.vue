@@ -14,8 +14,11 @@
     <div class="message">
       <ul>
         <li v-for="(item, index) in newsList">
-          <router-link :to="{ name: 'newsInfo', params: { nid: item.nid } }"><p>{{ item.title }}</p></router-link>
-          {{ item.create | timePretty }}
+          <router-link :to="{ name: 'newsInfo', params: { nid: item.nid } }">
+            <span>{{ item.title }}</span>
+            <i class="el-icon-arrow-right"></i>
+          </router-link>
+          <p>{{ item.create | timePretty }}</p>
         </li>
       </ul>
     </div>
@@ -87,4 +90,8 @@ export default {
       text-align: left
       li
         margin-bottom: 10px
+        span
+          margin-right: 10px
+        .el-icon-arrow-right
+          font-weight: bold
 </style>

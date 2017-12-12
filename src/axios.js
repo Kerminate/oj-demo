@@ -67,10 +67,6 @@ export default {
   getProblems (data) {
     return instance.get('/problem/list', { params: data })
   },
-  // 获取题目数量
-  countProblem (data) {
-    return instance.get('/problem/count', { params: data })
-  },
   // 获取题目信息
   getProblemInfo (data) {
     return instance.get(`/problem/${data.pid}`, { params: data })
@@ -82,5 +78,9 @@ export default {
   // 获取消息内容
   getNewInfo (data) {
     return instance.get(`/news/${data.pid}`, { params: data })
+  },
+  // 获取提交列表
+  getSolutions (data) {
+    return instance.get('/status/list', { params: data })
   }
 }

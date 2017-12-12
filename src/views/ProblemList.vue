@@ -71,7 +71,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import api from '@/axios.js'
+// import api from '@/axios.js'
 
 export default {
   data () {
@@ -92,28 +92,20 @@ export default {
       ],
       type: 'pid',
       content: '',
-      tableData: [],
       currentPage: 1,
-      sumProblem: 1,
       pageSize: 10
     }
   },
   created () {
     this.getProblems()
-    this.count()
   },
   computed: {
     ...mapGetters([
-      'problemList'
+      'problemList',
+      'sumProblem'
     ])
   },
   methods: {
-    handleEdit (index, row) {
-      console.log(index, row)
-    },
-    handleDelete (index, row) {
-      console.log(index, row)
-    },
     getProblems () {
       let opt = {
         page: this.currentPage,
@@ -129,21 +121,6 @@ export default {
       }
       this.$store.dispatch('updateProblemList', opt)
     },
-    count () {
-      let opt = {}
-      if (this.content !== '') {
-        opt.type = this.type
-        if (this.type === 'pid') {
-          opt.content = parseInt(this.content)
-        } else {
-          opt.content = this.content
-        }
-      }
-      api.countProblem(opt).then(({ data }) => {
-        this.sumProblem = data
-        this.currentPage = 1
-      })
-    },
     handleCurrentChange (val) {
       this.currentPage = val
       this.getProblems()
@@ -158,7 +135,6 @@ export default {
     },
     search () {
       this.getProblems()
-      this.count()
     }
   }
 }

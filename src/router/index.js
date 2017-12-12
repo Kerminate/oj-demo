@@ -4,6 +4,7 @@ import ProblemList from '@/views/ProblemList.vue'
 import ProblemInfo from '@/views/ProblemInfo.vue'
 import NewsInfo from '@/views/NewsInfo.vue'
 import Home from '@/views/Home.vue'
+import Status from '@/views/Status.vue'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/news/:nid',
     name: 'newsInfo',
     component: NewsInfo
+  },
+  {
+    path: '/status',
+    name: 'status',
+    component: Status
   }
 ]
 

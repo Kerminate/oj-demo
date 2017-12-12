@@ -3,13 +3,15 @@ import api from '../../axios.js'
 
 const state = {
   problemList: [],
-  problem: {}
+  problem: {},
+  sumProblem: 0
 }
 
 // getters
 const getters = {
   problemList: state => state.problemList,
-  problem: state => state.problem
+  problem: state => state.problem,
+  sumProblem: state => state.sumProblem
 }
 
 // mutations
@@ -19,6 +21,9 @@ const mutations = {
   },
   [types.UPDATE_PROBLEM_LIST]: (state, payload) => {
     state.problemList = payload
+  },
+  [types.UPDATE_SUMPROBLEM]: (state, payload) => {
+    state.sumProblem = payload
   }
 }
 
@@ -31,7 +36,8 @@ const actions = {
   },
   updateProblemList ({ commit }, payload) {
     return api.getProblems(payload).then(({ data }) => {
-      commit(types.UPDATE_PROBLEM_LIST, data)
+      commit(types.UPDATE_PROBLEM_LIST, data.list)
+      commit(types.UPDATE_SUMPROBLEM, data.count)
     })
   }
 }
