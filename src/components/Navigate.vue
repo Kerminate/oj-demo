@@ -26,8 +26,8 @@
           <el-button v-show="uid" class="login" type="text">{{ this.uid }}</el-button>
           <el-button v-show="uid" class="register" type="text" @click="userLogout">Logout</el-button>
           <el-button v-show="uid === 'admin'" class="admin" type="text">admin</el-button>
-          <login :ifShow="loginDialog" @closeLogin="execLogin"></login>
-          <register :ifShow="registerDialog" @closeRegister="execRegister"></register>
+          <login :ifShow="loginDialog"></login>
+          <register :ifShow="registerDialog"></register>
         </el-menu>
       </el-col>
     </el-row>

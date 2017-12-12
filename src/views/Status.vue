@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="status-wrap">
-    <el-row>
+    <el-row class="filter">
       <el-col :offset="1" :span="5">
         <el-col :span="6"><label>User</label></el-col>
         <el-col :span="15"><el-input v-model="uid" size="small" placeholder="username"></el-input></el-col>
@@ -9,8 +9,8 @@
         <el-col :span="6"><label>Pid</label></el-col>
         <el-col :span="15"><el-input v-model="pid" size="small" placeholder="pid"></el-input></el-col>
       </el-col>
-      <el-col :span="7">
-        <el-col :span="5"><label>Judge</label></el-col>
+      <el-col :span="6">
+        <el-col :span="6"><label>Judge</label></el-col>
         <el-col :span="16">
           <el-select v-model="judge" placeholder="请选择" size="small">
             <el-option
@@ -23,8 +23,8 @@
         </el-col>
       </el-col>
       <el-col :span="4">
-        <el-col :span="7"><label>User</label></el-col>
-        <el-col :span="15">
+        <el-col :span="12"><label>Language</label></el-col>
+        <el-col :span="12">
           <el-select v-model="language" placeholder="请选择" size="small">
             <el-option
               v-for="item in languageList"
@@ -36,7 +36,7 @@
         </el-col>
       </el-col>
       <el-col :span="3">
-        <el-button type="primary" size="small" @click="">Search</el-button>
+        <el-button type="primary" size="small" @click="search">Search</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -47,21 +47,23 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           layout=" sizes, prev, pager, next, jumper"
-          :total="sumStatus"
+          :total="sumSolutions"
           :page-sizes="[10, 20, 30, 40]"
           :page-size="pageSize">
         </el-pagination>
       </el-col>
     </el-row>
     <el-table :data="solutionList" class="eltable">
-      <el-table-column label="SID" align="center" width="50">
+      <el-table-column label="SID" align="center" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.sid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="PID" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.pid }}</span>
+          <router-link :to="{ name: '', params: { } }">
+            <el-button type="text">{{ scope.row.pid }}</el-button>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="Username" align="center">
@@ -71,125 +73,62 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Judge" align="center">
+      <el-table-column label="Judge" align="center" width="200">
         <template slot-scope="scope">
-          <span>{{ scope.row.judge }}</span>
+          <span :class="color[scope.row.judge]">{{ result[scope.row.judge] }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Time" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.time }}</span>
+          <span>{{ scope.row.time }} MS</span>
         </template>
       </el-table-column>
       <el-table-column label="Memory" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.memory }}</span>
+          <span>{{ scope.row.memory }} KB</span>
         </template>
       </el-table-column>
       <el-table-column label="Language" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.language }}</span>
+          <router-link :to="{ name: '', params: { } }">
+            <el-button @click="showDialog(scope.row)" type="text">{{ lang[scope.row.language] }}</el-button>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="Length" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.length }}</span>
+          <span>{{ scope.row.length }} B</span>
         </template>
       </el-table-column>
-      <el-table-column label="Submit Time" align="center">
+      <el-table-column label="Submit Time" align="center" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create | timePretty}}</span>
         </template>
       </el-table-column>
     </el-table>
+    <solution-code :ifShow="codeDialog"></solution-code>
   </div>
 </template>
 
 <script>
+import SolutionCode from '@/components/SolutionCode.vue'
 import { mapGetters } from 'vuex'
+import constant from '../util/constant.js'
 
 export default {
   data () {
     return {
-      currentPage: 1,
-      sumStatus: 1,
-      pageSize: 10,
       uid: '',
       pid: '',
       judge: 'ALL',
       language: 'ALL',
-      judgeList: [
-        {
-          value: '',
-          label: 'ALL'
-        },
-        {
-          value: 'Pending',
-          label: 'Pending'
-        },
-        {
-          value: 'Running & Judge',
-          label: 'Running'
-        },
-        {
-          value: 'CompileError',
-          label: 'Compile Error'
-        },
-        {
-          value: 'Accepted',
-          label: 'Accepted'
-        },
-        {
-          value: 'RuntimeError',
-          label: 'Runtime Error'
-        },
-        {
-          value: 'WrongAnswer',
-          label: 'Wrong Answer'
-        },
-        {
-          value: 'TimeLimitExceeded',
-          label: 'Time Limit Exceeded'
-        },
-        {
-          value: 'MemoryLimitExceed',
-          label: 'Memory Limit Exceeded'
-        },
-        {
-          value: 'OutputLimitExceed',
-          label: 'Output Limit Exceeded'
-        },
-        {
-          value: 'PresentationError',
-          label: 'Presentation Error'
-        },
-        {
-          value: 'SystemError',
-          label: 'System Error'
-        },
-        {
-          value: 'RejudgePending',
-          label: 'Rejudge Pending'
-        }
-      ],
-      languageList: [
-        {
-          value: 'ALL',
-          label: 'ALL'
-        },
-        {
-          value: 'C',
-          label: 'C'
-        },
-        {
-          value: 'C++',
-          label: 'C++'
-        },
-        {
-          value: 'Java',
-          label: 'Java'
-        }
-      ]
+      judgeList: constant.judgeList,
+      languageList: constant.languageList,
+      result: constant.result,
+      lang: constant.language,
+      currentPage: 1,
+      pageSize: 10,
+      color: constant.color
     }
   },
   created () {
@@ -197,15 +136,27 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'solutionList'
+      'solutionList',
+      'sumSolutions',
+      'codeDialog'
     ])
   },
   methods: {
+    showDialog (solution) {
+      this.$store.commit('SHOW_CODE', solution)
+      console.log(this.codeDialog)
+    },
     getStatus () {
       let opt = {
         page: this.currentPage,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        uid: this.uid,
+        pid: this.pid,
+        judge: this.judge,
+        language: this.language
       }
+      if (opt.judge === 'ALL') opt.judge = ''
+      if (opt.language === 'ALL') opt.language = ''
       this.$store.dispatch('updateSolutionList', opt)
     },
     handleCurrentChange (val) {
@@ -215,14 +166,29 @@ export default {
     handleSizeChange (val) {
       this.pageSize = val
       this.getStatus()
+    },
+    search () {
+      this.getStatus()
     }
+  },
+  components: {
+    SolutionCode
   }
 }
 </script>
 
 <style lang="stylus">
   .status-wrap
+    .filter
+      margin-bottom: 20px
     label
       height: 32px
       line-height: 32px
+    .el-table
+      margin-top: 10px
+      margin-bottom: 10px
+    .el-table th
+      padding: 8px 0
+    .el-table td
+      padding: 2px 0
 </style>

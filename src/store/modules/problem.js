@@ -22,7 +22,7 @@ const mutations = {
   [types.UPDATE_PROBLEM_LIST]: (state, payload) => {
     state.problemList = payload
   },
-  [types.UPDATE_SUMPROBLEM]: (state, payload) => {
+  [types.UPDATE_SUM_PROBLEM]: (state, payload) => {
     state.sumProblem = payload
   }
 }
@@ -37,7 +37,7 @@ const actions = {
   updateProblemList ({ commit }, payload) {
     return api.getProblems(payload).then(({ data }) => {
       commit(types.UPDATE_PROBLEM_LIST, data.list)
-      commit(types.UPDATE_SUMPROBLEM, data.count)
+      commit(types.UPDATE_SUM_PROBLEM, data.count)
     })
   }
 }

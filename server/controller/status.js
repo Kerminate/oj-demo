@@ -13,7 +13,7 @@ const getSolutionList = async (ctx) => {
 
   const doc = await Solution
     .find(filter)
-    .sort({pid: 1})
+    .sort({sid: -1})
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .exec()
