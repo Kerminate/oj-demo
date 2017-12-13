@@ -82,5 +82,9 @@ export default {
   // 获取提交列表
   getSolutions (data) {
     return instance.get('/status/list', { params: data })
+  },
+  // 获取用户信息
+  getUserInfo (data) {
+    return instance.get(`/user/${data.uid}`, { params: data })
   }
 }

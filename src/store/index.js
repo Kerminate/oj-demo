@@ -7,6 +7,7 @@ import session from './modules/session'
 import problem from './modules/problem'
 import news from './modules/news'
 import solution from './modules/solution'
+import user from './modules/user'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     session,
     problem,
     news,
-    solution
+    solution,
+    user
   }
 })

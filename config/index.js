@@ -15,6 +15,10 @@ module.exports = {
         target: 'http://127.0.0.1:8888',
         changeOrigin: true
       },
+      '/user/*': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
+      },
       '/session': {
         target: 'http://127.0.0.1:8888',
         changeOrigin: true

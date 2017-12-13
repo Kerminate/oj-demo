@@ -1,0 +1,34 @@
+<template lang="html">
+  <div class="user-wrap">
+    <ul>
+      <li>{{ user.uid }}</li>
+      <li><i class="el-icon-info"></i> Nick:&nbsp;&nbsp;{{ user.nick }}</li>
+      <li><i class="el-icon-edit"></i> Motto:&nbsp;&nbsp;{{ user.motto }}</li>
+      <li><i class="el-icon-message"></i> Mail:&nbsp;&nbsp;{{ user.mail }}</li>
+      <li><i class="el-icon-location-outline"></i> School:&nbsp;&nbsp;{{ user.school }}</li>
+      <li><i class="el-icon-success"></i> Solved:&nbsp;&nbsp;{{ user.solve }}</li>
+      <li><i class="el-icon-error"></i> Unsolved:&nbsp;&nbsp;{{ user.submit - user.solve }}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
+  created () {
+    this.$store.dispatch('updateUser', this.$route.params)
+  }
+}
+</script>
+
+<style lang="stylus">
+  .user-wrap
+    text-align: left
+    line-height: 30px
+</style>

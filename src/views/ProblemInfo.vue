@@ -3,17 +3,17 @@
     <h1>{{ problem.title }}</h1>
     <h5>Time Limit: {{ problem.time }}MS&nbsp;&nbsp;&nbsp;Memory Limit: {{ problem.memory }}KB</h5>
     <h3>Description</h3>
-    <p>{{ problem.description }}</p>
+    <div class="cont" v-html="problem.description"></div>
     <h3>Input</h3>
-    <p>{{ problem.input }}</p>
+    <div class="cont" v-html="problem.input"></div>
     <h3>Output</h3>
-    <p>{{ problem.output }}</p>
+    <div class="cont" v-html="problem.output"></div>
     <h3>Sample Input</h3>
-    <p>{{ problem.in }}</p>
+    <p class="cont">{{ problem.in }}</p>
     <h3>Sample Output</h3>
-    <p>{{ problem.out }}</p>
+    <p class="cont">{{ problem.out }}</p>
     <h3>Hint</h3>
-    <p>{{ problem.hint }}</p>
+    <div class="cont" v-html="problem.hint"></div>
     <el-row class="button">
       <el-button>Submit</el-button>
       <el-button>Statistic</el-button>
@@ -25,10 +25,6 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
-    return {
-    }
-  },
   computed: {
     ...mapGetters([
       'problem'
@@ -46,7 +42,7 @@ export default {
       text-align: left
       border-bottom: 1px solid #e8e8e8
       padding: 10px 0
-    p
+    .cont
       text-align: left
       margin-left: 20px
     .button

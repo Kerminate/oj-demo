@@ -61,14 +61,14 @@
       </el-table-column>
       <el-table-column label="PID" align="center">
         <template slot-scope="scope">
-          <router-link :to="{ name: '', params: { } }">
+          <router-link :to="{ name: 'problemInfo', params: { pid: scope.row.pid } }">
             <el-button type="text">{{ scope.row.pid }}</el-button>
           </router-link>
         </template>
       </el-table-column>
       <el-table-column label="Username" align="center">
         <template slot-scope="scope">
-          <router-link :to="{ name: '', params: { } }">
+          <router-link :to="{ name: 'userInfo', params: { uid: scope.row.uid } }">
             <el-button type="text">{{ scope.row.uid }}</el-button>
           </router-link>
         </template>
