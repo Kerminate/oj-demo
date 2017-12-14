@@ -50,6 +50,14 @@ module.exports = {
       '/status/*': {
         target: 'http://127.0.0.1:8888',
         changeOrigin: true
+      },
+      '/statistics': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
+      },
+      '/statistics/*': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
       }
     },
 

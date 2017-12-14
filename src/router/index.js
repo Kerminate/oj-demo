@@ -6,6 +6,7 @@ import NewsInfo from '@/views/NewsInfo.vue'
 import Home from '@/views/Home.vue'
 import Status from '@/views/Status.vue'
 import UserInfo from '@/views/UserInfo.vue'
+import Statistics from '@/views/Statistics.vue'
 
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/user/:uid',
     name: 'userInfo',
     component: UserInfo
+  },
+  {
+    path: '/statistics/:pid',
+    name: 'statistics',
+    component: Statistics
   }
 ]
 

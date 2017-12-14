@@ -8,6 +8,7 @@ import problem from './modules/problem'
 import news from './modules/news'
 import solution from './modules/solution'
 import user from './modules/user'
+import statistics from './modules/statistics'
 
 Vue.use(Vuex)
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     problem,
     news,
     solution,
-    user
+    user,
+    statistics
   }
 })

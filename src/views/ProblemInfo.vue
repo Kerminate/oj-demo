@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="proinfo-wrap">
-    <h1>{{ problem.title }}</h1>
+    <h1>{{ problem.pid }}:  {{ problem.title }}</h1>
     <h5>Time Limit: {{ problem.time }}MS&nbsp;&nbsp;&nbsp;Memory Limit: {{ problem.memory }}KB</h5>
     <h3>Description</h3>
     <div class="cont" v-html="problem.description"></div>
@@ -16,7 +16,9 @@
     <div class="cont" v-html="problem.hint"></div>
     <el-row class="button">
       <el-button>Submit</el-button>
-      <el-button>Statistic</el-button>
+      <el-button>
+        <router-link :to="{ name: 'statistics', params: { pid: problem.pid } }">Statistic</router-link>
+      </el-button>
     </el-row>
   </div>
 </template>
@@ -47,4 +49,6 @@ export default {
       margin-left: 20px
     .button
       margin: 30px 0
+    a
+      color: #9f28b8
 </style>

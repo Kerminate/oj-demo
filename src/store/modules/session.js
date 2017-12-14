@@ -5,16 +5,14 @@ import api from '../../axios.js'
 const state = {
   token: window.sessionStorage.getItem('token'),
   uid: window.sessionStorage.getItem('uid'),
-  loginDialog: false,
-  registerDialog: false
+  loginDialog: false
 }
 
 // getters
 const getters = {
   uid: state => state.uid,
   token: state => state.token,
-  loginDialog: state => state.loginDialog,
-  registerDialog: state => state.registerDialog
+  loginDialog: state => state.loginDialog
 }
 
 // mutations
@@ -38,9 +36,6 @@ const mutations = {
   },
   [types.SHOW_LOGIN]: (state) => {
     state.loginDialog = !state.loginDialog
-  },
-  [types.SHOW_REGISTER]: (state) => {
-    state.registerDialog = !state.registerDialog
   }
 }
 
@@ -59,16 +54,8 @@ const actions = {
     }).catch(err => {
       console.log(err)
     })
-  },
-  // UserLogout 和 uid 应该放到 mutations 中，因为它们是明显的同步操作
-  UserRegister ({ commit }, payload) {
-    return api.userRegister(payload).then(({ data }) => {
-      if (data.success) {
-        commit(types.SHOW_REGISTER)
-      }
-      return data
-    })
   }
+  // UserLogout 和 uid 应该放到 mutations 中，因为它们是明显的同步操作
 }
 
 export default {

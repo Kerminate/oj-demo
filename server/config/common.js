@@ -9,6 +9,7 @@ config.judge = {
   WrongAnswer: 5,
   TimeLimitExceeded: 6,
   MemoryLimitExceed: 7,
+  OutputLimitExceed: 8,
   PresentationError: 9,
   SystemError: 10,
   RejudgePending: 11

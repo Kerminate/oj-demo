@@ -49,20 +49,24 @@ axios.interceptors.request.use = instance.interceptors.request.use
 export default {
   // 用户注册
   userRegister (data) {
-    return instance.post('/session/register', data)
+    return instance.post('/user/register', data)
+  },
+  // 获取用户信息
+  getUserInfo (data) {
+    return instance.get(`/user/${data.uid}`, { params: data })
   },
   // 用户登录
   userLogin (data) {
     return instance.post('/session/login', data)
   },
   // 获取用户
-  getUser () {
-    return instance.get('/session/info')
-  },
+  // getUser () {
+  //   return instance.get('/session/info')
+  // },
   // 删除用户
-  delUser (data) {
-    return instance.post('/session/delUser', data)
-  },
+  // delUser (data) {
+  //   return instance.post('/session/delUser', data)
+  // },
   // 获取题目列表
   getProblems (data) {
     return instance.get('/problem/list', { params: data })
@@ -83,8 +87,8 @@ export default {
   getSolutions (data) {
     return instance.get('/status/list', { params: data })
   },
-  // 获取用户信息
-  getUserInfo (data) {
-    return instance.get(`/user/${data.uid}`, { params: data })
+  // 获取题目提交信息
+  getStatistics (data) {
+    return instance.get(`/statistics/${data.pid}`, { params: data })
   }
 }

@@ -108,10 +108,23 @@ const color = {
   11: 'rp'
 }
 
+const statisTableObj = [
+  'Compile Error',
+  'Accepted',
+  'Runtime Error',
+  'Wrong Answer',
+  'Time Limit Exceeded',
+  'Memory Limit Exceeded',
+  'Output Limit Exceeded',
+  'Presentation Error',
+  'System Error'
+]
+
 module.exports = {
   result,
   language,
   judgeList,
   languageList,
-  color
+  color,
+  statisTableObj
 }

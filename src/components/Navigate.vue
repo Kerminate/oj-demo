@@ -4,15 +4,21 @@
       <el-col :offset="2" :span="14">
         <el-menu :default-active="left" class="el-menu-demo" mode="horizontal">
           <el-menu-item index="1">
-            <router-link :to="{ name: 'home', params: {} }">Home</router-link>
+            <router-link :to="{ name: 'home', params: {} }">
+              <p>Home</p>
+            </router-link>
           </el-menu-item>
           <el-menu-item index="2">News</el-menu-item>
           <el-menu-item index="3">Discuss</el-menu-item>
           <el-menu-item index="4">
-            <router-link :to="{ name: 'problemList', params: {} }">Problems</router-link>
+            <router-link :to="{ name: 'problemList', params: {} }">
+              <p>Problems</p>
+            </router-link>
           </el-menu-item>
           <el-menu-item index="5">
-            <router-link :to="{ name: 'status', params: {} }">Status</router-link>
+            <router-link :to="{ name: 'status', params: {} }">
+              <p>Status</p>
+            </router-link>
           </el-menu-item>
           <el-menu-item index="6">Ranklist</el-menu-item>
           <el-menu-item index="7">Contests</el-menu-item>
@@ -77,10 +83,14 @@ export default {
   .container
     box-shadow: 0 2px 3px hsla(0,0%,4%,.1)
     margin-bottom: 30px
-  .head
-    float: right
-  .login, .logout, .register, .user, .admin
-    height: 60px
-    width: 80px
-    color: #878d99
+    p
+      line-height: 60px
+      height: 60px
+      margin: 0
+    .head
+      float: right
+    .login, .logout, .register, .user, .admin
+      height: 60px
+      width: 80px
+      color: #878d99
 </style>
