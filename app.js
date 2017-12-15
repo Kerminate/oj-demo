@@ -18,6 +18,7 @@ const news = require('./server/routes/news.js')
 const status = require('./server/routes/status.js')
 const user = require('./server/routes/user.js')
 const statistics = require('./server/routes/statistics.js')
+const ranklist = require('./server/routes/ranklist.js')
 
 router.use('/session', session.routes(), session.allowedMethods()) // allowedMethods:当前接口运行的method
 router.use('/problem', problem.routes(), problem.allowedMethods())
@@ -25,6 +26,7 @@ router.use('/news', news.routes(), news.allowedMethods())
 router.use('/status', status.routes(), status.allowedMethods())
 router.use('/user', user.routes(), user.allowedMethods())
 router.use('/statistics', statistics.routes(), statistics.allowedMethods())
+router.use('/ranklist', ranklist.routes(), ranklist.allowedMethods())
 
 app.use(router.routes()).use(router.allowedMethods())
 

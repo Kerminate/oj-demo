@@ -58,6 +58,10 @@ module.exports = {
       '/statistics/*': {
         target: 'http://127.0.0.1:8888',
         changeOrigin: true
+      },
+      '/ranklist': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
       }
     },
 

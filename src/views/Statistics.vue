@@ -105,7 +105,6 @@ export default {
   },
   created () {
     this.getStatistics()
-    console.log(this.$route.params.pid)
     this.pid = this.$route.params.pid
   },
   mounted () {

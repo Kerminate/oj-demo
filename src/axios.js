@@ -90,5 +90,9 @@ export default {
   // 获取题目提交信息
   getStatistics (data) {
     return instance.get(`/statistics/${data.pid}`, { params: data })
+  },
+  // 获取排名列表
+  getRanklist (data) {
+    return instance.get('/ranklist/list', { params: data })
   }
 }

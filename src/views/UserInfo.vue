@@ -37,7 +37,6 @@ export default {
   },
   created () {
     this.$store.dispatch('updateUser', this.$route.params)
-    console.log(this.solved)
   }
 }
 </script>

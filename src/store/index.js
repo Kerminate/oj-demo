@@ -9,6 +9,7 @@ import news from './modules/news'
 import solution from './modules/solution'
 import user from './modules/user'
 import statistics from './modules/statistics'
+import ranklist from './modules/ranklist'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     news,
     solution,
     user,
-    statistics
+    statistics,
+    ranklist
   }
 })

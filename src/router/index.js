@@ -7,6 +7,7 @@ import Home from '@/views/Home.vue'
 import Status from '@/views/Status.vue'
 import UserInfo from '@/views/UserInfo.vue'
 import Statistics from '@/views/Statistics.vue'
+import Ranklist from '@/views/Ranklist.vue'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ const routes = [
     path: '/statistics/:pid',
     name: 'statistics',
     component: Statistics
+  },
+  {
+    path: '/ranklist',
+    name: 'ranklist',
+    component: Ranklist
   }
 ]
 

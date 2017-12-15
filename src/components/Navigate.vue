@@ -20,7 +20,11 @@
               <p>Status</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="6">Ranklist</el-menu-item>
+          <el-menu-item index="6">
+            <router-link :to="{ name: 'ranklist', params: {} }">
+              <p>Ranklist</p>
+            </router-link>
+          </el-menu-item>
           <el-menu-item index="7">Contests</el-menu-item>
           <el-menu-item index="8">FAQ</el-menu-item>
         </el-menu>
