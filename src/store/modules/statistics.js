@@ -5,16 +5,18 @@ import { statisTableObj } from '../../util/constant.js'
 const state = {
   statisticsList: [],
   countList: [],
-  sumStatis: 0,
-  statisTable: []
+  sumCharts: 0,
+  statisTable: [],
+  sumStatis: 0
 }
 
 // getters
 const getters = {
   statisticsList: state => state.statisticsList,
   countList: state => state.countList,
-  sumStatis: state => state.sumStatis,
-  statisTable: state => state.statisTable
+  sumCharts: state => state.sumCharts,
+  statisTable: state => state.statisTable,
+  sumStatis: state => state.sumStatis
 }
 
 // mutations
@@ -27,6 +29,9 @@ const mutations = {
   },
   [types.UPDATE_STATISTICS_TOTAL]: (state, payload) => {
     state.sumStatis = payload
+  },
+  [types.UPDATE_STATISTICS_CHARTS]: (state, payload) => {
+    state.sumCharts = payload
   },
   [types.UPDATE_STATISTICS_TABLE]: (state, payload) => {
     let obj = {
@@ -49,8 +54,9 @@ const actions = {
     return api.getStatistics(payload).then(({ data }) => {
       commit(types.UPDATE_STATISTICS_LIST, data.list)
       commit(types.UPDATE_COUNT_LIST, data.counted)
-      commit(types.UPDATE_STATISTICS_TOTAL, data.total)
+      commit(types.UPDATE_STATISTICS_CHARTS, data.total)
       commit(types.UPDATE_STATISTICS_TABLE, data)
+      commit(types.UPDATE_STATISTICS_TOTAL, data.sum)
     })
   }
 }

@@ -132,6 +132,9 @@ export default {
     }
   },
   created () {
+    this.queryParams()
+  },
+  mounted () {
     this.getStatus()
   },
   computed: {
@@ -144,7 +147,13 @@ export default {
   methods: {
     showDialog (solution) {
       this.$store.commit('SHOW_CODE', solution)
-      console.log(this.codeDialog)
+    },
+    queryParams () {
+      if (this.$route.params) {
+        let opt = this.$route.params
+        this.pid = opt.pid || ''
+        this.judge = opt.judge || 'ALL'
+      }
     },
     getStatus () {
       let opt = {
