@@ -1,41 +1,49 @@
 <template lang="html">
   <div>
     <el-row class="container">
-      <el-col :offset="2" :span="14">
-        <el-menu :default-active="left" class="el-menu-demo" mode="horizontal">
-          <el-menu-item index="1">
+      <el-col :offset="2" :span="16">
+        <el-menu :default-active="left" class="el-menu-demo" mode="horizontal" active-text-color="#B12CCC">
+          <el-menu-item index="/">
             <router-link :to="{ name: 'home', params: {} }">
               <p>Home</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="2">News</el-menu-item>
-          <el-menu-item index="3">Discuss</el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="news">News</el-menu-item>
+          <el-menu-item index="discuss">Discuss</el-menu-item>
+          <el-menu-item index="problem">
             <router-link :to="{ name: 'problemList', params: {} }">
               <p>Problems</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="5">
+          <el-menu-item index="status">
             <router-link :to="{ name: 'status', params: {} }">
               <p>Status</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="6">
+          <el-menu-item index="ranklist">
             <router-link :to="{ name: 'ranklist', params: {} }">
               <p>Ranklist</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="7">Contests</el-menu-item>
-          <el-menu-item index="8">FAQ</el-menu-item>
+          <el-menu-item index="contest">Contests</el-menu-item>
+          <el-menu-item index="faq">FAQ</el-menu-item>
+          <el-submenu index="/" v-show="uid === 'admin'">
+            <template slot="title">Admin</template>
+            <el-menu-item index="admin/problem/add">
+              <router-link :to="{ name: 'problemAdd', params: {} }">Create Problems</router-link>
+            </el-menu-item>
+            <el-menu-item index="9-2">Create Contests</el-menu-item>
+            <el-menu-item index="9-3">User Management</el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <el-menu class="el-menu-demo head" mode="horizontal">
           <el-button v-show="!uid" class="login" type="text" @click="execLogin">Login</el-button>
           <el-button v-show="!uid" class="register" type="text" @click="execRegister">Register</el-button>
           <el-button v-show="uid" class="login" type="text">{{ this.uid }}</el-button>
           <el-button v-show="uid" class="register" type="text" @click="userLogout">Logout</el-button>
-          <el-button v-show="uid === 'admin'" class="admin" type="text">admin</el-button>
+          <!-- <el-button v-show="uid === 'admin'" class="admin" type="text">admin</el-button> -->
           <login :ifShow="loginDialog"></login>
           <register :ifShow="registerDialog"></register>
         </el-menu>
@@ -72,7 +80,9 @@ export default {
       this.logout()
       this.$message({
         type: 'success',
-        message: '退出成功'
+        message: '退出成功',
+        duration: 2000,
+        showClose: true
       })
     }
   },
@@ -87,6 +97,8 @@ export default {
   .container
     box-shadow: 0 2px 3px hsla(0,0%,4%,.1)
     margin-bottom: 30px
+    .el-menu--horizontal
+      border-bottom: none
     p
       line-height: 60px
       height: 60px

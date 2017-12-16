@@ -67,7 +67,9 @@ export default {
             if (data.info === false) {
               this.$message({
                 type: 'info',
-                message: '账号不存在'
+                message: '账号不存在',
+                duration: 2000,
+                showClose: true
               })
               return false
             }
@@ -75,7 +77,9 @@ export default {
             if (data.success) {
               this.$message({
                 type: 'success',
-                message: '登录成功'
+                message: '登录成功',
+                duration: 2000,
+                showClose: true
               })
               // // 如果用户手动输入"/"那么会跳转到这里来，即this.$route.query.redirect有参数
               // let redirectUrl = decodeURIComponent(this.$route.query.redirect || '/')
@@ -86,7 +90,9 @@ export default {
             } else {
               this.$message({
                 type: 'info',
-                message: '密码错误！'
+                message: '密码错误！',
+                duration: 2000,
+                showClose: true
               })
             }
           })

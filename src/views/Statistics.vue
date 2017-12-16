@@ -29,7 +29,7 @@
     </div>
     <div class="right">
       <el-table :data="statisticsList" class="eltable">
-        <el-table-column label="Rank" type="index" align="center" width="70">
+        <el-table-column label="Rank" type="index" :index="indexMethod" align="center" width="70">
         </el-table-column>
         <el-table-column label="Username" align="center" width="170">
           <template slot-scope="scope">
@@ -168,6 +168,9 @@ export default {
     handleSizeChange (val) {
       this.pageSize = val
       this.getStatistics()
+    },
+    indexMethod (index) {
+      return index + 1 + (this.currentPage - 1) * this.pageSize
     }
   }
 }

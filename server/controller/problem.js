@@ -42,7 +42,36 @@ const getOneProblem = async (ctx) => {
   ctx.body = doc
 }
 
+// 新建一个题目
+const createProblem = async (ctx) => {
+  let opt = ctx.request.body
+
+  const initPro = await Problem
+    .find()
+    .sort({pid: -1})
+    .limit(1)
+    .exec()
+
+  const info = {
+    pid: parseInt(initPro.pid) + 1,
+    title: opt.title,
+    time: parseInt(opt.time) || 1000,
+    memory: parseInt(opt.memory) || 32768,
+    description: opt.description,
+    input: opt.input,
+    output: opt.output,
+    in: opt.in,
+    out: opt.out
+  }
+
+  await info.save()
+  ctx.body = {
+    success: true
+  }
+}
+
 module.exports = {
   getProblemList,
-  getOneProblem
+  getOneProblem,
+  createProblem
 }

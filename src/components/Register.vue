@@ -99,12 +99,16 @@ export default {
             if (data.success) {
               this.$message({
                 type: 'success',
-                message: '注册成功'
+                message: '注册成功',
+                duration: 2000,
+                showClose: true
               })
             } else {
               this.$message({
                 type: 'info',
-                message: '用户名已经存在'
+                message: '用户名已经存在',
+                duration: 2000,
+                showClose: true
               })
             }
           })

@@ -8,6 +8,7 @@ import Status from '@/views/Status.vue'
 import UserInfo from '@/views/UserInfo.vue'
 import Statistics from '@/views/Statistics.vue'
 import Ranklist from '@/views/Ranklist.vue'
+import ProblemAdd from '@/views/ProblemAdd.vue'
 
 Vue.use(Router)
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/ranklist',
     name: 'ranklist',
     component: Ranklist
+  },
+  {
+    path: 'admin/problem/add',
+    name: 'problemAdd',
+    component: ProblemAdd
   }
 ]
 

@@ -1,15 +1,15 @@
 const User = require('../model/user.js')
 
-// 返回题目列表
+// 返回排名列表
 const getRanklist = async (ctx) => {
   let opt = ctx.request.query
   let filter = {}
   let page = parseInt(opt.page) || 1
-  let pageSize = parseInt(opt.pageSize) || 20
+  let pageSize = parseInt(opt.pageSize) || 30
 
   const doc = await User
     .find(filter)
-    .sort({pid: 1})
+    .sort({solve: -1})
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .exec()

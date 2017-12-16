@@ -127,7 +127,7 @@ export default {
       result: constant.result,
       lang: constant.language,
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 30,
       color: constant.color
     }
   },
@@ -153,6 +153,7 @@ export default {
         let opt = this.$route.params
         this.pid = opt.pid || ''
         this.judge = opt.judge || 'ALL'
+        this.uid = opt.uid || ''
       }
     },
     getStatus () {

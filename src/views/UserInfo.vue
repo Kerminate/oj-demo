@@ -16,7 +16,7 @@
       </el-button>
     </div>
     <div class="unsolved">
-      <div class="unsolved-name">Solved</div>
+      <div class="unsolved-name">Unolved</div>
       <el-button v-for="item in unsolved" :key="item" type="text">
         <router-link :to="{ name: 'problemInfo', params: { pid: item } }">{{ item }}</router-link>
       </el-button>

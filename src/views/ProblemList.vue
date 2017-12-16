@@ -56,7 +56,7 @@
       </el-table-column>
       <el-table-column label="Ratio" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.solve / scope.row.submit | formate }}</span>
+          <span>{{ scope.row.solve / (scope.row.submit + 0.0000001) | formate }}</span>
           (<el-button type="text">{{ scope.row.solve }}</el-button> / <el-button style="margin-left:0px" type="text">{{ scope.row.submit }}</el-button>)
         </template>
       </el-table-column>
@@ -93,7 +93,7 @@ export default {
       type: 'pid',
       content: '',
       currentPage: 1,
-      pageSize: 10
+      pageSize: 30
     }
   },
   created () {
