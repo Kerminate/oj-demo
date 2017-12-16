@@ -16,7 +16,7 @@ const getProblemList = async (ctx) => {
   }
 
   // 链式操作较多的话，个人建议分成多行的话，可读性更加
-  const [ doc, count ] = Promise.all([
+  const [ doc, count ] = await Promise.all([
     Problem
       .find(filter)
       .sort({pid: 1})
