@@ -2,10 +2,10 @@ const Solution = require('../model/solution.js')
 
 // 获取statistics信息
 const getStatistics = async (ctx) => {
-  let opt = ctx.query
-  let page = parseInt(opt.page) || 1
-  let pageSize = parseInt(opt.pageSize) || 20
-  let pid = parseInt(opt.pid)
+  const opt = ctx.query
+  const page = parseInt(opt.page) || 1
+  const pageSize = parseInt(opt.pageSize) || 20
+  const pid = parseInt(opt.pid)
 
   // distinct不能喝sort同时使用，故使用聚合
   const list = await Solution.aggregate([
@@ -66,7 +66,7 @@ const getStatistics = async (ctx) => {
 
   let counted = []
   for (let i = 2; i <= 10; i++) {
-    counted.push(Solution.find({pid, judge: i}).count().exec())
+    counted.push(Solution.count({pid, judge: i}).exec())
   }
   counted = await Promise.all(counted)
 

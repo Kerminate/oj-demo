@@ -8,10 +8,10 @@ const util = require('../config/util.js')
 // 登录
 const Login = async (ctx) => {
   // 拿到账号和密码
-  let uid = ctx.request.body.uid
-  let pwd = util.generatePwd(ctx.request.body.pwd)
+  const uid = ctx.request.body.uid
+  const pwd = util.generatePwd(ctx.request.body.pwd)
   // let password = sha1(ctx.request.body.password)
-  let doc = await User.findOne({ uid }).exec()
+  const doc = await User.findOne({ uid }).exec()
   if (!doc) {
     console.log('检查到用户名不存在')
     ctx.status = 200
@@ -21,16 +21,15 @@ const Login = async (ctx) => {
   } else if (doc.pwd === pwd) {
     console.log('密码一致')
     // 生成一个新的token,并存到数据库
-    let token = createToken(uid)
+    const token = createToken(uid)
     console.log(token)
     doc.token = token
     await doc.save()
 
-    ctx.status = 200
     ctx.body = {
       success: true,
       uid,
-      token, // 登录成功要创建一个新的token，应该存到数据库
+      token, // 登录成功要创建一个新的twoken，应该存到数据库
       create: doc.create
     }
   } else {

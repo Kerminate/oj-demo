@@ -5,23 +5,22 @@ const createToken = require('../token/createToken.js')
 
 // 查询用户具体信息
 const getUserInfo = async (ctx) => {
-  let uid = ctx.query.uid
-  const info = await User
-    .findOne({ uid })
-    .exec()
-
-  const solved = await Solution
-    .find({ uid, judge: 3 })
-    .distinct('pid')
-    .exec()
-
-  const unsolved = await Solution
-    .find({ uid, judge: {$ne: 3} })
-    .distinct('pid')
-    .exec()
+  const uid = ctx.query.uid
+  const [info, solved, unsolved] = await Promise.all([
+    User
+      .findOne({ uid })
+      .exec(),
+    Solution
+      .find({ uid, judge: 3 })
+      .distinct('pid')
+      .exec(),
+    Solution
+      .find({ uid, judge: {$ne: 3} })
+      .distinct('pid')
+      .exec()
+  ])
 
   console.log(info)
-  ctx.status = 200
   ctx.body = {
     info,
     solved,
@@ -31,7 +30,7 @@ const getUserInfo = async (ctx) => {
 
 // 注册
 const reg = async (ctx) => {
-  let user = new User({
+  const user = new User({
     uid: ctx.request.body.uid,
     nick: ctx.request.body.nick,
     pwd: util.generatePwd(ctx.request.body.pwd),
@@ -39,10 +38,9 @@ const reg = async (ctx) => {
   })
   // 将objectid转换为用户创建时间(可以不用)
   // user.create = moment(objectIdToTimestamp(user._id)).format('YYYY-MM-DD HH:mm:ss')
-  let doc = await User.findOne({ uid: user.uid }).exec()
+  const doc = await User.findOne({ uid: user.uid }).exec()
   if (doc) {
     console.log('用户已经存在')
-    ctx.status = 200
     ctx.body = {
       success: false
     }
@@ -50,7 +48,6 @@ const reg = async (ctx) => {
     await user.save()
 
     console.log('注册成功')
-    ctx.status = 200
     ctx.body = {
       success: true
     }

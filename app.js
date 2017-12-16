@@ -1,32 +1,15 @@
 const Koa = require('koa')
-const Router = require('koa-router')
 const logger = require('koa-logger')
 const bodyparser = require('koa-bodyparser')
+const router = require('./server/routes')
 require('./server/config/db.js')
 
 const app = new Koa()
-const router = new Router()
 
 // 日志，会在控制台显示请求的方法和路由
 app.use(logger())
 
 app.use(bodyparser())
-
-const session = require('./server/routes/session.js')
-const problem = require('./server/routes/problem.js')
-const news = require('./server/routes/news.js')
-const status = require('./server/routes/status.js')
-const user = require('./server/routes/user.js')
-const statistics = require('./server/routes/statistics.js')
-const ranklist = require('./server/routes/ranklist.js')
-
-router.use('/session', session.routes(), session.allowedMethods()) // allowedMethods:当前接口运行的method
-router.use('/problem', problem.routes(), problem.allowedMethods())
-router.use('/news', news.routes(), news.allowedMethods())
-router.use('/status', status.routes(), status.allowedMethods())
-router.use('/user', user.routes(), user.allowedMethods())
-router.use('/statistics', statistics.routes(), statistics.allowedMethods())
-router.use('/ranklist', ranklist.routes(), ranklist.allowedMethods())
 
 app.use(router.routes()).use(router.allowedMethods())
 

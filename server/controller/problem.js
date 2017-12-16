@@ -2,10 +2,10 @@ const Problem = require('../model/problem.js')
 
 // 返回题目列表
 const getProblemList = async (ctx) => {
-  let opt = ctx.request.query
-  let filter = {}
-  let page = parseInt(opt.page)
-  let pageSize = parseInt(opt.pageSize)
+  const opt = ctx.request.query
+  const filter = {}
+  const page = parseInt(opt.page)
+  const pageSize = parseInt(opt.pageSize)
   if (opt.type) {
     page = 1
     if (opt.type === 'pid') {
@@ -16,18 +16,18 @@ const getProblemList = async (ctx) => {
   }
 
   // 链式操作较多的话，个人建议分成多行的话，可读性更加
-  const doc = await Problem
-    .find(filter)
-    .sort({pid: 1})
-    .skip((page - 1) * pageSize)
-    .limit(pageSize)
-    .exec()
+  const [ doc, count ] = Promise.all([
+    Problem
+      .find(filter)
+      .sort({pid: 1})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .exec(),
+    Problem
+      .count(filter)
+      .exec()
+  ])
 
-  const count = await Problem
-    .find(filter)
-    .count()
-
-  ctx.status = 200
   ctx.body = {
     list: doc,
     count: count
@@ -36,15 +36,14 @@ const getProblemList = async (ctx) => {
 
 // 返回一道题目
 const getOneProblem = async (ctx) => {
-  let opt = parseInt(ctx.query.pid)
-  let doc = await Problem.findOne({pid: opt}).exec()
-  ctx.status = 200
+  const opt = parseInt(ctx.query.pid)
+  const doc = await Problem.findOne({pid: opt}).exec()
   ctx.body = doc
 }
 
 // 新建一个题目
 const createProblem = async (ctx) => {
-  let opt = ctx.request.body
+  const opt = ctx.request.body
 
   const initPro = await Problem
     .findOne()

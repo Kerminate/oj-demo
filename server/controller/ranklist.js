@@ -7,18 +7,18 @@ const getRanklist = async (ctx) => {
   let page = parseInt(opt.page) || 1
   let pageSize = parseInt(opt.pageSize) || 30
 
-  const doc = await User
-    .find(filter)
-    .sort({solve: -1})
-    .skip((page - 1) * pageSize)
-    .limit(pageSize)
-    .exec()
+  const [doc, count] = await Promise.all([
+    User
+      .find(filter)
+      .sort({solve: -1, submit: 1})
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .exec(),
+    User
+      .count(filter)
+      .exec()
+  ])
 
-  const count = await User
-    .find(filter)
-    .count()
-
-  ctx.status = 200
   ctx.body = {
     list: doc,
     count: count
