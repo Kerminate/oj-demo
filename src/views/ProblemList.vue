@@ -49,11 +49,6 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Submit" align="center">
-        <template slot-scope="scope">
-          <i class="el-icon-edit size"></i>
-        </template>
-      </el-table-column>
       <el-table-column label="Ratio" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.solve / (scope.row.submit + 0.0000001) | formate }}</span>
