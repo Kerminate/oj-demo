@@ -30,4 +30,20 @@ export default {
     .main
       margin-left: 8%
       margin-right: 8%
+    // common parts
+    a
+      text-decoration: none
+    ul, li
+      list-style-type: none
+    .ac
+      color: red
+    .wa, .re, .tle, .mle, .ole, .se, .rp
+      color: #11b811
+    .ce
+      color: #6633FF
+    .pe
+      color: orange
+    .pd, .rj
+      color: black
+
 </style>
