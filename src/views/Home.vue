@@ -59,13 +59,6 @@ export default {
       pageSize: this.pageSize
     }
     this.$store.dispatch('updateNewsList', opt)
-  },
-  methods: {
-    formatTime (time) {
-      let newDate = new Date()
-      newDate.setTime(time)
-      return newDate.toLocaleDateString()
-    }
   }
 }
 </script>

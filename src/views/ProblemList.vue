@@ -71,7 +71,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import api from '@/axios.js'
 
 export default {
   data () {
