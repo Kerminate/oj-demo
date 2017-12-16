@@ -94,5 +94,9 @@ export default {
   // 获取排名列表
   getRanklist (data) {
     return instance.get('/ranklist/list', { params: data })
+  },
+  // 增加题目
+  addProblem (data) {
+    return instance.post('/problem/add', data)
   }
 }

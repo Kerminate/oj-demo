@@ -47,12 +47,15 @@ const createProblem = async (ctx) => {
   let opt = ctx.request.body
 
   const initPro = await Problem
-    .find()
+    .findOne()
     .sort({pid: -1})
     .limit(1)
     .exec()
 
-  const info = {
+  console.log(opt)
+  console.log(initPro)
+
+  const info = new Problem({
     pid: parseInt(initPro.pid) + 1,
     title: opt.title,
     time: parseInt(opt.time) || 1000,
@@ -61,12 +64,14 @@ const createProblem = async (ctx) => {
     input: opt.input,
     output: opt.output,
     in: opt.in,
-    out: opt.out
-  }
+    out: opt.out,
+    hint: opt.hint
+  })
 
   await info.save()
   ctx.body = {
-    success: true
+    success: true,
+    pid: info.pid
   }
 }
 
