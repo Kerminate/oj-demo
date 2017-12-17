@@ -14,12 +14,6 @@
     <p class="cont">{{ problem.out }}</p>
     <h3>Hint</h3>
     <div class="cont" v-html="problem.hint"></div>
-    <el-row class="button">
-      <el-button>Submit</el-button>
-      <el-button>
-        <router-link :to="{ name: 'statistics', params: { pid: problem.pid } }">Statistic</router-link>
-      </el-button>
-    </el-row>
   </div>
 </template>
 
