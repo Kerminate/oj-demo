@@ -97,6 +97,10 @@ export default {
   },
   // 增加题目
   addProblem (data) {
-    return instance.post('/problem/add', data)
+    return instance.post('/problem/', data)
+  },
+  // 获取竞赛列表信息
+  getContestList (data) {
+    return instance.get('/contest/list', { params: data })
   }
 }

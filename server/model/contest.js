@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate')
 
-const newSchema = mongoose.Schema({
+const contestSchema = mongoose.Schema({
   cid: {
     type: Number,
     index: {
@@ -20,7 +21,10 @@ const newSchema = mongoose.Schema({
   end: Number,
   creator: String,
   list: [Number],
-  encrypt: 1,
+  encrypt: {
+    type: Number,
+    default: 1
+  },
   argument: {
     type: mongoose.Schema.Types.Mixed, // 这个字段干啥的？
     default: null
@@ -29,4 +33,6 @@ const newSchema = mongoose.Schema({
   collection: 'Contest'
 })
 
-module.exports = mongoose.model('Contest', newSchema)
+contestSchema.plugin(mongoosePaginate)
+
+module.exports = mongoose.model('Contest', contestSchema)

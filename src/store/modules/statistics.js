@@ -1,5 +1,5 @@
 import * as types from '../types.js'
-import api from '../../axios.js'
+import api from '../../api.js'
 import { statisTableObj } from '../../util/constant.js'
 
 const state = {

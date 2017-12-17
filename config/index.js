@@ -62,6 +62,14 @@ module.exports = {
       '/ranklist': {
         target: 'http://127.0.0.1:8888',
         changeOrigin: true
+      },
+      '/contest': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
+      },
+      '/contest/*': {
+        target: 'http://127.0.0.1:8888',
+        changeOrigin: true
       }
     },
 

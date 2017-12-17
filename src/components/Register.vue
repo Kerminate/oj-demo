@@ -27,7 +27,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-// import api from '@/axios.js'
+// import api from '@/api.js'
 
 export default {
   props: {

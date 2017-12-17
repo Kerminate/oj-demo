@@ -10,6 +10,7 @@ import solution from './modules/solution'
 import user from './modules/user'
 import statistics from './modules/statistics'
 import ranklist from './modules/ranklist'
+import contest from './modules/contest'
 
 Vue.use(Vuex)
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     solution,
     user,
     statistics,
-    ranklist
+    ranklist,
+    contest
   }
 })

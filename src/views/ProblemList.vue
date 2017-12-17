@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="pro-wrap">
+  <div class="prolist-wrap">
     <el-row class="pro-main" align="middle">
       <el-col :span="8">
         <el-pagination
@@ -44,7 +44,7 @@
       </el-table-column>
       <el-table-column label="Title" align="center">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'problemInfo', params: { pid: scope.row.pid } }">
+          <router-link :to="{ name: 'problem', params: { pid: scope.row.pid } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>
@@ -135,7 +135,7 @@ export default {
 </script>
 
 <style lang="stylus">
-  .pro-wrap
+  .prolist-wrap
     .pro-main
       margin-bottom: 20px
     .eltable

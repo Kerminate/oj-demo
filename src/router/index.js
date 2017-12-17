@@ -9,6 +9,9 @@ import UserInfo from '@/views/UserInfo.vue'
 import Statistics from '@/views/Statistics.vue'
 import Ranklist from '@/views/Ranklist.vue'
 import ProblemAdd from '@/views/ProblemAdd.vue'
+import Contest from '@/views/Contest.vue'
+import Problem from '@/views/Problem.vue'
+import ProblemEdit from '@/views/ProblemEdit.vue'
 
 Vue.use(Router)
 
@@ -25,9 +28,31 @@ const routes = [
   },
   {
     path: '/problem/:pid',
-    name: 'problemInfo',
-    component: ProblemInfo
+    name: 'problem',
+    component: Problem,
+    children: [
+      {
+        path: '',
+        name: 'problemInfo',
+        component: ProblemInfo
+      },
+      {
+        path: 'statistics',
+        name: 'statistics',
+        component: Statistics
+      },
+      {
+        path: 'edit',
+        name: 'problemEdit',
+        component: ProblemEdit
+      }
+    ]
   },
+  // {
+  //   path: '/problem/:pid',
+  //   name: 'problemInfo',
+  //   component: ProblemInfo
+  // },
   {
     path: '/news/:nid',
     name: 'newsInfo',
@@ -57,6 +82,11 @@ const routes = [
     path: 'admin/problem/add',
     name: 'problemAdd',
     component: ProblemAdd
+  },
+  {
+    path: '/contest',
+    name: 'contest',
+    component: Contest
   }
 ]
 

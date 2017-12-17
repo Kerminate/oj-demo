@@ -25,7 +25,11 @@
               <p>Ranklist</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="contest">Contests</el-menu-item>
+          <el-menu-item index="contest">
+            <router-link :to="{ name: 'contest', params: {} }">
+              <p>Contests</p>
+            </router-link>
+          </el-menu-item>
           <el-menu-item index="faq">FAQ</el-menu-item>
           <el-submenu index="/" v-show="uid === 'admin'">
             <template slot="title">Admin</template>

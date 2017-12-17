@@ -1,5 +1,5 @@
 import * as types from '../types'
-import api from '../../axios.js'
+import api from '../../api.js'
 
 const state = {
   problemList: [],

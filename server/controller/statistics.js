@@ -56,9 +56,7 @@ const getStatistics = async (ctx) => {
       memory: { $first: '$memory' },
       length: { $first: '$length' },
       language: { $first: '$language' },
-      create: { $first: '$create' },
-      pid: { $first: '$pid' },
-      uid: { $first: '$uid' }
+      create: { $first: '$create' }
     }}
   ]).exec()
 

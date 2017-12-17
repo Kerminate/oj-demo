@@ -4,10 +4,9 @@ const Problem = require('../model/problem.js')
 const getProblemList = async (ctx) => {
   const opt = ctx.request.query
   const filter = {}
-  const page = parseInt(opt.page)
-  const pageSize = parseInt(opt.pageSize)
+  const page = parseInt(opt.page) || 1
+  const pageSize = parseInt(opt.pageSize) || 30
   if (opt.type) {
-    page = 1
     if (opt.type === 'pid') {
       filter[opt.type] = parseInt(opt.content)
     } else {
