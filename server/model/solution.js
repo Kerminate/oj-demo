@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate')
 const config = require('../config/common.js')
 
 const solutionSchema = mongoose.Schema({
@@ -68,5 +69,7 @@ const solutionSchema = mongoose.Schema({
 }, {
   collection: 'Solution'
 })
+
+solutionSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Solution', solutionSchema)

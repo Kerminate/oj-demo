@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate')
 
 const userSchema = mongoose.Schema({
   uid: {
@@ -49,5 +50,7 @@ const userSchema = mongoose.Schema({
 }, {
   collection: 'User'
 })
+
+userSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('User', userSchema)

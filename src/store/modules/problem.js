@@ -16,28 +16,31 @@ const getters = {
 
 // mutations
 const mutations = {
-  [types.UPDATE_PROBLEM]: (state, payload) => {
+  [types.GET_PROBLEM]: (state, payload) => {
     state.problem = payload
   },
-  [types.UPDATE_PROBLEM_LIST]: (state, payload) => {
+  [types.GET_PROBLEM_LIST]: (state, payload) => {
     state.problemList = payload
   },
-  [types.UPDATE_SUM_PROBLEM]: (state, payload) => {
+  [types.GET_SUM_PROBLEM]: (state, payload) => {
     state.sumProblem = payload
+  },
+  [types.UPDATE_PROBLEM]: (state, payload) => {
+    state.problem = payload
   }
 }
 
 // actions
 const actions = {
-  updateProblem ({ commit }, payload) {
+  getProblem ({ commit }, payload) {
     return api.getProblemInfo(payload).then(({ data }) => {
-      commit(types.UPDATE_PROBLEM, data)
+      commit(types.GET_PROBLEM, data)
     })
   },
-  updateProblemList ({ commit }, payload) {
+  getProblemList ({ commit }, payload) {
     return api.getProblems(payload).then(({ data }) => {
-      commit(types.UPDATE_PROBLEM_LIST, data.list)
-      commit(types.UPDATE_SUM_PROBLEM, data.count)
+      commit(types.GET_PROBLEM_LIST, data.res.docs)
+      commit(types.GET_SUM_PROBLEM, data.res.total)
     })
   }
 }

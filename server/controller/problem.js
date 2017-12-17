@@ -14,22 +14,31 @@ const getProblemList = async (ctx) => {
     }
   }
 
-  // 链式操作较多的话，个人建议分成多行的话，可读性更加
-  const [ doc, count ] = await Promise.all([
-    Problem
-      .find(filter)
-      .sort({pid: 1})
-      .skip((page - 1) * pageSize)
-      .limit(pageSize)
-      .exec(),
-    Problem
-      .count(filter)
-      .exec()
-  ])
+  // const [ doc, count ] = await Promise.all([
+  //   Problem
+  //     .find(filter)
+  //     .sort({pid: 1})
+  //     .skip((page - 1) * pageSize)
+  //     .limit(pageSize)
+  //     .exec(),
+  //   Problem
+  //     .count(filter)
+  //     .exec()
+  // ])
+  // ctx.body = {
+  //   list: doc,
+  //   count: count
+  // }
+
+  // 使用mongoose-paginate包简化
+  const res = await Problem.paginate(filter, {
+    sort: { pid: 1 },
+    page,
+    limit: pageSize
+  })
 
   ctx.body = {
-    list: doc,
-    count: count
+    res
   }
 }
 
@@ -73,8 +82,19 @@ const createProblem = async (ctx) => {
   }
 }
 
+// 更新一道题目
+const updateProblem = async (ctx) => {
+  const problem = ctx.request.body
+  console.log(problem)
+  await Problem.save(problem)
+  ctx.body = {
+    success: true
+  }
+}
+
 module.exports = {
   getProblemList,
   getOneProblem,
-  createProblem
+  createProblem,
+  updateProblem
 }

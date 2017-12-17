@@ -1,20 +1,5 @@
 <template lang="html">
   <div class="proadd-wrap">
-    <!-- <div class="title">
-      <label for="">Title</label>
-      <el-input size="small"></el-input>
-    </div>
-    <div class="time-memory">
-      <div class="time">
-        <label for="">Time</label>
-        <el-input size="small"></el-input>
-
-      </div>
-      <div class="memory">
-        <label for="">Memory</label>
-        <el-input size="small"></el-input>
-      </div>
-    </div> -->
     <el-row>
       <el-col :span="23">
         <el-input v-model="form.title" size="small">

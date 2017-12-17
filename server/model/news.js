@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate')
 
 const newSchema = mongoose.Schema({
   nid: {
@@ -20,5 +21,7 @@ const newSchema = mongoose.Schema({
 }, {
   collection: 'News'
 })
+
+newSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('News', newSchema)

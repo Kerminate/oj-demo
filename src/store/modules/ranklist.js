@@ -26,8 +26,8 @@ const mutations = {
 const actions = {
   updateRanklist ({ commit }, payload) {
     return api.getRanklist(payload).then(({ data }) => {
-      commit(types.UPDATE_RANKLIST, data.list)
-      commit(types.UPDATE_SUM_RANKLIST, data.count)
+      commit(types.UPDATE_RANKLIST, data.res.docs)
+      commit(types.UPDATE_SUM_RANKLIST, data.res.total)
     })
   }
 }

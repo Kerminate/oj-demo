@@ -37,8 +37,8 @@ const mutations = {
 const actions = {
   updateSolutionList ({ commit }, payload) {
     return api.getSolutions(payload).then(({ data }) => {
-      commit(types.UPDATE_SOLUTION_LIST, data.list)
-      commit(types.UPDATE_SUM_SOLUTIONS, data.count)
+      commit(types.UPDATE_SOLUTION_LIST, data.res.docs)
+      commit(types.UPDATE_SUM_SOLUTIONS, data.res.total)
     })
   }
 }

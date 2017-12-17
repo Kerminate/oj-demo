@@ -11,21 +11,30 @@ const getSolutionList = async (ctx) => {
   if (opt.judge) filter.judge = opt.judge
   if (opt.language) filter.language = opt.language
 
-  const [ doc, count ] = await Promise.all([
-    Solution
-      .find(filter)
-      .sort({sid: -1})
-      .skip((page - 1) * pageSize)
-      .limit(pageSize)
-      .exec(),
-    Solution
-      .count(filter)
-      .exec()
-  ])
+  // const [ doc, count ] = await Promise.all([
+  //   Solution
+  //     .find(filter)
+  //     .sort({sid: -1})
+  //     .skip((page - 1) * pageSize)
+  //     .limit(pageSize)
+  //     .exec(),
+  //   Solution
+  //     .count(filter)
+  //     .exec()
+  // ])
+  // ctx.body = {
+  //   list: doc,
+  //   count: count
+  // }
+
+  const res = await Solution.paginate(filter, {
+    sort: { sid: -1 },
+    page,
+    limit: pageSize
+  })
 
   ctx.body = {
-    list: doc,
-    count: count
+    res
   }
 }
 

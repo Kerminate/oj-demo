@@ -33,7 +33,7 @@ export default {
     ])
   },
   created () {
-    this.$store.dispatch('updateProblem', this.$route.params)
+    this.$store.dispatch('getProblem', this.$route.params)
   }
 }
 </script>

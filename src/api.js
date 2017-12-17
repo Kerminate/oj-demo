@@ -102,5 +102,9 @@ export default {
   // 获取竞赛列表信息
   getContestList (data) {
     return instance.get('/contest/list', { params: data })
+  },
+  // 更新题目
+  updateProblem (data) {
+    return instance.put(`/problem/${data.pid}`, data)
   }
 }

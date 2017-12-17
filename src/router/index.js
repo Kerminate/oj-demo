@@ -12,6 +12,7 @@ import ProblemAdd from '@/views/ProblemAdd.vue'
 import Contest from '@/views/Contest.vue'
 import Problem from '@/views/Problem.vue'
 import ProblemEdit from '@/views/ProblemEdit.vue'
+import Submit from '@/views/Submit.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ const routes = [
         path: 'statistics',
         name: 'statistics',
         component: Statistics
+      },
+      {
+        path: 'submit',
+        name: 'submit',
+        component: Submit
       },
       {
         path: 'edit',

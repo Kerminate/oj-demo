@@ -113,7 +113,7 @@ export default {
           opt.content = this.content
         }
       }
-      this.$store.dispatch('updateProblemList', opt)
+      this.$store.dispatch('getProblemList', opt)
     },
     handleCurrentChange (val) {
       this.currentPage = val
