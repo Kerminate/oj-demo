@@ -14,22 +14,6 @@ const getProblemList = async (ctx) => {
     }
   }
 
-  // const [ doc, count ] = await Promise.all([
-  //   Problem
-  //     .find(filter)
-  //     .sort({pid: 1})
-  //     .skip((page - 1) * pageSize)
-  //     .limit(pageSize)
-  //     .exec(),
-  //   Problem
-  //     .count(filter)
-  //     .exec()
-  // ])
-  // ctx.body = {
-  //   list: doc,
-  //   count: count
-  // }
-
   // 使用mongoose-paginate包简化
   const res = await Problem.paginate(filter, {
     sort: { pid: 1 },
