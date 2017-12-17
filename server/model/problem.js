@@ -7,7 +7,8 @@ const problemSchema = mongoose.Schema({
     type: Number,
     index: {
       unique: true
-    }
+    },
+    default: -1 // 表示新题目
   },
   time: {
     type: Number,
@@ -74,5 +75,28 @@ const problemSchema = mongoose.Schema({
 })
 
 problemSchema.plugin(mongoosePaginate)
+
+problemSchema.pre('validate', function (next) {
+  // 验证字段
+  if (problem.time > 10000) {
+    next(new Error('Time should not be longer than 10000 ms'))
+  } else {
+    next()
+  }
+})
+
+problemSchema.pre('save', function (next) {
+  // 保存
+  if (this.pid === -1) {
+    // 查询并获得新 id
+    // ...
+    // Id.findAndUpdate('Problem', { $inc: { id: 1 } }).then(id => {
+    //  this.pid = id + 1
+    // }).then(next)
+    // next()
+  } else {
+    next()
+  }
+})
 
 module.exports = mongoose.model('Problemlist', problemSchema)
