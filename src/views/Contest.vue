@@ -1,29 +1,31 @@
 <template lang="html">
   <div class="con-wrap">
     <el-table :data="contestList" class="eltable">
-      <el-table-column label="Cid" align="center">
+      <el-table-column label="Cid" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.cid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" align="center">
+      <el-table-column label="Title" align="left" min-width="100">
         <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
+          <router-link :to="{ name: 'contestInfo', params: { pid: scope.row.cid } }">
+            <el-button type="text">{{ scope.row.title }}</el-button>
+          </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Status" align="center">
+      <el-table-column label="Status" align="left">
         <template slot-scope="scope">
-          <span>{{ scope.row.status }}</span>
+          <span>{{ status[scope.row.status] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Start Time" align="center">
+      <el-table-column label="Start Time" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.create | timePretty }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Type" align="center">
+      <el-table-column label="Type" align="left">
         <template slot-scope="scope">
-          <span>{{ scope.row.encrypt }}</span>
+          <span>{{ type[scope.row.encrypt] }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -42,12 +44,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import constant from '../util/constant.js'
 
 export default {
   data () {
     return {
-      currentPage: 1,
-      pageSize: 20
+      currentPage: parseInt(this.$route.query.page) || 1,
+      pageSize: parseInt(this.$route.query.pageSize) || 20,
+      status: constant.contestStatus,
+      type: constant.contestType
     }
   },
   computed: {
@@ -65,6 +70,10 @@ export default {
         page: this.currentPage,
         pageSize: this.pageSize
       }
+      this.$router.push({
+        name: 'contest',
+        query: opt
+      })
       this.$store.dispatch('updateContestList', opt)
     },
     handleCurrentChange (val) {

@@ -6,7 +6,7 @@ const getProblemList = async (ctx) => {
   const filter = {}
   const page = parseInt(opt.page) || 1
   const pageSize = parseInt(opt.pageSize) || 30
-  if (opt.type) {
+  if (opt.content) {
     if (opt.type === 'pid') {
       filter[opt.type] = parseInt(opt.content)
     } else {
@@ -43,9 +43,6 @@ const createProblem = async (ctx) => {
     .limit(1)
     .exec()
 
-  console.log(opt)
-  console.log(initPro)
-
   const info = new Problem({
     pid: parseInt(initPro.pid) + 1,
     title: opt.title,
@@ -68,9 +65,14 @@ const createProblem = async (ctx) => {
 
 // 更新一道题目
 const updateProblem = async (ctx) => {
-  const problem = ctx.request.body
-  console.log(problem)
-  await Problem.save(problem)
+  const opt = ctx.request.body
+  const problem = await Problem.findOne({pid: opt.pid}).exec()
+  const fileds = ['title', 'time', 'memory', 'description', 'input', 'output', 'hint', 'in', 'out']
+  fileds.forEach((filed) => {
+    problem[filed] = opt[filed]
+  })
+
+  await problem.save(problem)
   ctx.body = {
     success: true
   }

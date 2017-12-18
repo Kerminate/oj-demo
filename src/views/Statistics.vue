@@ -9,7 +9,7 @@
         <tr>
           <td class="t1">Total Submissions</td>
           <td class="t2">
-            <router-link :to="{ name: 'status', params: { pid } }">
+            <router-link :to="{ name: 'status', query: { pid } }">
               <el-button type="text">{{ sumCharts }}</el-button>
             </router-link>
           </td>
@@ -20,7 +20,7 @@
         <tr v-for="(item, index) in countList">
           <td class="t1">{{ name[index] }}</td>
           <td class="t2">
-            <router-link :to="{ name: 'status', params: { pid, judge: index + 2 } }">
+            <router-link :to="{ name: 'status', query: { pid, judge: index + 2 } }">
               <el-button type="text">{{ item }}</el-button>
             </router-link>
           </td>
@@ -29,36 +29,36 @@
     </div>
     <div class="right">
       <el-table :data="statisticsList" class="eltable">
-        <el-table-column label="Rank" type="index" :index="indexMethod" align="center" width="70">
+        <el-table-column label="Rank" type="index" :index="indexMethod" align="left" width="70">
         </el-table-column>
-        <el-table-column label="Username" align="center" width="170">
+        <el-table-column label="Username" align="left" min-width="100">
           <template slot-scope="scope">
             <router-link :to="{ name: 'userInfo', params: { uid: scope.row.uid } }">
               <el-button type="text">{{ scope.row.uid }}</el-button>
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column label="Time" align="center">
+        <el-table-column label="Time" align="left">
           <template slot-scope="scope">
             <span>{{ scope.row.time }} MS</span>
           </template>
         </el-table-column>
-        <el-table-column label="Memory" align="center" width="100">
+        <el-table-column label="Memory" align="left" width="">
           <template slot-scope="scope">
             <span>{{ scope.row.memory }} KB</span>
           </template>
         </el-table-column>
-        <el-table-column label="Length" align="center">
+        <el-table-column label="Length" align="left">
           <template slot-scope="scope">
             <span>{{ scope.row.length }} B</span>
           </template>
         </el-table-column>
-        <el-table-column label="Lang" align="center" width="70">
+        <el-table-column label="Lang" align="left" width="">
           <template slot-scope="scope">
             <span>{{ lang[scope.row.language] }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Submit Time" align="center" width="160">
+        <el-table-column label="Submit Time" align="left" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.time | timePretty }}</span>
           </template>

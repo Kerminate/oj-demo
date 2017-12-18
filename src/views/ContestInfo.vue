@@ -1,10 +1,10 @@
 <template lang="html">
-  <div class="pro-wrap">
+  <div class="conin-wrap">
     <el-tabs v-model="display" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="Description" name="problemInfo"></el-tab-pane>
-      <el-tab-pane label="Submit" name="submit"></el-tab-pane>
-      <el-tab-pane label="Statistics" name="statistics"></el-tab-pane>
-      <el-tab-pane label="Edit" name="problemEdit"></el-tab-pane>
+      <el-tab-pane label="Overview" name="problemInfo"></el-tab-pane>
+      <el-tab-pane label="Problem" name="submit"></el-tab-pane>
+      <el-tab-pane label="Status" name="statistics"></el-tab-pane>
+      <el-tab-pane label="Ranklist" name="problemEdit"></el-tab-pane>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -16,7 +16,7 @@
 export default {
   data () {
     return {
-      display: 'problemInfo'
+      display: 'Overview'
     }
   },
   created () {
@@ -30,7 +30,5 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-  .pro-wrap
-    margin-right: 20px
+<style lang="css">
 </style>

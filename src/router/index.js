@@ -13,6 +13,7 @@ import Contest from '@/views/Contest.vue'
 import Problem from '@/views/Problem.vue'
 import ProblemEdit from '@/views/ProblemEdit.vue'
 import Submit from '@/views/Submit.vue'
+import ContestInfo from '@/views/ContestInfo.vue'
 
 Vue.use(Router)
 
@@ -93,6 +94,11 @@ const routes = [
     path: '/contest',
     name: 'contest',
     component: Contest
+  },
+  {
+    path: '/contest/:cid',
+    name: 'contestInfo',
+    component: ContestInfo
   }
 ]
 

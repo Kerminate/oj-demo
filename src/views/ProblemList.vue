@@ -14,13 +14,12 @@
         </el-pagination>
       </el-col>
       <el-col :offset="8" :span="2">
-        <el-select v-model="type" placeholder="请选择" size="small">
+        <el-select v-model="type" placeholder="请选择" size="small" @change="select">
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
-            :value="item.value"
-            @change="select">
+            :value="item.value">
           </el-option>
         </el-select>
       </el-col>
@@ -32,30 +31,35 @@
       </el-col>
     </el-row>
     <el-table :data="problemList" class="eltable">
-      <el-table-column label="#" align="center" width="50">
+      <el-table-column label="#" align="left" min-width="30">
         <template slot-scope="scope">
           <i class="el-icon-check" v-show="scope.row.isdone"></i>
         </template>
       </el-table-column>
-      <el-table-column label="PID" align="center">
+      <el-table-column label="PID" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.pid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" align="center">
+      <el-table-column label="Title" align="left">
         <template slot-scope="scope">
           <router-link :to="{ name: 'problem', params: { pid: scope.row.pid } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Ratio" align="center">
+      <el-table-column label="Ratio" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.solve / (scope.row.submit + 0.0000001) | formate }}</span>
-          (<el-button type="text">{{ scope.row.solve }}</el-button> / <el-button style="margin-left:0px" type="text">{{ scope.row.submit }}</el-button>)
+          (<router-link :to="{ name: 'status', query: { pid: scope.row.pid, judge: 3 } }">
+            <el-button type="text">{{ scope.row.solve }}</el-button>
+          </router-link> /
+           <router-link :to="{ name: 'status', query: { pid: scope.row.pid } }">
+             <el-button style="margin-left:0px" type="text">{{ scope.row.submit }}</el-button>
+           </router-link>)
         </template>
       </el-table-column>
-      <el-table-column label="Tags" align="center">
+      <el-table-column label="Tags" align="left">
         <template slot-scope="scope">
           <el-tag size="small" v-for="(item, index) in scope.row.tags" :key="index">{{ item }}</el-tag>
         </template>
@@ -84,10 +88,10 @@ export default {
           label: 'Tag'
         }
       ],
-      type: 'pid',
-      content: '',
-      currentPage: 1,
-      pageSize: 30
+      type: this.$route.query.type || 'pid',
+      content: this.$route.query.content || '',
+      currentPage: parseInt(this.$route.query.page) || 1,
+      pageSize: parseInt(this.$route.query.pageSize) || 30
     }
   },
   created () {
@@ -103,16 +107,14 @@ export default {
     getProblems () {
       let opt = {
         page: this.currentPage,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        type: this.type,
+        content: this.content
       }
-      if (this.content !== '') {
-        opt.type = this.type
-        if (this.type === 'pid') {
-          opt.content = parseInt(this.content)
-        } else {
-          opt.content = this.content
-        }
-      }
+      this.$router.push({
+        name: 'problemList',
+        query: opt
+      })
       this.$store.dispatch('getProblemList', opt)
     },
     handleCurrentChange (val) {
@@ -125,9 +127,9 @@ export default {
     },
     select () {
       this.content = ''
-      console.log(this.content)
     },
     search () {
+      this.currentPage = 1
       this.getProblems()
     }
   }

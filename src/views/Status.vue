@@ -54,53 +54,53 @@
       </el-col>
     </el-row>
     <el-table :data="solutionList" class="eltable">
-      <el-table-column label="SID" align="center" width="80">
+      <el-table-column label="SID" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.sid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="PID" align="center">
+      <el-table-column label="PID" align="left">
         <template slot-scope="scope">
           <router-link :to="{ name: 'problemInfo', params: { pid: scope.row.pid } }">
             <el-button type="text">{{ scope.row.pid }}</el-button>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Username" align="center">
+      <el-table-column label="Username" align="left" min-width="120">
         <template slot-scope="scope">
           <router-link :to="{ name: 'userInfo', params: { uid: scope.row.uid } }">
             <el-button type="text">{{ scope.row.uid }}</el-button>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Judge" align="center" width="200">
+      <el-table-column label="Judge" align="left" min-width="140">
         <template slot-scope="scope">
           <span :class="color[scope.row.judge]">{{ result[scope.row.judge] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Time" align="center">
+      <el-table-column label="Time" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.time }} MS</span>
         </template>
       </el-table-column>
-      <el-table-column label="Memory" align="center">
+      <el-table-column label="Memory" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.memory }} KB</span>
         </template>
       </el-table-column>
-      <el-table-column label="Language" align="center">
+      <el-table-column label="Language" align="left">
         <template slot-scope="scope">
           <router-link :to="{ name: '', params: { } }">
             <el-button @click="showDialog(scope.row)" type="text">{{ lang[scope.row.language] }}</el-button>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Length" align="center">
+      <el-table-column label="Length" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.length }} B</span>
         </template>
       </el-table-column>
-      <el-table-column label="Submit Time" align="center" width="200">
+      <el-table-column label="Submit Time" align="left" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.create | timePretty}}</span>
         </template>
@@ -118,23 +118,20 @@ import constant from '../util/constant.js'
 export default {
   data () {
     return {
-      uid: '',
-      pid: '',
-      judge: 'ALL',
-      language: 'ALL',
+      uid: this.$route.query.uid || '',
+      pid: this.$route.query.pid || '',
+      judge: this.$route.query.judge || '',
+      language: this.$route.query.language || '',
+      currentPage: parseInt(this.$route.query.page) || 1,
+      pageSize: parseInt(this.$route.query.pageSize) || 30,
       judgeList: constant.judgeList,
       languageList: constant.languageList,
       result: constant.result,
       lang: constant.language,
-      currentPage: 1,
-      pageSize: 30,
       color: constant.color
     }
   },
   created () {
-    this.queryParams()
-  },
-  mounted () {
     this.getStatus()
   },
   computed: {
@@ -148,16 +145,8 @@ export default {
     showDialog (solution) {
       this.$store.commit('SHOW_CODE', solution)
     },
-    queryParams () {
-      if (this.$route.params) {
-        let opt = this.$route.params
-        this.pid = opt.pid || ''
-        this.judge = opt.judge || 'ALL'
-        this.uid = opt.uid || ''
-      }
-    },
     getStatus () {
-      let opt = {
+      const opt = {
         page: this.currentPage,
         pageSize: this.pageSize,
         uid: this.uid,
@@ -165,8 +154,10 @@ export default {
         judge: this.judge,
         language: this.language
       }
-      if (opt.judge === 'ALL') opt.judge = ''
-      if (opt.language === 'ALL') opt.language = ''
+      this.$router.push({
+        name: 'status',
+        query: opt
+      })
       this.$store.dispatch('updateSolutionList', opt)
     },
     handleCurrentChange (val) {
@@ -178,6 +169,7 @@ export default {
       this.getStatus()
     },
     search () {
+      this.currentPage = 1
       this.getStatus()
     }
   },

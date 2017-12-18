@@ -120,11 +120,24 @@ const statisTableObj = [
   'System Error'
 ]
 
+const contestStatus = {
+  0: 'Running',
+  2: 'Ended'
+}
+
+const contestType = {
+  1: 'Public',
+  2: 'Private',
+  3: 'Password'
+}
+
 module.exports = {
   result,
   language,
   judgeList,
   languageList,
   color,
-  statisTableObj
+  statisTableObj,
+  contestStatus,
+  contestType
 }

@@ -78,7 +78,7 @@ problemSchema.plugin(mongoosePaginate)
 
 problemSchema.pre('validate', function (next) {
   // 验证字段
-  if (problem.time > 10000) {
+  if (this.time > 10000) {
     next(new Error('Time should not be longer than 10000 ms'))
   } else {
     next()
