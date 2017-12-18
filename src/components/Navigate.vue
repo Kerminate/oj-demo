@@ -24,8 +24,8 @@
               <p>Ranklist</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="contest">
-            <router-link :to="{ name: 'contest', params: {} }">
+          <el-menu-item index="contestList">
+            <router-link :to="{ name: 'contestList', params: {} }">
               <p>Contests</p>
             </router-link>
           </el-menu-item>

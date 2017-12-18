@@ -8,7 +8,7 @@
       </el-table-column>
       <el-table-column label="Title" align="left" min-width="100">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'contestInfo', params: { pid: scope.row.cid } }">
+          <router-link :to="{ name: 'contestInfo', params: { cid: scope.row.cid } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>
@@ -34,7 +34,7 @@
       :current-page.sync="currentPage"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      layout=" sizes, prev, pager, next, jumper"
+      layout="sizes, prev, pager, next, jumper"
       :total="sumContest"
       :page-sizes="[20, 30, 40, 50]"
       :page-size="pageSize">
@@ -71,7 +71,7 @@ export default {
         pageSize: this.pageSize
       }
       this.$router.push({
-        name: 'contest',
+        name: 'contestList',
         query: opt
       })
       this.$store.dispatch('updateContestList', opt)

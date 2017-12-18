@@ -1,4 +1,6 @@
 const Contest = require('../model/contest.js')
+const Problem = require('../model/problem.js')
+const Solution = require('../model/solution.js')
 
 // 返回竞赛列表
 const getContestList = async (ctx) => {
@@ -16,6 +18,44 @@ const getContestList = async (ctx) => {
   }
 }
 
+const getContestInfo = async (ctx) => {
+  const opt = parseInt(ctx.query.cid)
+  const doc = await Contest.findOne({ cid: opt }).exec()
+
+  const list = doc.list
+  const total = list.length
+  let res = []
+  const process = list.map(async (pid, index) => {
+    await Problem.findOne({pid}).exec()
+      .then((problem) => {
+        res[index] = {
+          title: problem.title,
+          pid: problem.pid
+        }
+      })
+      .then(() => {
+        return Solution.count({pid, module: 2}).exec() // 为什么用mid不用module？
+      })
+      .then((count) => {
+        res[index].submit = count
+      })
+      .then(() => {
+        return Solution.count({pid, module: 2, judge: 3}).exec()
+      })
+      .then((count) => {
+        res[index].solve = count
+      })
+  })
+  await Promise.all(process)
+
+  ctx.body = {
+    doc,
+    res,
+    total
+  }
+}
+
 module.exports = {
-  getContestList
+  getContestList,
+  getContestInfo
 }

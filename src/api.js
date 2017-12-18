@@ -103,6 +103,10 @@ export default {
   getContestList (data) {
     return instance.get('/contest/list', { params: data })
   },
+  // 获取竞赛信息
+  getContestInfo (data) {
+    return instance.get(`/contest/${data.cid}`, { params: data })
+  },
   // 更新题目
   updateProblem (data) {
     return instance.put(`/problem/${data.pid}`, data)

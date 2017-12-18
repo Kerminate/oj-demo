@@ -4,5 +4,6 @@ const Router = require('koa-router')
 const contestRouter = new Router()
 
 contestRouter.get('/list', ContestController.getContestList)
+contestRouter.get('/:cid', ContestController.getContestInfo)
 
 module.exports = contestRouter

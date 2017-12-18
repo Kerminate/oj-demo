@@ -9,11 +9,12 @@ import UserInfo from '@/views/UserInfo.vue'
 import Statistics from '@/views/Statistics.vue'
 import Ranklist from '@/views/Ranklist.vue'
 import ProblemAdd from '@/views/ProblemAdd.vue'
-import Contest from '@/views/Contest.vue'
+import ContestList from '@/views/ContestList.vue'
 import Problem from '@/views/Problem.vue'
 import ProblemEdit from '@/views/ProblemEdit.vue'
 import Submit from '@/views/Submit.vue'
 import ContestInfo from '@/views/ContestInfo.vue'
+import ContestOverview from '@/views/ContestOverview.vue'
 
 Vue.use(Router)
 
@@ -75,11 +76,11 @@ const routes = [
     name: 'userInfo',
     component: UserInfo
   },
-  {
-    path: '/statistics/:pid',
-    name: 'statistics',
-    component: Statistics
-  },
+  // {
+  //   path: '/statistics/:pid',
+  //   name: 'statistics',
+  //   component: Statistics
+  // },
   {
     path: '/ranklist',
     name: 'ranklist',
@@ -92,13 +93,20 @@ const routes = [
   },
   {
     path: '/contest',
-    name: 'contest',
-    component: Contest
+    name: 'contestList',
+    component: ContestList
   },
   {
     path: '/contest/:cid',
     name: 'contestInfo',
-    component: ContestInfo
+    component: ContestInfo,
+    children: [
+      {
+        path: '',
+        name: 'contestOverview',
+        component: ContestOverview
+      }
+    ]
   }
 ]
 
