@@ -1,6 +1,6 @@
 const User = require('../model/user')
 const Solution = require('../model/solution')
-const util = require('../config/util.js')
+const { generatePwd } = require('../utils/helper.js')
 const createToken = require('../token/createToken.js')
 
 // 查询用户具体信息
@@ -34,7 +34,7 @@ const reg = async (ctx) => {
   const user = new User({
     uid: ctx.request.body.uid,
     nick: ctx.request.body.nick,
-    pwd: util.generatePwd(ctx.request.body.pwd),
+    pwd: generatePwd(ctx.request.body.pwd),
     token: createToken(this.uid)
   })
   // 将objectid转换为用户创建时间(可以不用)
