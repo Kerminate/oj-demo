@@ -39,16 +39,9 @@ const getOneProblem = async (ctx) => {
 const createProblem = async (ctx) => {
   const opt = ctx.request.body
 
-  const initPro = await Problem
-    .findOne()
-    .sort({pid: -1})
-    .limit(1)
-    .exec()
-
   const info = new Problem(Object.assign(
     only(opt, 'title description input output in out hint'),
-    {
-      pid: parseInt(initPro.pid) + 1,
+    { // pid 会自动生成
       time: parseInt(opt.time) || 1000,
       memory: parseInt(opt.memory) || 32768
     }

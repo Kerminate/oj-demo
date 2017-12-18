@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate') // 分页
+const ids = require('./ID')
+const logger = require('../utils/logger')
 
 const problemSchema = mongoose.Schema({
   isdone: Boolean,
@@ -88,12 +90,14 @@ problemSchema.pre('validate', function (next) {
 problemSchema.pre('save', function (next) {
   // 保存
   if (this.pid === -1) {
-    // 查询并获得新 id
-    // ...
-    // Id.findAndUpdate('Problem', { $inc: { id: 1 } }).then(id => {
-    //  this.pid = id + 1
-    // }).then(next)
-    // next()
+    // 表示新的题目被创建了，因此赋予一个新的 id
+    ids
+      .generateId('Problem')
+      .then(id => {
+        this.pid = id
+        logger.trace(`new problem is created: ${this.pid} -- ${this.title}`)
+      })
+      .then(next)
   } else {
     next()
   }

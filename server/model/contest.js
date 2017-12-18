@@ -1,12 +1,15 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
+const ids = require('./ID')
+const logger = require('../utils/logger')
 
 const contestSchema = mongoose.Schema({
   cid: {
     type: Number,
     index: {
       unique: true
-    }
+    },
+    default: -1
   },
   title: String,
   status: {
@@ -34,5 +37,21 @@ const contestSchema = mongoose.Schema({
 })
 
 contestSchema.plugin(mongoosePaginate)
+
+contestSchema.pre('save', function (next) {
+  // 保存
+  if (this.cid === -1) {
+    // 表示新的比赛被创建了，因此赋予一个新的 id
+    ids
+      .generateId('Contest')
+      .then(id => {
+        this.cid = id
+        logger.trace(`new contest is created: ${this.cid} -- ${this.title}`)
+      })
+      .then(next)
+  } else {
+    next()
+  }
+})
 
 module.exports = mongoose.model('Contest', contestSchema)

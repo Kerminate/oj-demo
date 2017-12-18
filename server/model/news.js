@@ -1,12 +1,15 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
+const ids = require('./ID')
+const logger = require('../utils/logger')
 
 const newSchema = mongoose.Schema({
   nid: {
     type: Number,
     index: {
       unique: true
-    }
+    },
+    default: -1
   },
   title: String,
   content: String,
@@ -23,5 +26,21 @@ const newSchema = mongoose.Schema({
 })
 
 newSchema.plugin(mongoosePaginate)
+
+newSchema.pre('save', function (next) {
+  // 保存
+  if (this.nid === -1) {
+    // 表示新的新闻被创建了，因此赋予一个新的 id
+    ids
+      .generateId('News')
+      .then(id => {
+        this.nid = id
+        logger.trace(`new news is created: ${this.nid} -- ${this.title}`)
+      })
+      .then(next)
+  } else {
+    next()
+  }
+})
 
 module.exports = mongoose.model('News', newSchema)

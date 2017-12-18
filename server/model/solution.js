@@ -1,13 +1,16 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
 const config = require('../config/common.js')
+const ids = require('./ID')
+const logger = require('../utils/logger')
 
 const solutionSchema = mongoose.Schema({
   sid: {
     type: Number,
     index: {
       unique: true
-    }
+    },
+    default: -1
   },
   pid: {
     type: Number,
@@ -71,5 +74,21 @@ const solutionSchema = mongoose.Schema({
 })
 
 solutionSchema.plugin(mongoosePaginate)
+
+solutionSchema.pre('save', function (next) {
+  // 保存
+  if (this.sid === -1) {
+    // 表示新的提交被创建了，因此赋予一个新的 id
+    ids
+      .generateId('Solution')
+      .then(id => {
+        this.sid = id
+        logger.trace(`new solution is created: ${this.sid} -- ${this.pid} -- ${this.uid}`)
+      })
+      .then(next)
+  } else {
+    next()
+  }
+})
 
 module.exports = mongoose.model('Solution', solutionSchema)
