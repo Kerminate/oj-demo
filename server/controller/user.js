@@ -9,6 +9,7 @@ const getUserInfo = async (ctx) => {
   const [info, solved, unsolved] = await Promise.all([
     User
       .findOne({ uid })
+      .select('-_id -pwd')
       .exec(),
     Solution
       .find({ uid, judge: 3 })

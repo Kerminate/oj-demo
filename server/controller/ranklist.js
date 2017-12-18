@@ -10,7 +10,8 @@ const getRanklist = async (ctx) => {
   const res = await User.paginate(filter, {
     sort: { solve: -1, submit: 1 },
     page,
-    limit: pageSize
+    limit: pageSize,
+    select: '-_id -pwd -privilege'
   })
 
   ctx.body = {

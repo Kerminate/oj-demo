@@ -19,7 +19,8 @@ const getProblemList = async (ctx) => {
   const res = await Problem.paginate(filter, {
     sort: { pid: 1 },
     page,
-    limit: pageSize
+    limit: pageSize,
+    select: '-_id -hint -description -in -out -input -output'
   })
 
   ctx.body = {
