@@ -2,20 +2,20 @@
   <div class="proadd-wrap">
     <el-row>
       <el-col :span="23">
-        <el-input v-model="form.title" size="small">
+        <el-input v-model="problem.title" size="small">
           <template slot="prepend">Title</template>
         </el-input>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="11">
-        <el-input v-model="form.time" size="small">
+        <el-input v-model="problem.time" size="small">
           <template slot="prepend">Time</template>
           <template slot="append">MS</template>
         </el-input>
       </el-col>
       <el-col :offset="1" :span="11">
-        <el-input v-model="form.memory" size="small">
+        <el-input v-model="problem.memory" size="small">
           <template slot="prepend">Memory</template>
           <template slot="append">KB</template>
         </el-input>
@@ -24,37 +24,37 @@
     <div class="label">Description</div>
     <el-row>
       <el-col :span="23">
-        <quill-editor ref="myTextEditor" v-model="form.description" :config="editorOption"></quill-editor>
+        <quill-editor ref="myTextEditor" v-model="problem.description" :config="editorOption"></quill-editor>
       </el-col>
     </el-row>
     <div class="label">Input</div>
     <el-row>
       <el-col :span="23">
-        <quill-editor ref="myTextEditor" v-model="form.input" :config="editorOption"></quill-editor>
+        <quill-editor ref="myTextEditor" v-model="problem.input" :config="editorOption"></quill-editor>
       </el-col>
     </el-row>
     <div class="label">Output</div>
     <el-row>
       <el-col :span="23">
-        <quill-editor ref="myTextEditor" v-model="form.output" :config="editorOption"></quill-editor>
+        <quill-editor ref="myTextEditor" v-model="problem.output" :config="editorOption"></quill-editor>
       </el-col>
     </el-row>
     <div class="label">Hint</div>
     <el-row>
       <el-col :span="23">
-        <quill-editor ref="myTextEditor" v-model="form.hint" :config="editorOption"></quill-editor>
+        <quill-editor ref="myTextEditor" v-model="problem.hint" :config="editorOption"></quill-editor>
       </el-col>
     </el-row>
     <div class="label">Sample Input</div>
     <el-row>
       <el-col :span="23">
-        <el-input type="textarea" :rows="8" v-model="form.in"></el-input>
+        <el-input type="textarea" :rows="8" v-model="problem.in"></el-input>
       </el-col>
     </el-row>
     <div class="label">Sample Output</div>
     <el-row>
       <el-col :span="23">
-        <el-input type="textarea" :rows="8" v-model="form.out"></el-input>
+        <el-input type="textarea" :rows="8" v-model="problem.out"></el-input>
       </el-col>
     </el-row>
     <el-button type="primary" @click="submit" @keyup.enter="submit">Submit</el-button>
@@ -62,7 +62,8 @@
 </template>
 
 <script>
-import api from '../api.js'
+import api from '@/api.js'
+import { mapGetters } from 'vuex'
 import { quillEditor } from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -71,26 +72,20 @@ import 'quill/dist/quill.bubble.css'
 export default {
   data () {
     return {
-      form: {
-        title: '',
-        time: 1000,
-        memory: 32768,
-        description: '',
-        input: '',
-        output: '',
-        hint: '',
-        in: '',
-        out: ''
-      },
       editorOption: {}
     }
   },
+  computed: {
+    ...mapGetters([
+      'problem'
+    ])
+  },
+  created () {
+    this.$store.dispatch('getProblem', { pid: this.$route.params.pid })
+  },
   methods: {
-    // onEditorChange ({ editor, html, text }) {
-    //   this.content = html
-    // },
     submit () {
-      api.addProblem(this.form).then(({ data }) => {
+      api.updateProblem(this.problem).then(({ data }) => {
         if (data.success) {
           this.$message({
             type: 'success',
@@ -117,11 +112,6 @@ export default {
         })
       })
     }
-  },
-  computed: {
-    // editor () {
-    //   return this.$refs.myTextEditor.quill
-    // }
   },
   components: {
     quillEditor

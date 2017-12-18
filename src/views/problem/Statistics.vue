@@ -80,7 +80,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import constant from '../util/constant.js'
+import constant from '@/util/constant.js'
 import echarts from 'echarts'
 // let echarts = require('echarts/lib/echarts')
 

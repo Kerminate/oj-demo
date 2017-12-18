@@ -1,20 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ProblemList from '@/views/ProblemList.vue'
-import ProblemInfo from '@/views/ProblemInfo.vue'
+
+// general
 import NewsInfo from '@/views/NewsInfo.vue'
 import Home from '@/views/Home.vue'
 import Status from '@/views/Status.vue'
 import UserInfo from '@/views/UserInfo.vue'
-import Statistics from '@/views/Statistics.vue'
+import Statistics from '@/views/problem/Statistics.vue'
 import Ranklist from '@/views/Ranklist.vue'
-import ProblemAdd from '@/views/ProblemAdd.vue'
+
+// problems
+import ProblemList from '@/views/ProblemList.vue'
+import ProblemInfo from '@/views/problem/ProblemInfo.vue'
+import Problem from '@/views/problem/Problem.vue'
+import ProblemEdit from '@/views/problem/ProblemEdit.vue'
+import Submit from '@/views/problem/Submit.vue'
+
+// admin
+import ProblemAdd from '@/views/admin/ProblemAdd.vue'
+
+// contests
 import ContestList from '@/views/ContestList.vue'
-import Problem from '@/views/Problem.vue'
-import ProblemEdit from '@/views/ProblemEdit.vue'
-import Submit from '@/views/Submit.vue'
-import ContestInfo from '@/views/ContestInfo.vue'
-import ContestOverview from '@/views/ContestOverview.vue'
+import ContestInfo from '@/views/contest/ContestInfo.vue'
+import ContestOverview from '@/views/contest/ContestOverview.vue'
 
 Vue.use(Router)
 

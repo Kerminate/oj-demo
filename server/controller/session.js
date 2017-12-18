@@ -3,13 +3,13 @@
 // const sha1 = require('sha1')
 const User = require('../model/user.js')
 const createToken = require('../token/createToken.js')
-const util = require('../config/util.js')
+const { generatePwd } = require('../utils/helper')
 
 // 登录
 const Login = async (ctx) => {
   // 拿到账号和密码
   const uid = ctx.request.body.uid
-  const pwd = util.generatePwd(ctx.request.body.pwd)
+  const pwd = generatePwd(ctx.request.body.pwd)
   // let password = sha1(ctx.request.body.password)
   const doc = await User.findOne({ uid }).exec()
   if (!doc) {
