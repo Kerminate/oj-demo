@@ -1,6 +1,7 @@
 const Contest = require('../model/contest.js')
 const Problem = require('../model/problem.js')
 const Solution = require('../model/solution.js')
+const only = require('only')
 
 // 返回竞赛列表
 const getContestList = async (ctx) => {
@@ -28,10 +29,7 @@ const getContestInfo = async (ctx) => {
   const process = list.map(async (pid, index) => {
     await Problem.findOne({pid}).exec()
       .then((problem) => {
-        res[index] = {
-          title: problem.title,
-          pid: problem.pid
-        }
+        res[index] = only(problem, 'title, pid')
       })
       .then(() => {
         return Solution.count({pid, module: 2}).exec() // 为什么用mid不用module？

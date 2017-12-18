@@ -1,4 +1,5 @@
 const Problem = require('../model/problem.js')
+const only = require('only')
 
 // 返回题目列表
 const getProblemList = async (ctx) => {
@@ -43,18 +44,14 @@ const createProblem = async (ctx) => {
     .limit(1)
     .exec()
 
-  const info = new Problem({
-    pid: parseInt(initPro.pid) + 1,
-    title: opt.title,
-    time: parseInt(opt.time) || 1000,
-    memory: parseInt(opt.memory) || 32768,
-    description: opt.description,
-    input: opt.input,
-    output: opt.output,
-    in: opt.in,
-    out: opt.out,
-    hint: opt.hint
-  })
+  const info = new Problem(Object.assign(
+    only(opt, 'title description input output in out hint'),
+    {
+      pid: parseInt(initPro.pid) + 1,
+      time: parseInt(opt.time) || 1000,
+      memory: parseInt(opt.memory) || 32768
+    }
+  ))
 
   await info.save()
   ctx.body = {

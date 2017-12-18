@@ -27,7 +27,8 @@ const routes = [
   {
     path: '/problem',
     name: 'problemList',
-    component: ProblemList
+    component: ProblemList,
+    props: true
   },
   {
     path: '/problem/:pid',

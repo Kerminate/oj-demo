@@ -4,13 +4,11 @@
       <el-col :span="8">
         <el-pagination
           background
-          :current-page.sync="currentPage"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          layout=" sizes, prev, pager, next, jumper"
+          @current-change="(val) => getProblems({ page: val })"
+          layout="total, prev, pager, next, jumper"
+          :pageSize="pageSize || 30"
           :total="sumProblem"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="pageSize">
+          >
         </el-pagination>
       </el-col>
       <el-col :offset="8" :span="2">
@@ -70,6 +68,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import only from 'only'
 
 export default {
   data () {
@@ -87,11 +86,25 @@ export default {
           value: 'tag',
           label: 'Tag'
         }
-      ],
-      type: this.$route.query.type || 'pid',
-      content: this.$route.query.content || '',
-      currentPage: parseInt(this.$route.query.page) || 1,
-      pageSize: parseInt(this.$route.query.pageSize) || 30
+      ]
+    }
+  },
+  props: {
+    type: {
+      type: String,
+      default: null
+    },
+    content: {
+      type: String,
+      default: null
+    },
+    page: {
+      type: Number,
+      default: 1
+    },
+    pageSize: {
+      type: Number,
+      default: null
     }
   },
   created () {
@@ -104,33 +117,22 @@ export default {
     ])
   },
   methods: {
-    getProblems () {
-      let opt = {
-        page: this.currentPage,
-        pageSize: this.pageSize,
-        type: this.type,
-        content: this.content
-      }
+    getProblems (others) {
+      const opt = Object.assign(
+        only(this, 'type content page pageSize'),
+        others
+      )
       this.$router.push({
         name: 'problemList',
         query: opt
       })
       this.$store.dispatch('getProblemList', opt)
     },
-    handleCurrentChange (val) {
-      this.currentPage = val
-      this.getProblems()
-    },
-    handleSizeChange (val) {
-      this.pageSize = val
-      this.getProblems()
-    },
     select () {
       this.content = ''
     },
     search () {
-      this.currentPage = 1
-      this.getProblems()
+      this.getProblems({ page: 1 })
     }
   }
 }

@@ -1,15 +1,12 @@
 const Solution = require('../model/solution.js')
+const only = require('only')
 
 // 返回提交列表
 const getSolutionList = async (ctx) => {
   const opt = ctx.request.query
-  const filter = {}
   const page = parseInt(opt.page)
   const pageSize = parseInt(opt.pageSize)
-  if (opt.pid) filter.pid = opt.pid
-  if (opt.uid) filter.uid = opt.uid
-  if (opt.judge) filter.judge = opt.judge
-  if (opt.language) filter.language = opt.language
+  const filter = only(opt, 'uid pid judge language')
 
   const res = await Solution.paginate(filter, {
     sort: { sid: -1 },
