@@ -2,7 +2,7 @@
   <div class="conin-wrap">
     <el-tabs v-model="display" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="Overview" name="contestOverview"></el-tab-pane>
-      <el-tab-pane label="Problem" name="submit"></el-tab-pane>
+      <el-tab-pane label="Problem" name="contestProblem"></el-tab-pane>
       <el-tab-pane label="Status" name="statistics"></el-tab-pane>
       <el-tab-pane label="Ranklist" name="problemEdit"></el-tab-pane>
       <keep-alive>
@@ -16,19 +16,23 @@
 export default {
   data () {
     return {
-      display: 'contestOverview'
+      display: this.$route.name
     }
   },
   created () {
-    this.$router.push({ name: 'contestOverview', params: { cid: this.$route.params.cid } })
+    // console.log(this.$route.params)
   },
   methods: {
-    handleClick () {
-      this.$router.push({ name: this.display, params: { cid: this.$route.params.cid } })
+    handleClick (tab) {
+      if (tab.name === 'contestProblem') {
+        this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid, id: this.$route.params.id || 1 } })
+      }
     }
   }
 }
 </script>
 
-<style lang="css">
+<style lang="stylus">
+  .conin-wrap
+    margin-bottom: 20px
 </style>

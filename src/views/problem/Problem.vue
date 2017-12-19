@@ -20,8 +20,8 @@ export default {
     }
   },
   methods: {
-    handleClick () {
-      this.$router.push({ name: this.display, params: { pid: this.$route.params.pid } })
+    handleClick (tab) {
+      this.$router.push({ name: tab.name, params: { pid: this.$route.params.pid } })
     }
   }
 }
@@ -29,5 +29,5 @@ export default {
 
 <style lang="stylus">
   .pro-wrap
-    margin-right: 20px
+    margin-bottom: 20px
 </style>

@@ -4,11 +4,13 @@
       <el-col :span="8">
         <el-pagination
           background
+          :current-page.sync="page"
+          @size-change="(val) => getProblems({ pageSize: val })"
           @current-change="(val) => getProblems({ page: val })"
-          layout="total, prev, pager, next, jumper"
-          :pageSize="pageSize || 30"
+          layout=" sizes, prev, pager, next, jumper"
           :total="sumProblem"
-          >
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="pageSize">
         </el-pagination>
       </el-col>
       <el-col :offset="8" :span="2">
@@ -86,25 +88,11 @@ export default {
           value: 'tag',
           label: 'Tag'
         }
-      ]
-    }
-  },
-  props: {
-    type: {
-      type: String,
-      default: null
-    },
-    content: {
-      type: String,
-      default: null
-    },
-    page: {
-      type: Number,
-      default: 1
-    },
-    pageSize: {
-      type: Number,
-      default: null
+      ],
+      type: this.$route.query.type || 'pid',
+      content: this.$route.query.content || '',
+      page: parseInt(this.$route.query.page) || 1,
+      pageSize: parseInt(this.$route.query.pageSize) || 30
     }
   },
   created () {
@@ -119,7 +107,7 @@ export default {
   methods: {
     getProblems (others) {
       const opt = Object.assign(
-        only(this, 'type content page pageSize'),
+        only(this, 'page pageSize type content'),
         others
       )
       this.$router.push({
@@ -132,6 +120,7 @@ export default {
       this.content = ''
     },
     search () {
+      this.page = 1
       this.getProblems({ page: 1 })
     }
   }

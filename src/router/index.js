@@ -23,6 +23,7 @@ import ProblemAdd from '@/views/admin/ProblemAdd.vue'
 import ContestList from '@/views/ContestList.vue'
 import ContestInfo from '@/views/contest/ContestInfo.vue'
 import ContestOverview from '@/views/contest/ContestOverview.vue'
+import ContestProblem from '@/views/contest/ContestProblem.vue'
 
 Vue.use(Router)
 
@@ -40,11 +41,10 @@ const routes = [
   },
   {
     path: '/problem/:pid',
-    name: 'problem',
     component: Problem,
     children: [
       {
-        path: '',
+        path: '', // 默认子组件
         name: 'problemInfo',
         component: ProblemInfo
       },
@@ -107,13 +107,17 @@ const routes = [
   },
   {
     path: '/contest/:cid',
-    name: 'contestInfo',
     component: ContestInfo,
     children: [
       {
         path: '',
         name: 'contestOverview',
         component: ContestOverview
+      },
+      {
+        path: 'problem/:id',
+        name: 'contestProblem',
+        component: ContestProblem
       }
     ]
   }

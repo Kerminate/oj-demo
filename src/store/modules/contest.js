@@ -50,7 +50,6 @@ const actions = {
       commit(types.GET_CONTEST, data.doc)
       commit(types.GET_CONTEST_OVERVIEW, data.res)
       commit(types.GET_CONTEST_TOTAL_PRO, data.total)
-      console.log(data)
     })
   }
 }

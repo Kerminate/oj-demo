@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column label="Title" align="left">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'problemInfo', params: { pid: scope.row.pid } }">
+          <router-link :to="{ name: 'contestProblem', params: { pid: scope.row.pid, id: scope.$index + 1 } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>
@@ -35,8 +35,7 @@ export default {
   computed: {
     ...mapGetters([
       'contest',
-      'contestOverview',
-      'contestTotalPro'
+      'contestOverview'
     ])
   },
   created () {

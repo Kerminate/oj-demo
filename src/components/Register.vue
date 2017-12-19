@@ -27,7 +27,6 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-// import api from '@/api.js'
 
 export default {
   props: {

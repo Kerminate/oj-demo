@@ -32,7 +32,7 @@ const getContestInfo = async (ctx) => {
         res[index] = only(problem, 'title pid')
       })
       .then(() => {
-        return Solution.count({pid, mid: opt}).exec() // 为什么用mid不用module？
+        return Solution.count({pid, module: 2}).exec() // 为什么用mid不用module？
       })
       .then((count) => {
         res[index].submit = count

@@ -8,7 +8,7 @@
       </el-table-column>
       <el-table-column label="Title" align="left" min-width="100">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'contestInfo', params: { cid: scope.row.cid } }">
+          <router-link :to="{ name: 'contestOverview', params: { cid: scope.row.cid } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>
