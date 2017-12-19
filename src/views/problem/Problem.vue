@@ -19,9 +19,6 @@ export default {
       display: 'problemInfo'
     }
   },
-  created () {
-    this.$router.push({ name: 'problemInfo', params: { pid: this.$route.params.pid } })
-  },
   methods: {
     handleClick () {
       this.$router.push({ name: this.display, params: { pid: this.$route.params.pid } })
