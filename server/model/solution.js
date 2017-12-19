@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
 const config = require('../config/common.js')
 const ids = require('./ID')
-const logger = require('../utils/logger')
 
 const solutionSchema = mongoose.Schema({
   sid: {
@@ -83,7 +82,6 @@ solutionSchema.pre('save', function (next) {
       .generateId('Solution')
       .then(id => {
         this.sid = id
-        logger.trace(`new solution is created: ${this.sid} -- ${this.pid} -- ${this.uid}`)
       })
       .then(next)
   } else {

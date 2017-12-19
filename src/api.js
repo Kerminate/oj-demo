@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Vue from 'vue'
 // import store from './store'
 // import router from './router'
 
@@ -12,41 +13,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8
 
 axios.interceptors.request.use = instance.interceptors.request.use
 
-// request拦截器
-// instance.interceptors.request.use(
-//   config => {
-//     // 每次发送请求之前检测,若vuex存有 token,那么都要放在请求头发送给服务器
-//     if (store.state.token) {
-//       config.headers.Authorization = `token ${store.state.token}`
-//     }
-//     return config
-//   },
-//   err => {
-//     return Promise.reject(err)
-//   }
-// )
-
-// response拦截器
-// instance.interceptors.response.use(
-//   response => response,
-//   // 默认除了2XX之外的都是错误的，就会走这里
-//   error => {
-//     if (error.response) {
-//       switch (error.response.status) {
-//         case 401:
-//           store.dispatch('UserLogout') // 可能是token过期，清除它
-//           router.replace({
-//             // 跳转到题目页面
-//             path: 'Problem',
-//             query: { redirect: router.currentRoute.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
-//           })
-//       }
-//     }
-//     return Promise.reject(error.response)
-//   }
-// )
-
-export default {
+const api = {
   // 用户注册
   userRegister (data) {
     return instance.post('/user/register', data)
@@ -112,3 +79,49 @@ export default {
     return instance.put(`/problem/${data.pid}`, data)
   }
 }
+
+// 对异常的基本处理
+Object.entries(api).forEach(([key, value]) => {
+  api[key] = function (...args) {
+    return value(...args)
+      .catch((err) => {
+        if (err.response && err.response.status >= 500) {
+          Vue.prototype.$message({
+            message: `Σ(;ﾟдﾟ)  服务器崩坏，需要联系管理员维修`,
+            duration: 10000,
+            type: 'error',
+            showClose: true
+          })
+        } else if (err.response && err.response.status === 403) {
+          Vue.prototype.$message({
+            message: `╮(╯_╰)╭ 你没有相关权限进行此操作`,
+            duration: 10000,
+            type: 'warning',
+            showClose: true
+          })
+        } else if (err.response && err.response.status === 401) {
+          Vue.prototype.$message({
+            message: `(〃∀〃) 请先登录`,
+            duration: 10000,
+            showClose: true
+          })
+        } else if (err.response && err.response.status === 400) {
+          Vue.prototype.$message({
+            message: `${err.response.data.error}`,
+            duration: 10000,
+            showClose: true,
+            type: 'error'
+          })
+        } else if (!err.response) {
+          Vue.prototype.$message({
+            message: `_(:з」∠)_  网络异常，检查你的网线`,
+            duration: 10000,
+            type: 'error',
+            showClose: true
+          })
+        }
+      })
+  }
+})
+
+export default api

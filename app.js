@@ -12,6 +12,18 @@ app.use(koaLogger())
 
 app.use(bodyparser())
 
+app.use(async (ctx, next) => {
+  try {
+    await next()
+  } catch (err) {
+    ctx.status = err.status || 500
+    ctx.body = {
+      error: err.message
+    }
+    logger.error(`${err.status} -- ${err.message}\n${err.stack}`)
+  }
+})
+
 app.use(router.routes()).use(router.allowedMethods())
 
 app.listen(8888, () => {

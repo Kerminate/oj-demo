@@ -1,5 +1,6 @@
 const Problem = require('../model/problem.js')
 const only = require('only')
+const logger = require('../utils/logger')
 
 // 返回题目列表
 const getProblemList = async (ctx) => {
@@ -62,8 +63,13 @@ const updateProblem = async (ctx) => {
   fileds.forEach((filed) => {
     problem[filed] = opt[filed]
   })
+  try {
+    await problem.save()
+    logger.info(`New problem is updated" ${problem.pid} -- ${problem.title}`)
+  } catch (e) {
+    ctx.throw(400, e.message)
+  }
 
-  await problem.save(problem)
   ctx.body = {
     success: true
   }

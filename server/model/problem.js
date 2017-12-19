@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate') // 分页
 const ids = require('./ID')
-const logger = require('../utils/logger')
 
 const problemSchema = mongoose.Schema({
   isdone: Boolean,
@@ -95,7 +94,6 @@ problemSchema.pre('save', function (next) {
       .generateId('Problem')
       .then(id => {
         this.pid = id
-        logger.trace(`new problem is created: ${this.pid} -- ${this.title}`)
       })
       .then(next)
   } else {

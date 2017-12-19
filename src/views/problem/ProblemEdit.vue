@@ -94,22 +94,7 @@ export default {
             showClose: true
           })
           this.$router.push({name: 'problemInfo', params: { pid: data.pid }})
-        } else {
-          this.$message({
-            type: 'info',
-            message: '提交失败',
-            duration: 2000,
-            showClose: true
-          })
         }
-      }).catch(err => {
-        console.log(err)
-        this.$message({
-          type: 'info',
-          message: '提交失败',
-          duration: 2000,
-          showClose: true
-        })
       })
     }
   },

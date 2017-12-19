@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
 const ids = require('./ID')
-const logger = require('../utils/logger')
 
 const newSchema = mongoose.Schema({
   nid: {
@@ -35,7 +34,6 @@ newSchema.pre('save', function (next) {
       .generateId('News')
       .then(id => {
         this.nid = id
-        logger.trace(`new news is created: ${this.nid} -- ${this.title}`)
       })
       .then(next)
   } else {
