@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column label="Title" align="left">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'contestProblem', params: { pid: scope.row.pid, id: scope.$index + 1 } }">
+          <router-link :to="{ name: 'contestProblem', params: { cid: scope.row.cid, id: scope.$index + 1 } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>

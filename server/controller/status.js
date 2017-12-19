@@ -8,7 +8,7 @@ const getSolutionList = async (ctx) => {
   const page = parseInt(opt.page)
   const pageSize = parseInt(opt.pageSize)
   const filter = pickBy(
-    only(opt, 'uid pid judge language'),
+    only(opt, 'uid pid judge language mid'),
     x => x != null && x !== '')
 
   const res = await Solution.paginate(filter, {

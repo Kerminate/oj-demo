@@ -24,6 +24,7 @@ import ContestList from '@/views/ContestList.vue'
 import ContestInfo from '@/views/contest/ContestInfo.vue'
 import ContestOverview from '@/views/contest/ContestOverview.vue'
 import ContestProblem from '@/views/contest/ContestProblem.vue'
+import ContestStatus from '@/views/contest/ContestStatus.vue'
 
 Vue.use(Router)
 
@@ -118,6 +119,11 @@ const routes = [
         path: 'problem/:id',
         name: 'contestProblem',
         component: ContestProblem
+      },
+      {
+        path: 'status',
+        name: 'contestStatus',
+        component: ContestStatus
       }
     ]
   }
