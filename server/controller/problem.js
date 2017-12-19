@@ -21,7 +21,7 @@ const getProblemList = async (ctx) => {
     sort: { pid: 1 },
     page,
     limit: pageSize,
-    select: '-_id -hint -description -in -out -input -output'
+    select: '-_id -hint -description -in -out -input -output' // -表示不要的字段
   })
 
   ctx.body = {

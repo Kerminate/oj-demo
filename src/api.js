@@ -82,7 +82,7 @@ const api = {
 
 // 对异常的基本处理
 Object.entries(api).forEach(([key, value]) => {
-  api[key] = function (...args) {
+  api[key] = function (...args) { // 闭包给原函数捕获异常
     return value(...args)
       .catch((err) => {
         if (err.response && err.response.status >= 500) {
