@@ -41,7 +41,6 @@ const actions = {
     return api.getProblems(payload).then(({ data }) => {
       commit(types.GET_PROBLEM_LIST, data.res.docs)
       commit(types.GET_SUM_PROBLEM, data.res.total)
-      console.log(data)
     })
   }
 }

@@ -29,7 +29,7 @@ const getContestInfo = async (ctx) => {
   const process = list.map(async (pid, index) => {
     await Problem.findOne({pid}).exec()
       .then((problem) => {
-        res[index] = only(problem, 'title, pid')
+        res[index] = only(problem, 'title pid')
       })
       .then(() => {
         return Solution.count({pid, mid: opt}).exec() // 为什么用mid不用module？
