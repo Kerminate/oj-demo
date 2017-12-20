@@ -31,9 +31,9 @@
     </el-table>
     <el-pagination
       background
-      :current-page.sync="currentPage"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      :current-page.sync="page"
+      @size-change="sizeChange"
+      @current-change="pageChange"
       layout="sizes, prev, pager, next, jumper"
       :total="sumContest"
       :page-sizes="[20, 30, 40, 50]"
@@ -45,6 +45,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import constant from '../util/constant'
+import only from 'only'
+import pickBy from 'lodash.pickby'
 
 export default {
   data () {
@@ -59,30 +61,42 @@ export default {
     ...mapGetters([
       'contestList',
       'sumContest'
-    ])
+    ]),
+    query () {
+      const opt = only(this.$route.query, 'page pageSize type content')
+      return pickBy(
+        opt,
+        x => x != null && x !== ''
+      )
+    }
   },
   created () {
-    this.getContestList()
+    this.fetch()
   },
   methods: {
-    getContestList () {
-      let opt = {
-        page: this.currentPage,
-        pageSize: this.pageSize
-      }
+    fetch () {
+      this.$store.dispatch('updateContestList', this.query)
+      const query = this.$route.query
+      this.page = parseInt(query.page) || 1
+      this.pageSize = parseInt(query.pageSize) || 20
+    },
+    reload (payload = {}) {
+      const query = Object.assign(this.query, payload)
       this.$router.push({
         name: 'contestList',
-        query: opt
+        query
       })
-      this.$store.dispatch('updateContestList', opt)
     },
-    handleCurrentChange (val) {
-      this.currentPage = val
-      this.getContestList()
+    sizeChange (val) {
+      this.reload({ pageSize: val })
     },
-    handleSizeChange (val) {
-      this.pageSize = val
-      this.getContestList()
+    pageChange (val) {
+      this.reload({ page: val })
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to !== from) this.fetch()
     }
   }
 }

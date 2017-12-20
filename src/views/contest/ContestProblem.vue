@@ -6,7 +6,7 @@
         background
         layout="pager"
         :current-page.sync="proIndex"
-        @current-change="handleCurrentChange"
+        @current-change="pageChange"
         :page-count="contestTotalPro">
       </el-pagination>
       </el-col>
@@ -45,18 +45,31 @@ export default {
     ])
   },
   created () {
-    this.$store.dispatch('getProblem', { pid: this.contestOverview[this.$route.params.id - 1].pid })
-    // console.log(this.contestOverview)
-    // console.log(this.contestTotalPro)
+    this.fetch()
   },
   methods: {
-    handleCurrentChange (val) {
-      this.proIndex = val
+    fetch () {
+      this.proIndex = parseInt(this.$route.params.id)
+      this.$store.dispatch('getContest', this.$route.params).then(() => {
+        this.$store.dispatch('getProblem', { pid: this.contestOverview[this.proIndex - 1].pid })
+      })
+    },
+    reload (val) {
       this.$router.push({
         name: 'contest.problem',
-        params: { id: this.proIndex }
+        params: { id: val }
       })
-      this.$store.dispatch('getProblem', { pid: this.contestOverview[this.proIndex - 1].pid })
+    },
+    pageChange (val) {
+      this.$router.push({
+        name: 'contest.problem',
+        params: { id: val }
+      })
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to !== from && to.name === 'contest.problem') this.fetch()
     }
   }
 }

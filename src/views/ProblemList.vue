@@ -123,6 +123,7 @@ export default {
     },
     reload (payload = {}) {
       const query = Object.assign(this.query, payload)
+      console.log(query)
       this.$router.push({
         name: 'problemList',
         query
@@ -142,7 +143,7 @@ export default {
       this.reload({ page: val })
     }
   },
-  watch: {
+  watch: { // 浏览器后退时回退页面
     '$route' (to, from) {
       if (to !== from) this.fetch()
     }

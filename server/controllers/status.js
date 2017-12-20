@@ -5,8 +5,8 @@ const pickBy = require('lodash.pickby')
 // 返回提交列表
 const list = async (ctx) => {
   const opt = ctx.request.query
-  const page = parseInt(opt.page)
-  const pageSize = parseInt(opt.pageSize)
+  const page = parseInt(opt.page) || 1
+  const pageSize = parseInt(opt.pageSize) || 30
   const filter = pickBy(
     only(opt, 'uid pid judge language mid'),
     x => x != null && x !== '')

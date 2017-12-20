@@ -36,16 +36,16 @@
         </el-col>
       </el-col>
       <el-col :span="3">
-        <el-button type="primary" size="small" @click="search">Search</el-button>
+        <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="8">
         <el-pagination
           background
-          :current-page.sync="currentPage"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
+          :current-page.sync="page"
+          @size-change="sizeChange"
+          @current-change="pageChange"
           layout=" sizes, prev, pager, next, jumper"
           :total="sumSolutions"
           :page-sizes="[10, 20, 30, 40]"
@@ -114,6 +114,8 @@
 import SolutionCode from '@/components/SolutionCode.vue'
 import { mapGetters } from 'vuex'
 import constant from '../util/constant.js'
+import only from 'only'
+import pickBy from 'lodash.pickby'
 
 export default {
   data () {
@@ -122,7 +124,7 @@ export default {
       pid: this.$route.query.pid || '',
       judge: this.$route.query.judge || '',
       language: this.$route.query.language || '',
-      currentPage: parseInt(this.$route.query.page) || 1,
+      page: parseInt(this.$route.query.page) || 1,
       pageSize: parseInt(this.$route.query.pageSize) || 30,
       judgeList: constant.judgeList,
       languageList: constant.languageList,
@@ -132,45 +134,67 @@ export default {
     }
   },
   created () {
-    this.getStatus()
+    this.fetch()
   },
   computed: {
     ...mapGetters([
       'solutionList',
       'sumSolutions',
       'codeDialog'
-    ])
+    ]),
+    query () {
+      const opt = only(this.$route.query, 'page pageSize uid pid language judge')
+      return pickBy(
+        opt,
+        x => x != null && x !== ''
+      )
+    }
   },
   methods: {
     showDialog (solution) {
       this.$store.commit('SHOW_CODE', solution)
     },
-    getStatus () {
-      const opt = {
-        page: this.currentPage,
-        pageSize: this.pageSize,
-        uid: this.uid,
-        pid: this.pid,
-        judge: this.judge,
-        language: this.language
-      }
+    fetch () {
+      const query = this.$route.query
+      this.$store.dispatch('updateSolutionList', query)
+      this.page = parseInt(query.page) || 1
+      this.pageSize = parseInt(query.pageSize) || 30
+      this.uid = query.uid
+      this.pid = query.pid || ''
+      this.language = query.language || ''
+    },
+    reload (payload = {}) {
+      // console.log(this.$route.query)
+      // console.log(this.query)
+      const query = Object.assign(this.query, payload)
+      // console.log(query)
+      // console.log(this.$route.query)
       this.$router.push({
         name: 'status',
-        query: opt
+        query
       })
-      this.$store.dispatch('updateSolutionList', opt)
     },
-    handleCurrentChange (val) {
-      this.currentPage = val
-      this.getStatus()
+    search (val) {
+      this.reload({
+        page: 1,
+        uid: this.uid,
+        pid: this.pid,
+        language: this.language,
+        judge: this.judge
+      })
     },
-    handleSizeChange (val) {
-      this.pageSize = val
-      this.getStatus()
+    sizeChange (val) {
+      this.reload({ pageSize: val })
     },
-    search () {
-      this.currentPage = 1
-      this.getStatus()
+    pageChange (val) {
+      this.reload({ page: val })
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to !== from) {
+        this.fetch()
+      }
     }
   },
   components: {

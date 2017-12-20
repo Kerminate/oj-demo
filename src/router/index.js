@@ -66,11 +66,6 @@ const routes = [
       }
     ]
   },
-  // {
-  //   path: '/problem/:pid',
-  //   name: 'problemInfo',
-  //   component: ProblemInfo
-  // },
   {
     path: '/news/:nid',
     name: 'newsInfo',

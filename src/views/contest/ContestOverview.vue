@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column label="Title" align="left">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'contest.problem', params: { cid: scope.row.cid, id: scope.$index + 1 } }">
+          <router-link :to="{ name: 'contest.problem', params: { cid: cid, id: scope.$index + 1 } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>
@@ -32,6 +32,11 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  data () {
+    return {
+      cid: this.$route.params.cid
+    }
+  },
   computed: {
     ...mapGetters([
       'contest',

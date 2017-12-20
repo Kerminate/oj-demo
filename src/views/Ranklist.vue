@@ -42,9 +42,9 @@
     </el-table>
     <el-pagination
       background
-      :current-page.sync="currentPage"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      :current-page.sync="page"
+      @size-change="sizeChange"
+      @current-change="pageChange"
       layout=" sizes, prev, pager, next, jumper"
       :total="sumRank"
       :page-sizes="[20, 30, 40, 50]"
@@ -55,11 +55,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import only from 'only'
+import pickBy from 'lodash.pickby'
 
 export default {
   data () {
     return {
-      currentPage: parseInt(this.$route.query.page) || 1,
+      page: parseInt(this.$route.query.page) || 1,
       pageSize: parseInt(this.$route.query.pageSize) || 30
     }
   },
@@ -67,33 +69,45 @@ export default {
     ...mapGetters([
       'ranklist',
       'sumRank'
-    ])
+    ]),
+    query () {
+      const opt = only(this.$route.query, 'page pageSize')
+      return pickBy(
+        opt,
+        x => x != null && x !== ''
+      )
+    }
   },
   created () {
-    this.getRanks()
+    this.fetch()
   },
   methods: {
-    getRanks () {
-      let opt = {
-        page: this.currentPage,
-        pageSize: this.pageSize
-      }
+    fetch () {
+      this.$store.dispatch('updateRanklist', this.query)
+      const query = this.$route.query
+      this.page = parseInt(query.page) || 1
+      this.pageSize = parseInt(query.pageSize) || 30
+    },
+    reload (payload = {}) {
+      const query = Object.assign(this.query, payload)
       this.$router.push({
         name: 'ranklist',
-        query: opt
+        query
       })
-      this.$store.dispatch('updateRanklist', opt)
     },
-    handleCurrentChange (val) {
-      this.currentPage = val
-      this.getRanks()
+    sizeChange (val) {
+      this.reload({ pageSize: val })
     },
-    handleSizeChange (val) {
-      this.pageSize = val
-      this.getRanks()
+    pageChange (val) {
+      this.reload({ page: val })
     },
     indexMethod (index) {
-      return index + 1 + (this.currentPage - 1) * this.pageSize
+      return index + 1 + (this.page - 1) * this.pageSize
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to !== from) this.fetch()
     }
   }
 }
