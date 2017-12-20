@@ -1,7 +1,5 @@
 import axios from 'axios'
 import Vue from 'vue'
-// import store from './store'
-// import router from './router'
 
 // 设置全局axios默认值
 axios.defaults.timeout = 5000 // 5000ms的超时验证
@@ -15,26 +13,17 @@ axios.interceptors.request.use = instance.interceptors.request.use
 
 const api = {
   // 用户注册
-  userRegister (data) {
-    return instance.post('/user/register', data)
+  register (data) {
+    return instance.post('/user', data)
   },
   // 获取用户信息
   getUserInfo (data) {
     return instance.get(`/user/${data.uid}`, { params: data })
   },
   // 用户登录
-  userLogin (data) {
-    return instance.post('/session/login', data)
+  login (data) {
+    return instance.post('/session', data)
   },
-  // 获取用户
-  // getUser () {
-  //   return instance.get('/session/info')
-  // },
-  // 删除用户
-  // delUser (data) {
-  //   return instance.post('/session/delUser', data)
-  // },
-  // 获取题目列表
   getProblems (data) {
     return instance.get('/problem/list', { params: data })
   },
@@ -119,7 +108,18 @@ Object.entries(api).forEach(([key, value]) => {
             type: 'error',
             showClose: true
           })
+        } else {
+          Vue.prototype.$message({
+            message: err.message,
+            duration: 10000,
+            type: 'error',
+            showClose: true
+          })
         }
+        return Promise.reject(new Error('I throw this on purpose'))
+        // 继续抛出错误
+        // 不让后面的继续执行，也就是说，后面的 then 必然是在请求没有错误的情况下才执行的
+        // 因此后面不需要用 if (data.success) 语句判断是否有无错误
       })
   }
 })

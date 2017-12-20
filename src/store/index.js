@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import mutations from './mutations'
-// import actions from './actions'
-// import * as getters from './getters'
 import session from './modules/session'
 import problem from './modules/problem'
 import news from './modules/news'

@@ -39,7 +39,7 @@ const mutations = {
 
 // actions
 const actions = {
-  UserRegister ({ commit }, payload) {
+  register ({ commit }, payload) {
     return api.userRegister(payload).then(({ data }) => {
       if (data.success) {
         commit(types.SHOW_REGISTER)

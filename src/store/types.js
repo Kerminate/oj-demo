@@ -1,8 +1,10 @@
+// session
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
-export const UID = 'UID'
 export const SHOW_LOGIN = 'SHOW_LOGIN'
 export const SHOW_REGISTER = 'SHOW_REGISTER'
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
+
 export const GET_PROBLEM = 'GET_PROBLEM'
 export const GET_PROBLEM_LIST = 'GET_PROBLEM_LIST'
 export const GET_SUM_PROBLEM = 'GET_SUM_PROBLEM'

@@ -17,6 +17,17 @@ Vue.filter('timePretty', timePretty)
 
 Vue.config.productionTip = false
 
+;['success', 'warning', 'info', 'error'].forEach((type) => {
+  Vue.prototype['$' + type] = function (message, options = {}) {
+    this.$message(Object.assign({
+      type,
+      message,
+      duration: 5000,
+      showClose: true
+    }, options))
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
