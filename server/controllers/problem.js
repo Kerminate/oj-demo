@@ -33,6 +33,9 @@ const list = async (ctx) => {
 const findOne = async (ctx) => {
   const opt = parseInt(ctx.query.pid)
   const doc = await Problem.findOne({pid: opt}).exec()
+
+  if (doc == null) ctx.throw(400, 'No such a problem')
+
   ctx.body = doc
 }
 
@@ -40,7 +43,7 @@ const findOne = async (ctx) => {
 const create = async (ctx) => {
   const opt = ctx.request.body
 
-  const info = new Problem(Object.assign(
+  const problem = new Problem(Object.assign(
     only(opt, 'title description input output in out hint'),
     { // pid 会自动生成
       time: parseInt(opt.time) || 1000,
@@ -48,10 +51,16 @@ const create = async (ctx) => {
     }
   ))
 
-  await info.save()
+  try {
+    await problem.save()
+    logger.info(`New problem is created" ${problem.pid} -- ${problem.title}`)
+  } catch (e) {
+    ctx.throw(400, e.message)
+  }
+
   ctx.body = {
     success: true,
-    pid: info.pid
+    pid: problem.pid
   }
 }
 
@@ -65,7 +74,7 @@ const update = async (ctx) => {
   })
   try {
     await problem.save()
-    logger.info(`New problem is updated" ${problem.pid} -- ${problem.title}`)
+    logger.info(`One problem is updated" ${problem.pid} -- ${problem.title}`)
   } catch (e) {
     ctx.throw(400, e.message)
   }
