@@ -5,42 +5,40 @@ const User = require('../models/User')
 const createToken = require('../token/createToken')
 const { generatePwd } = require('../utils/helper')
 
-// 登录
 const login = async (ctx) => {
-  // 拿到账号和密码
   const uid = ctx.request.body.uid
   const pwd = generatePwd(ctx.request.body.pwd)
-  // let password = sha1(ctx.request.body.password)
-  const doc = await User.findOne({ uid }).exec()
-  if (!doc) {
-    console.log('检查到用户名不存在')
-    ctx.status = 200
-    ctx.body = {
-      info: false
-    }
-  } else if (doc.pwd === pwd) {
-    console.log('密码一致')
-    // 生成一个新的token,并存到数据库
-    const token = createToken(uid)
-    console.log(token)
-    doc.token = token
-    await doc.save()
 
-    ctx.body = {
-      success: true,
-      uid,
-      token, // 登录成功要创建一个新的twoken，应该存到数据库
-      create: doc.create
-    }
-  } else {
-    console.log('密码错误')
-    ctx.status = 200
-    ctx.body = {
-      success: false
-    }
+  const user = await User
+    .findOne({ uid })
+    .exec()
+
+  if (user == null) {
+    ctx.throw(400, 'No such a user')
+  }
+  console.log(pwd, user.pwd)
+  if (user.pwd !== pwd) {
+    ctx.throw(400, 'Wrong password')
+  }
+
+  ctx.session.profile = user
+
+  ctx.body = {}
+}
+
+const logout = async (ctx) => {
+  ctx.session.profile = null
+  ctx.body = {}
+}
+
+const profile = async (ctx) => {
+  ctx.body = {
+    session: ctx.session.profile
   }
 }
 
 module.exports = {
-  login
+  login,
+  logout,
+  profile
 }
