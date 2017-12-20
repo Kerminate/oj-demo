@@ -1,11 +1,11 @@
-const ProblemController = require('../controller/problem.js')
+const problem = require('../controllers/problem')
 const Router = require('koa-router')
 
-const problemRouter = new Router()
+const router = new Router()
 
-problemRouter.get('/list', ProblemController.getProblemList)
-problemRouter.get('/:pid', ProblemController.getOneProblem)
-problemRouter.post('/', ProblemController.createProblem)
-problemRouter.put('/:pid', ProblemController.updateProblem)
+router.get('/list', problem.list)
+router.get('/:pid', problem.findOne)
+router.post('/', problem.create)
+router.put('/:pid', problem.update)
 
-module.exports = problemRouter
+module.exports = router

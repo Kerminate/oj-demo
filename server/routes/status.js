@@ -1,8 +1,8 @@
-const StatusController = require('../controller/status.js')
+const status = require('../controllers/status')
 const Router = require('koa-router')
 
-const statusRouter = new Router()
+const router = new Router()
 
-statusRouter.get('/list', StatusController.getSolutionList)
+router.get('/list', status.list)
 
-module.exports = statusRouter
+module.exports = router

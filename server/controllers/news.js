@@ -1,7 +1,7 @@
-const News = require('../model/news.js')
+const News = require('../models/News')
 
 // 返回消息列表
-const getNewsList = async (ctx) => {
+const list = async (ctx) => {
   const filter = {}
   const opt = ctx.request.query
   const page = parseInt(opt.page) || 1
@@ -22,14 +22,14 @@ const countNews = async (ctx) => {
 }
 
 // 返回一道题目
-const getNewsInfo = async (ctx) => {
+const findOne = async (ctx) => {
   const opt = parseInt(ctx.query.nid)
   const doc = await News.findOne({nid: opt}).exec()
   ctx.body = doc
 }
 
 module.exports = {
-  getNewsList,
+  list,
   countNews,
-  getNewsInfo
+  findOne
 }

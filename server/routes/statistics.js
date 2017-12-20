@@ -1,8 +1,8 @@
-const StatisticsController = require('../controller/statistics.js')
+const statistics = require('../controllers/statistics')
 const Router = require('koa-router')
 
-const statisticsRouter = new Router()
+const rotuer = new Router()
 
-statisticsRouter.get('/:pid', StatisticsController.getStatistics)
+rotuer.get('/:pid', statistics.list)
 
-module.exports = statisticsRouter
+module.exports = rotuer

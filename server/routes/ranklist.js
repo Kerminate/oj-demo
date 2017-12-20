@@ -1,8 +1,8 @@
-const RanklistController = require('../controller/ranklist.js')
+const ranklist = require('../controllers/ranklist.js')
 const Router = require('koa-router')
 
-const ranklistRouter = new Router()
+const router = new Router()
 
-ranklistRouter.get('/list', RanklistController.getRanklist)
+router.get('/list', ranklist.list)
 
-module.exports = ranklistRouter
+module.exports = router

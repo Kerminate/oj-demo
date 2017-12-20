@@ -1,10 +1,10 @@
-const Contest = require('../model/contest.js')
-const Problem = require('../model/problem.js')
-const Solution = require('../model/solution.js')
+const Contest = require('../models/Contest')
+const Problem = require('../models/Problem')
+const Solution = require('../models/Solution')
 const only = require('only')
 
 // 返回竞赛列表
-const getContestList = async (ctx) => {
+const list = async (ctx) => {
   const opt = ctx.request.query
   const page = parseInt(opt.page) || 1
   const pageSize = parseInt(opt.pageSize) || 20
@@ -19,7 +19,7 @@ const getContestList = async (ctx) => {
   }
 }
 
-const getContestInfo = async (ctx) => {
+const findOne = async (ctx) => {
   const opt = parseInt(ctx.query.cid)
   const doc = await Contest.findOne({ cid: opt }).exec()
 
@@ -54,6 +54,6 @@ const getContestInfo = async (ctx) => {
 }
 
 module.exports = {
-  getContestList,
-  getContestInfo
+  list,
+  findOne
 }

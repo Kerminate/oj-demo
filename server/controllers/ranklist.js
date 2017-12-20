@@ -1,7 +1,7 @@
-const User = require('../model/user.js')
+const User = require('../models/User.js')
 
 // 返回排名列表
-const getRanklist = async (ctx) => {
+const list = async (ctx) => {
   let opt = ctx.request.query
   let filter = {}
   let page = parseInt(opt.page) || 1
@@ -20,5 +20,5 @@ const getRanklist = async (ctx) => {
 }
 
 module.exports = {
-  getRanklist
+  list
 }

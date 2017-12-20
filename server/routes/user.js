@@ -1,10 +1,10 @@
-const UserController = require('../controller/user.js')
+const user = require('../controllers/user')
 const Router = require('koa-router')
 
-const userRouter = new Router()
+const router = new Router()
 
-userRouter.get('/:uid', UserController.getUserInfo)
+router.get('/:uid', user.findOne)
 
-userRouter.post('/register', UserController.reg)
+router.post('/register', user.reg)
 
-module.exports = userRouter
+module.exports = router

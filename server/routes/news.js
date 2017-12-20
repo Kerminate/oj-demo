@@ -1,9 +1,9 @@
-const NewsController = require('../controller/news.js')
+const news = require('../controllers/news.js')
 const Router = require('koa-router')
 
-const newsRouter = new Router()
+const router = new Router()
 
-newsRouter.get('/list', NewsController.getNewsList)
-newsRouter.get('/:nid', NewsController.getNewsInfo)
+router.get('/list', news.list)
+router.get('/:nid', news.findOne)
 
-module.exports = newsRouter
+module.exports = router

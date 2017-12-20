@@ -1,9 +1,9 @@
-const ContestController = require('../controller/contest.js')
+const contest = require('../controllers/contest.js')
 const Router = require('koa-router')
 
-const contestRouter = new Router()
+const router = new Router()
 
-contestRouter.get('/list', ContestController.getContestList)
-contestRouter.get('/:cid', ContestController.getContestInfo)
+router.get('/list', contest.list)
+router.get('/:cid', contest.findOne)
 
-module.exports = contestRouter
+module.exports = router

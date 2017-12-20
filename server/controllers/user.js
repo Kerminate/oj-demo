@@ -1,10 +1,10 @@
-const User = require('../model/user')
-const Solution = require('../model/solution')
-const { generatePwd } = require('../utils/helper.js')
+const User = require('../models/User')
+const Solution = require('../models/Solution')
+const { generatePwd } = require('../utils/helper')
 const createToken = require('../token/createToken.js')
 
 // 查询用户具体信息
-const getUserInfo = async (ctx) => {
+const findOne = async (ctx) => {
   const uid = ctx.query.uid
   const [info, solved, unsolved] = await Promise.all([
     User
@@ -56,6 +56,6 @@ const reg = async (ctx) => {
 }
 
 module.exports = {
-  getUserInfo,
+  findOne,
   reg
 }

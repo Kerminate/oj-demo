@@ -1,9 +1,9 @@
-const Solution = require('../model/solution.js')
+const Solution = require('../models/Solution')
 const only = require('only')
 const pickBy = require('lodash.pickby')
 
 // 返回提交列表
-const getSolutionList = async (ctx) => {
+const list = async (ctx) => {
   const opt = ctx.request.query
   const page = parseInt(opt.page)
   const pageSize = parseInt(opt.pageSize)
@@ -24,5 +24,5 @@ const getSolutionList = async (ctx) => {
 }
 
 module.exports = {
-  getSolutionList
+  list
 }

@@ -1,9 +1,9 @@
-const Problem = require('../model/problem.js')
+const Problem = require('../models/Problem')
 const only = require('only')
 const logger = require('../utils/logger')
 
 // 返回题目列表
-const getProblemList = async (ctx) => {
+const list = async (ctx) => {
   const opt = ctx.request.query
   const filter = {}
   const page = parseInt(opt.page) || 1
@@ -30,14 +30,14 @@ const getProblemList = async (ctx) => {
 }
 
 // 返回一道题目
-const getOneProblem = async (ctx) => {
+const findOne = async (ctx) => {
   const opt = parseInt(ctx.query.pid)
   const doc = await Problem.findOne({pid: opt}).exec()
   ctx.body = doc
 }
 
 // 新建一个题目
-const createProblem = async (ctx) => {
+const create = async (ctx) => {
   const opt = ctx.request.body
 
   const info = new Problem(Object.assign(
@@ -56,7 +56,7 @@ const createProblem = async (ctx) => {
 }
 
 // 更新一道题目
-const updateProblem = async (ctx) => {
+const update = async (ctx) => {
   const opt = ctx.request.body
   const problem = await Problem.findOne({pid: opt.pid}).exec()
   const fileds = ['title', 'time', 'memory', 'description', 'input', 'output', 'hint', 'in', 'out']
@@ -76,8 +76,8 @@ const updateProblem = async (ctx) => {
 }
 
 module.exports = {
-  getProblemList,
-  getOneProblem,
-  createProblem,
-  updateProblem
+  list,
+  findOne,
+  create,
+  update
 }

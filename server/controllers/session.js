@@ -1,12 +1,12 @@
 // const moment = require('moment')
 // const objectIdToTimestamp = require('objectid-to-timestamp')
 // const sha1 = require('sha1')
-const User = require('../model/user.js')
-const createToken = require('../token/createToken.js')
+const User = require('../models/User')
+const createToken = require('../token/createToken')
 const { generatePwd } = require('../utils/helper')
 
 // 登录
-const Login = async (ctx) => {
+const login = async (ctx) => {
   // 拿到账号和密码
   const uid = ctx.request.body.uid
   const pwd = generatePwd(ctx.request.body.pwd)
@@ -42,5 +42,5 @@ const Login = async (ctx) => {
 }
 
 module.exports = {
-  Login
+  login
 }
