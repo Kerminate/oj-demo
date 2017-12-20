@@ -4,15 +4,17 @@
       <el-col :span="8">
         <el-pagination
           background
-          @current-change="changePage"
-          layout="prev, pager, next, jumper"
+          :current-page.sync="page"
+          @size-change="sizeChange"
+          @current-change="pageChange"
+          layout=" sizes, prev, pager, next, jumper"
           :total="sumProblem"
-          :page-size="30"
-          >
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="pageSize">
         </el-pagination>
       </el-col>
       <el-col :offset="8" :span="2">
-        <el-select v-model="searchType" placeholder="请选择" size="small">
+        <el-select v-model="type" placeholder="请选择" size="small">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,7 +24,7 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-input v-model="searchContent" placeholder="请输入内容" size="small"></el-input>
+        <el-input v-model="content" placeholder="请输入内容" size="small"></el-input>
       </el-col>
       <el-col :span="1.5">
         <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
@@ -74,8 +76,6 @@ import pickBy from 'lodash.pickby'
 export default {
   data () {
     return {
-      searchContent: '',
-      searchType: '',
       options: [
         {
           value: 'pid',
@@ -89,52 +89,62 @@ export default {
           value: 'tag',
           label: 'Tag'
         }
-      ]
-    }
-  },
-  props: {
-    type: {
-      default: '',
-      type: String
-    },
-    page: {
-      default: 1,
-      type: Number
-    },
-    content: {
-      type: String,
-      default: ''
+      ],
+      type: this.$route.query.type || 'pid',
+      content: this.$route.query.content || '',
+      page: parseInt(this.$route.query.page) || 1,
+      pageSize: parseInt(this.$route.query.pageSize) || 30
     }
   },
   created () {
-    this.getProblems()
+    this.fetch()
   },
   computed: {
     ...mapGetters([
       'problemList',
       'sumProblem'
-    ])
+    ]),
+    query () {
+      const opt = only(this.$route.query, 'page pageSize type content')
+      return pickBy(
+        opt,
+        x => x != null && x !== ''
+      )
+    }
   },
   methods: {
-    getProblems (others) {
-      let opt = Object.assign(
-        only(this, 'page pageSize type content'),
-        others, {
-          content: this.searchContent,
-          type: this.searchType
-        })
-      opt = pickBy(opt, x => x != null & x !== '')
+    fetch () {
+      this.$store.dispatch('getProblemList', this.query)
+      const query = this.$route.query
+      this.page = parseInt(query.page) || 1
+      if (query.pageSize) this.pageSize = parseInt(query.pageSize)
+      if (query.type) this.type = query.type
+      if (query.content) this.content = query.content
+    },
+    reload (payload = {}) {
+      const query = Object.assign(this.query, payload)
       this.$router.push({
         name: 'problemList',
-        query: opt
+        query
       })
-      this.$store.dispatch('getProblemList', opt)
     },
     search () {
-      this.getProblems({ page: 1 })
+      this.reload({
+        page: 1,
+        type: this.type,
+        content: this.content
+      })
     },
-    changePage (val) {
-      this.getProblems({ page: val })
+    sizeChange (val) {
+      this.reload({ pageSize: val })
+    },
+    pageChange (val) {
+      this.reload({ page: val })
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to !== from) this.fetch()
     }
   }
 }

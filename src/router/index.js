@@ -89,7 +89,8 @@ const routes = [
   {
     path: '/ranklist',
     name: 'ranklist',
-    component: Ranklist
+    component: Ranklist,
+    props: true
   },
   {
     path: 'admin/problem/add',
