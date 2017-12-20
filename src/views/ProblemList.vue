@@ -4,17 +4,15 @@
       <el-col :span="8">
         <el-pagination
           background
-          :current-page.sync="page"
-          @size-change="(val) => getProblems({ pageSize: val })"
-          @current-change="(val) => getProblems({ page: val })"
-          layout=" sizes, prev, pager, next, jumper"
+          @current-change="changePage"
+          layout="prev, pager, next, jumper"
           :total="sumProblem"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="pageSize">
+          :page-size="30"
+          >
         </el-pagination>
       </el-col>
       <el-col :offset="8" :span="2">
-        <el-select v-model="type" placeholder="请选择" size="small" @change="select">
+        <el-select v-model="searchType" placeholder="请选择" size="small">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -24,7 +22,7 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-input v-model="content" placeholder="请输入内容" size="small"></el-input>
+        <el-input v-model="searchContent" placeholder="请输入内容" size="small"></el-input>
       </el-col>
       <el-col :span="1.5">
         <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
@@ -71,10 +69,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import only from 'only'
+import pickBy from 'lodash.pickby'
 
 export default {
   data () {
     return {
+      searchContent: '',
+      searchType: '',
       options: [
         {
           value: 'pid',
@@ -88,11 +89,21 @@ export default {
           value: 'tag',
           label: 'Tag'
         }
-      ],
-      type: this.$route.query.type || 'pid',
-      content: this.$route.query.content || '',
-      page: parseInt(this.$route.query.page) || 1,
-      pageSize: parseInt(this.$route.query.pageSize) || 30
+      ]
+    }
+  },
+  props: {
+    type: {
+      default: '',
+      type: String
+    },
+    page: {
+      default: 1,
+      type: Number
+    },
+    content: {
+      type: String,
+      default: ''
     }
   },
   created () {
@@ -106,22 +117,24 @@ export default {
   },
   methods: {
     getProblems (others) {
-      const opt = Object.assign(
+      let opt = Object.assign(
         only(this, 'page pageSize type content'),
-        others
-      )
+        others, {
+          content: this.searchContent,
+          type: this.searchType
+        })
+      opt = pickBy(opt, x => x != null & x !== '')
       this.$router.push({
         name: 'problemList',
         query: opt
       })
       this.$store.dispatch('getProblemList', opt)
     },
-    select () {
-      this.content = ''
-    },
     search () {
-      this.page = 1
       this.getProblems({ page: 1 })
+    },
+    changePage (val) {
+      this.getProblems({ page: val })
     }
   }
 }

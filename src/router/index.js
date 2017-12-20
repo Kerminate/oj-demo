@@ -86,11 +86,6 @@ const routes = [
     name: 'userInfo',
     component: UserInfo
   },
-  // {
-  //   path: '/statistics/:pid',
-  //   name: 'statistics',
-  //   component: Statistics
-  // },
   {
     path: '/ranklist',
     name: 'ranklist',

@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="conin-wrap">
-    <el-tabs v-model="display" type="border-card" @tab-click="handleClick">
+    <el-tabs :value="display" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="Overview" name="contestOverview"></el-tab-pane>
       <el-tab-pane label="Problem" name="contestProblem"></el-tab-pane>
       <el-tab-pane label="Status" name="contestStatus"></el-tab-pane>
@@ -16,11 +16,11 @@
 export default {
   data () {
     return {
-      display: this.$route.name
+      display: ''
     }
   },
   created () {
-    // console.log(this.$route.params)
+    this.display = this.$route.name
   },
   methods: {
     handleClick (tab) {
@@ -28,8 +28,12 @@ export default {
         this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid, id: this.$route.params.id || 1 } })
       } else if (tab.name === 'contestStatus') {
         this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid } })
-        console.log(tab.name)
       }
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.display = to.name
     }
   }
 }
