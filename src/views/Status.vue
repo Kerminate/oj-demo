@@ -36,7 +36,7 @@
         </el-col>
       </el-col>
       <el-col :span="3">
-        <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
+        <el-button type="primary" size="small" @click="search">Search</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -111,11 +111,11 @@
 </template>
 
 <script>
-import SolutionCode from '@/components/SolutionCode.vue'
+import SolutionCode from '@/components/SolutionCode'
 import { mapGetters } from 'vuex'
-import constant from '../util/constant.js'
+import constant from '../util/constant'
 import only from 'only'
-import pickBy from 'lodash.pickby'
+import { purify } from '@/util/helper'
 
 export default {
   data () {
@@ -144,10 +144,7 @@ export default {
     ]),
     query () {
       const opt = only(this.$route.query, 'page pageSize uid pid language judge')
-      return pickBy(
-        opt,
-        x => x != null && x !== ''
-      )
+      return purify(opt)
     }
   },
   methods: {
@@ -167,7 +164,7 @@ export default {
     reload (payload = {}) {
       // console.log(this.$route.query)
       // console.log(this.query)
-      const query = Object.assign(this.query, payload)
+      const query = Object.assign(this.query, purify(payload))
       // console.log(query)
       // console.log(this.$route.query)
       this.$router.push({

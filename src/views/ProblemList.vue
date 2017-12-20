@@ -71,7 +71,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import only from 'only'
-import pickBy from 'lodash.pickby'
+import { purify } from '@/util/helper'
 
 export default {
   data () {
@@ -106,10 +106,7 @@ export default {
     ]),
     query () {
       const opt = only(this.$route.query, 'page pageSize type content')
-      return pickBy(
-        opt,
-        x => x != null && x !== ''
-      )
+      return purify(opt)
     }
   },
   methods: {
@@ -122,8 +119,7 @@ export default {
       if (query.content) this.content = query.content
     },
     reload (payload = {}) {
-      const query = Object.assign(this.query, payload)
-      console.log(query)
+      const query = Object.assign(this.query, purify(payload))
       this.$router.push({
         name: 'problemList',
         query
