@@ -8,7 +8,7 @@
       </el-table-column>
       <el-table-column label="Title" align="left" min-width="100">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'contestOverview', params: { cid: scope.row.cid } }">
+          <router-link :to="{ name: 'contest.overview', params: { cid: scope.row.cid } }">
             <el-button type="text">{{ scope.row.title }}</el-button>
           </router-link>
         </template>
@@ -44,7 +44,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import constant from '../util/constant.js'
+import constant from '../util/constant'
 
 export default {
   data () {

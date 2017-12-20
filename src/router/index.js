@@ -108,17 +108,17 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'contestOverview',
+        name: 'contest.overview',
         component: ContestOverview
       },
       {
         path: 'problem/:id',
-        name: 'contestProblem',
+        name: 'contest.problem',
         component: ContestProblem
       },
       {
         path: 'status',
-        name: 'contestStatus',
+        name: 'contest.status',
         component: ContestStatus
       }
     ]

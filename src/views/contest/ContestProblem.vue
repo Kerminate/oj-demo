@@ -53,7 +53,7 @@ export default {
     handleCurrentChange (val) {
       this.proIndex = val
       this.$router.push({
-        name: 'contestProblem',
+        name: 'contest.problem',
         params: { id: this.proIndex }
       })
       this.$store.dispatch('getProblem', { pid: this.contestOverview[this.proIndex - 1].pid })

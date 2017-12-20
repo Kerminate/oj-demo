@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="conin-wrap">
     <el-tabs :value="display" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="Overview" name="contestOverview"></el-tab-pane>
-      <el-tab-pane label="Problem" name="contestProblem"></el-tab-pane>
-      <el-tab-pane label="Status" name="contestStatus"></el-tab-pane>
+      <el-tab-pane label="Overview" name="contest.overview"></el-tab-pane>
+      <el-tab-pane label="Problem" name="contest.problem"></el-tab-pane>
+      <el-tab-pane label="Status" name="contests.tatus"></el-tab-pane>
       <el-tab-pane label="Ranklist" name="problemEdit"></el-tab-pane>
       <keep-alive>
         <router-view></router-view>
@@ -24,9 +24,9 @@ export default {
   },
   methods: {
     handleClick (tab) {
-      if (tab.name === 'contestProblem') {
+      if (tab.name === 'contest.problem') {
         this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid, id: this.$route.params.id || 1 } })
-      } else if (tab.name === 'contestStatus') {
+      } else if (tab.name === 'contest.status') {
         this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid } })
       }
     }
