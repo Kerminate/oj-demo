@@ -6,7 +6,8 @@ const state = {
   sumContest: 0,
   contest: {},
   contestOverview: [],
-  contestTotalPro: 0
+  contestTotalPro: 0,
+  contestPro: []
 }
 
 // getters
@@ -15,7 +16,8 @@ const getters = {
   sumContest: state => state.sumContest,
   contest: state => state.contest,
   contestOverview: state => state.contestOverview,
-  contestTotalPro: state => state.contestTotalPro
+  contestTotalPro: state => state.contestTotalPro,
+  contestPro: state => state.contestPro
 }
 
 // mutations
@@ -34,6 +36,9 @@ const mutations = {
   },
   [types.GET_CONTEST_TOTAL_PRO]: (state, payload) => {
     state.contestTotalPro = payload
+  },
+  [types.GET_CONTEST_PRO]: (state, payload) => {
+    state.contestPro = payload
   }
 }
 
@@ -50,6 +55,8 @@ const actions = {
       commit(types.GET_CONTEST, data.doc)
       commit(types.GET_CONTEST_OVERVIEW, data.res)
       commit(types.GET_CONTEST_TOTAL_PRO, data.total)
+      commit(types.GET_CONTEST_PRO, data.pro)
+      return data.res
     })
   }
 }

@@ -36,16 +36,16 @@
         </el-col>
       </el-col>
       <el-col :span="3">
-        <el-button type="primary" size="small" @click="search">Search</el-button>
+        <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="8">
         <el-pagination
           background
-          :current-page.sync="currentPage"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
+          :current-page.sync="page"
+          @size-change="sizeChange"
+          @current-change="pageChange"
           layout=" sizes, prev, pager, next, jumper"
           :total="sumSolutions"
           :page-sizes="[10, 20, 30, 40]"
@@ -61,8 +61,8 @@
       </el-table-column>
       <el-table-column label="PID" align="left">
         <template slot-scope="scope">
-          <router-link :to="{ name: 'contestProblem', params: { pid: getId(scope.row.pid) } }">
-            <el-button type="text">{{ scope.row.pid }}</el-button>
+          <router-link :to="{ name: 'contest.problem', params: { cid: mid, id: getId(scope.row.pid) } }">
+            <el-button type="text">{{ getId(scope.row.pid) }}</el-button>
           </router-link>
         </template>
       </el-table-column>
@@ -115,16 +115,17 @@ import SolutionCode from '@/components/SolutionCode.vue'
 import { mapGetters } from 'vuex'
 import constant from '@/util/constant.js'
 import only from 'only'
+import pickBy from 'lodash.pickby'
 
 export default {
   data () {
     return {
-      cid: this.$route.params.cid,
+      mid: this.$route.params.cid,
       uid: this.$route.query.uid || '',
       pid: this.$route.query.pid || '',
       judge: this.$route.query.judge || '',
       language: this.$route.query.language || '',
-      currentPage: parseInt(this.$route.query.page) || 1,
+      page: parseInt(this.$route.query.page) || 1,
       pageSize: parseInt(this.$route.query.pageSize) || 30,
       judgeList: constant.judgeList,
       languageList: constant.languageList,
@@ -134,42 +135,74 @@ export default {
     }
   },
   created () {
-    this.getStatus()
+    this.fetch()
   },
   computed: {
     ...mapGetters([
       'solutionList',
       'sumSolutions',
       'codeDialog',
-      'contestOverview'
-    ])
+      'contestPro'
+    ]),
+    query () {
+      const opt = Object.assign(
+        only(this.$route.query, 'page pageSize uid judge language'),
+        {
+          mid: this.$route.params.cid,
+          pid: this.contestPro[this.$route.query.pid - 1]
+        }
+      )
+      return pickBy(
+        opt,
+        x => x != null && x !== ''
+      )
+    }
   },
   methods: {
     getId (pid) {
-      return this.contestOverview.indexOf(pid)
+      return this.contestPro.indexOf(pid) + 1
     },
     showDialog (solution) {
       this.$store.commit('SHOW_CODE', solution)
     },
-    getStatus () {
-      const opt = only(this, 'page pageSize uid pid cid judge language')
+    fetch () {
+      this.$store.dispatch('updateSolutionList', this.query)
+      const query = this.$route.query
+      this.page = parseInt(query.page) || 1
+      this.pageSize = parseInt(query.pageSize) || 30
+      this.uid = query.uid
+      this.pid = query.pid || ''
+      this.judge = query.judge || ''
+      this.language = query.language || ''
+    },
+    reload (payload = {}) {
+      const query = Object.assign(this.query, payload)
       this.$router.push({
-        name: 'status',
-        query: opt
+        name: 'contest.status',
+        query
       })
-      this.$store.dispatch('updateSolutionList', opt)
-    },
-    handleCurrentChange (val) {
-      this.currentPage = val
-      this.getStatus()
-    },
-    handleSizeChange (val) {
-      this.pageSize = val
-      this.getStatus()
     },
     search () {
-      this.currentPage = 1
-      this.getStatus()
+      this.reload({
+        page: 1,
+        uid: this.uid,
+        pid: this.pid,
+        language: this.language,
+        judge: this.judge
+      })
+    },
+    sizeChange (val) {
+      this.reload({ pageSize: val })
+    },
+    pageChange (val) {
+      this.reload({ page: val })
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to !== from) {
+        this.fetch()
+      }
     }
   },
   components: {
@@ -180,6 +213,7 @@ export default {
 
 <style lang="stylus">
   .consta-wrap
+    margin-top: 10px
     .filter
       margin-bottom: 20px
     label

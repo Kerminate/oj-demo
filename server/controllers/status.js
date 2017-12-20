@@ -10,7 +10,6 @@ const list = async (ctx) => {
   const filter = pickBy(
     only(opt, 'uid pid judge language mid'),
     x => x != null && x !== '')
-
   const res = await Solution.paginate(filter, {
     sort: { sid: -1 },
     page,

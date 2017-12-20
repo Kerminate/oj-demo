@@ -46,10 +46,16 @@ const findOne = async (ctx) => {
   })
   await Promise.all(process)
 
+  let pro = []
+  res.forEach((value, index) => {
+    pro.push(res[index].pid)
+  })
+
   ctx.body = {
     doc,
     res,
-    total
+    total,
+    pro
   }
 }
 

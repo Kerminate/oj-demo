@@ -161,6 +161,7 @@ export default {
       this.pageSize = parseInt(query.pageSize) || 30
       this.uid = query.uid
       this.pid = query.pid || ''
+      this.judge = query.judge || ''
       this.language = query.language || ''
     },
     reload (payload = {}) {
