@@ -25,7 +25,6 @@ app.use(session(CONFIG, app))
 app.use(bodyparser())
 
 app.use(async (ctx, next) => {
-  console.log(ctx.session)
   try {
     await next()
   } catch (err) {

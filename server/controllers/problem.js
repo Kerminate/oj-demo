@@ -2,6 +2,15 @@ const Problem = require('../models/Problem')
 const only = require('only')
 const logger = require('../utils/logger')
 
+async function preLoad (ctx, next) {
+  const pid = parseInt(ctx.params.pid)
+  if (isNaN(pid)) ctx.throw(400, 'Pid has to be a number')
+  const problem = await Problem.findOne({ pid }).exec()
+  if (problem == null) ctx.throw(400, 'No such a problem')
+  ctx.state.problem = problem
+  return next()
+}
+
 // 返回题目列表
 const list = async (ctx) => {
   const opt = ctx.request.query
@@ -31,12 +40,9 @@ const list = async (ctx) => {
 
 // 返回一道题目
 const findOne = async (ctx) => {
-  const opt = parseInt(ctx.query.pid)
-  const doc = await Problem.findOne({pid: opt}).exec()
+  const problem = ctx.state.problem
 
-  if (doc == null) ctx.throw(400, 'No such a problem')
-
-  ctx.body = doc
+  ctx.body = problem
 }
 
 // 新建一个题目
@@ -67,7 +73,7 @@ const create = async (ctx) => {
 // 更新一道题目
 const update = async (ctx) => {
   const opt = ctx.request.body
-  const problem = await Problem.findOne({pid: opt.pid}).exec()
+  const problem = ctx.state.problem
   const fileds = ['title', 'time', 'memory', 'description', 'input', 'output', 'hint', 'in', 'out']
   fileds.forEach((filed) => {
     problem[filed] = opt[filed]
@@ -85,6 +91,7 @@ const update = async (ctx) => {
 }
 
 module.exports = {
+  preLoad,
   list,
   findOne,
   create,

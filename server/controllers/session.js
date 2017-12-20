@@ -16,24 +16,22 @@ const login = async (ctx) => {
   if (user == null) {
     ctx.throw(400, 'No such a user')
   }
-  console.log(pwd, user.pwd)
   if (user.pwd !== pwd) {
     ctx.throw(400, 'Wrong password')
   }
 
-  ctx.session.profile = user
-
+  ctx.session.user = user
   ctx.body = {}
 }
 
 const logout = async (ctx) => {
-  ctx.session.profile = null
+  delete ctx.session.user
   ctx.body = {}
 }
 
 const profile = async (ctx) => {
   ctx.body = {
-    session: ctx.session.profile
+    user: ctx.session.user
   }
 }
 
