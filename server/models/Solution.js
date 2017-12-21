@@ -74,6 +74,20 @@ const solutionSchema = mongoose.Schema({
 
 solutionSchema.plugin(mongoosePaginate)
 
+/**
+ * @example
+ * const s = await Solution.findOne({ sid }).exec()
+ * if (s.isAccepted) console.log(`${s.sid} has been Accepted`)
+ * else console.log(`Try again to solve it`)
+ */
+sloutionScheme.virtual('isAccepted').get(function () {
+  return this.judge === config.judge.Accepted
+})
+
+sloutionScheme.virtual('isPending').get(function () {
+  return this.judge === config.judge.Pending
+})
+
 solutionSchema.pre('save', function (next) {
   // 保存
   if (this.sid === -1) {
