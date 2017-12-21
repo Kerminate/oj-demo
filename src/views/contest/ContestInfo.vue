@@ -15,9 +15,7 @@
       <el-tab-pane label="Problem" name="contest.problem"></el-tab-pane>
       <el-tab-pane label="Status" name="contest.status"></el-tab-pane>
       <el-tab-pane label="Ranklist" name="contest.ranklist"></el-tab-pane>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
     </el-tabs>
   </div>
 </template>
@@ -41,7 +39,8 @@ export default {
       } else if (Date.now() > this.contest.end) {
         return 100
       } else {
-        return (Date.now() - this.contest.start) / (this.contest.end - this.contest.start)
+        return +((Date.now() - this.contest.start) * 100 /
+        (this.contest.end - this.contest.start)).toFixed(1)
       }
     }
   },

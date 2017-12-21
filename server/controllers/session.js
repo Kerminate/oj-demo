@@ -1,8 +1,5 @@
-// const moment = require('moment')
-// const objectIdToTimestamp = require('objectid-to-timestamp')
-// const sha1 = require('sha1')
+const only = require('only')
 const User = require('../models/User')
-// const createToken = require('../token/createToken')
 const { generatePwd } = require('../utils/helper')
 
 const login = async (ctx) => {
@@ -20,18 +17,18 @@ const login = async (ctx) => {
     ctx.throw(400, 'Wrong password')
   }
 
-  ctx.session.user = user
+  ctx.session.profile = only(user, 'uid nick')
   ctx.body = {}
 }
 
 const logout = async (ctx) => {
-  delete ctx.session.user
+  delete ctx.session.profile
   ctx.body = {}
 }
 
 const profile = async (ctx) => {
   ctx.body = {
-    user: ctx.session.user
+    profile: ctx.session.profile
   }
 }
 

@@ -1,5 +1,5 @@
 const login = async (ctx, next) => {
-  if (!ctx.session || ctx.session.user == null) ctx.throw(401, 'Login required')
+  if (!ctx.session || ctx.session.profile == null) ctx.throw(401, 'Login required')
   await next()
 }
 

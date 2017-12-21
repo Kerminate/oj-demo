@@ -60,7 +60,7 @@ const findOne = async (ctx) => {
   }
 }
 
-const getRanklist = async (ctx) => {
+const ranklist = async (ctx) => {
   let res = []
   let prime = []
   const cid = parseInt(ctx.query.cid)
@@ -87,7 +87,7 @@ const getRanklist = async (ctx) => {
   })
 
   const process = users.map(async (value, index) => {
-    await Solution.aggregate([
+    return Solution.aggregate([
       { $match: {
         mid: cid,
         uid: value,
@@ -176,5 +176,5 @@ const getRanklist = async (ctx) => {
 module.exports = {
   list,
   findOne,
-  getRanklist
+  ranklist
 }

@@ -5,6 +5,6 @@ const router = new Router()
 
 router.get('/list', contest.list)
 router.get('/:cid', contest.findOne)
-router.get('/:cid/rank', contest.getRanklist)
+router.get('/:cid/rank', contest.ranklist)
 
 module.exports = router
