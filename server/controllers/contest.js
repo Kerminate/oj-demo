@@ -1,6 +1,7 @@
 const Contest = require('../models/Contest')
 const Problem = require('../models/Problem')
 const Solution = require('../models/Solution')
+const User = require('../models/User')
 const only = require('only')
 
 // 返回竞赛列表
@@ -61,10 +62,16 @@ const findOne = async (ctx) => {
 
 const getRanklist = async (ctx) => {
   let res = []
+  let prime = []
   const cid = parseInt(ctx.query.cid)
   const users = await Solution.find({mid: cid}).distinct('uid').exec()
   const contest = await Contest.findOne({cid}).exec()
   const start = contest.start
+
+  contest.list.forEach((value, index) => {
+    prime[index] = ''
+  })
+
   users.forEach((value, index) => {
     let prolist = []
     res[index] = { uid: value }
@@ -78,6 +85,7 @@ const getRanklist = async (ctx) => {
     })
     res[index].list = prolist
   })
+
   const process = users.map(async (value, index) => {
     await Solution.aggregate([
       { $match: {
@@ -108,33 +116,60 @@ const getRanklist = async (ctx) => {
         })
         res[index].error = error
       })
+      .then(() => {
+        return User.findOne({uid: value}).exec()
+      })
+      .then((item) => {
+        res[index].nick = item.nick
+      })
   })
   await Promise.all(process)
 
   res.forEach((value, index) => {
-    res[index].ac = value.solve.length
-    res[index].time = 0
+    value.ac = value.solve.length
+    value.time = 0
     value.error.forEach((item, ind) => {
       value.list[contest.list.indexOf(item.pid)].submit++
     })
     value.solve.forEach((item, ind) => {
-      value.list[contest.list.indexOf(item.pid)].create = item.create
+      value.list[contest.list.indexOf(item.pid)].create = item.create - start
       value.list[contest.list.indexOf(item.pid)].solve = true
-      res[index].time += item.submit * 20 * 60 * 1000 + item.create - start
+    })
+    value.list.forEach((item, ind) => {
+      if (item.solve) {
+        // 直接相加导致字符串连接（不知道为啥）
+        value.time += parseInt(item.submit * 20 * 60 * 1000) + parseInt(item.create)
+      }
     })
   })
 
-  console.log(res)
-  res.sort((a, b) => {
+  res.sort(function (a, b) {
     if (a.ac !== b.ac) {
-      return a.ac < b.ac
+      return a.ac < b.ac ? 1 : -1 // 如果仅仅return a.ac < b.ac 排序会错误，原因暂时不知道
     } else {
-      return a.time > b.time
+      return a.time > b.time ? 1 : -1
     }
   })
 
+  const rate = await Solution.aggregate([
+    { $match: {
+      mid: cid,
+      judge: 3
+    }},
+    { $group: {
+      _id: '$pid',
+      pid: { $first: '$pid' },
+      uid: { $first: '$uid' }
+    }}
+  ])
+
+  rate.forEach((value, index) => {
+    prime[contest.list.indexOf(value.pid)] = value.uid
+  })
+
   ctx.body = {
-    res
+    res,
+    prime
   }
 }
 

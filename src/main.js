@@ -8,12 +8,13 @@ import ElementUI from 'element-ui'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import './element-variables.scss'
 import 'swiper/dist/css/swiper.css'
-import { formate, timePretty } from '@/util/formate'
+import { formate, timePretty, timeContest } from '@/util/formate'
 
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
 Vue.filter('formate', formate)
 Vue.filter('timePretty', timePretty)
+Vue.filter('timeContest', timeContest)
 
 Vue.config.productionTip = false
 
