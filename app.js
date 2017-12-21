@@ -17,7 +17,7 @@ const CONFIG = {
   key: 'koa:oj:sess',
   maxAge: 1 * 60 * 1000, // ms
   httpOnly: true, /** (boolean) httpOnly or not (default true) */
-  signed: true, /** (boolean) signed or not (default true) */
+  signed: true /** (boolean) signed or not (default true) */
 }
 
 app.use(session(CONFIG, app))

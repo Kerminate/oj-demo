@@ -1,11 +1,11 @@
-async function login (ctx, next) {
+const login = async (ctx, next) => {
   if (!ctx.session || ctx.session.user == null) ctx.throw(401, 'Login required')
-  return next()
+  await next()
 }
 
-async function admin (ctx, next) {
+const admin = async (ctx, next) => {
   // TODO 判断一个用户是不是 admin
-  return next()
+  if (ctx) await next()
 }
 
 module.exports = {

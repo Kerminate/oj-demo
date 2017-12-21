@@ -2,7 +2,7 @@ const Problem = require('../models/Problem')
 const only = require('only')
 const logger = require('../utils/logger')
 
-async function preload (ctx, next) {
+const preLoad = async (ctx, next) => {
   const pid = parseInt(ctx.params.pid)
   if (isNaN(pid)) ctx.throw(400, 'Pid has to be a number')
   const problem = await Problem.findOne({ pid }).exec()
