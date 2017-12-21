@@ -7,7 +7,8 @@ const state = {
   contest: {},
   contestOverview: [],
   contestTotalPro: 0,
-  contestPro: []
+  contestPro: [],
+  contestRank: []
 }
 
 // getters
@@ -17,7 +18,8 @@ const getters = {
   contest: state => state.contest,
   contestOverview: state => state.contestOverview,
   contestTotalPro: state => state.contestTotalPro,
-  contestPro: state => state.contestPro
+  contestPro: state => state.contestPro,
+  contestRank: state => state.contestRank
 }
 
 // mutations
@@ -39,6 +41,9 @@ const mutations = {
   },
   [types.GET_CONTEST_PRO]: (state, payload) => {
     state.contestPro = payload
+  },
+  [types.GET_CONTEST_RANK]: (state, payload) => {
+    state.contestRank = payload
   }
 }
 
@@ -57,6 +62,11 @@ const actions = {
       commit(types.GET_CONTEST_TOTAL_PRO, data.total)
       commit(types.GET_CONTEST_PRO, data.pro)
       return data.res
+    })
+  },
+  getContestRank ({ commit }, payload) {
+    return api.getContestRank(payload).then(({data}) => {
+      commit(types.GET_CONTEST_RANK, data)
     })
   }
 }

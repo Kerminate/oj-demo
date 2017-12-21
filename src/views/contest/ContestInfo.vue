@@ -14,7 +14,7 @@
       <el-tab-pane label="Overview" name="contest.overview"></el-tab-pane>
       <el-tab-pane label="Problem" name="contest.problem"></el-tab-pane>
       <el-tab-pane label="Status" name="contest.status"></el-tab-pane>
-      <el-tab-pane label="Ranklist" name="problemEdit"></el-tab-pane>
+      <el-tab-pane label="Ranklist" name="contest.ranklist"></el-tab-pane>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -51,11 +51,9 @@ export default {
   },
   methods: {
     handleClick (tab) {
-      if (tab.name === 'contest.overview') {
-        this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid } })
-      } else if (tab.name === 'contest.problem') {
+      if (tab.name === 'contest.problem') {
         this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid, id: this.$route.params.id || 1 } })
-      } else if (tab.name === 'contest.status') {
+      } else {
         this.$router.push({ name: tab.name, params: { cid: this.$route.params.cid } })
       }
     }

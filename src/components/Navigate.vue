@@ -30,7 +30,7 @@
             </router-link>
           </el-menu-item>
           <el-menu-item index="faq">FAQ</el-menu-item>
-          <el-submenu index="/" v-show="uid === 'admin'">
+          <el-submenu index="/" v-show="user === 'admin'">
             <template slot="title">Admin</template>
             <el-menu-item index="admin/problem/add">
               <router-link :to="{ name: 'problemAdd', params: {} }">Create Problems</router-link>
@@ -42,11 +42,11 @@
       </el-col>
       <el-col :span="4">
         <el-menu class="el-menu-demo head" mode="horizontal">
-          <el-button v-show="!uid" class="login" type="text" @click="execLogin">Login</el-button>
-          <el-button v-show="!uid" class="register" type="text" @click="execRegister">Register</el-button>
-          <el-button v-show="uid" class="login" type="text">{{ this.uid }}</el-button>
-          <el-button v-show="uid" class="register" type="text" @click="userLogout">Logout</el-button>
-          <!-- <el-button v-show="uid === 'admin'" class="admin" type="text">admin</el-button> -->
+          <el-button v-show="!user" class="login" type="text" @click="execLogin">Login</el-button>
+          <el-button v-show="!user" class="register" type="text" @click="execRegister">Register</el-button>
+          <el-button v-show="user" class="login" type="text">{{ this.user }}</el-button>
+          <el-button v-show="user" class="register" type="text" @click="userLogout">Logout</el-button>
+          <!-- <el-button v-show="user === 'admin'" class="admin" type="text">admin</el-button> -->
           <login :ifShow="loginDialog"></login>
           <register :ifShow="registerDialog"></register>
         </el-menu>
@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'uid',
+      'user',
       'loginDialog',
       'registerDialog'
     ])

@@ -1,24 +1,21 @@
 <template lang="html">
   <div class="conrank-wrap">
-    <el-table :data="tableData" border>
-      <el-table-column label="Rank" type="index" :index="indexMethod" align="left" width="">
-      </el-table-column>
-      <el-table-column label="" align="left">
-        <template slot-scope="scope">
-          <span>{{ scope.row.uid }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Nick" align="left">
-        <template slot-scope="scope">
-          <span>{{ scope.row.nick }}</span>
-        </template>
-      </el-table-column>
-  </el-table>
+    hello!
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
+  computed: {
+    ...mapGetters([
+      'contestRank'
+    ])
+  },
+  created () {
+    this.$store.dispatch('getContestRank', this.$route.params)
+  }
 }
 </script>
 

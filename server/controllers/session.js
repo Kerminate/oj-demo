@@ -2,7 +2,7 @@
 // const objectIdToTimestamp = require('objectid-to-timestamp')
 // const sha1 = require('sha1')
 const User = require('../models/User')
-const createToken = require('../token/createToken')
+// const createToken = require('../token/createToken')
 const { generatePwd } = require('../utils/helper')
 
 const login = async (ctx) => {

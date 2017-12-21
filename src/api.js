@@ -63,6 +63,10 @@ const api = {
   getContestInfo (data) {
     return instance.get(`/contest/${data.cid}`, { params: data })
   },
+  // 获取竞赛排名
+  getContestRank (data) {
+    return instance.get(`/contest/${data.cid}/rank`, { params: data })
+  },
   // 更新题目
   updateProblem (data) {
     return instance.put(`/problem/${data.pid}`, data)
