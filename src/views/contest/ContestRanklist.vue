@@ -18,7 +18,12 @@
         <td>{{ item.ac }}</td>
         <td>{{ item.time | timeContest }}</td>
         <td v-for="(item2, index2) in item.list">
-          {{ item2.create | timeContest }}
+          <div v-if="item2.create > 0">
+            {{ item2.create | timeContest }}<span v-if="item2.submit">({{ item2.submit }})</span>
+          </div>
+          <div v-if="item2.create === 0">
+            <span v-if="item2.submit">-{{ item2.submit }}</span>
+          </div>
         </td>
       </tr>
     </table>
