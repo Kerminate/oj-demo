@@ -16,15 +16,15 @@
         <td>{{ item.uid }}</td>
         <td>{{ item.nick }}</td>
         <td>{{ item.ac }}</td>
-        <td>{{ item.time | timeContest }}</td>
-        <td v-for="(item2, index2) in item.list">
-          <div v-if="item2.create > 0">
+        <td class="straight">{{ item.time | timeContest }}</td>
+        <template v-for="(item2, index2) in item.list">
+          <td v-if="item2.create > 0" :class="[ contestPrime[index2] === item.uid ? 'prime' : 'normal']">
             {{ item2.create | timeContest }}<span v-if="item2.submit">({{ item2.submit }})</span>
-          </div>
-          <div v-if="item2.create === 0">
+          </td>
+          <td v-if="item2.create === 0" :class="{'red': item2.submit}">
             <span v-if="item2.submit">-{{ item2.submit }}</span>
-          </div>
-        </td>
+          </td>
+        </template>
       </tr>
     </table>
   </div>
@@ -47,4 +47,28 @@ export default {
 </script>
 
 <style lang="stylus">
+  .conrank-wrap
+    table
+      width: 100%
+      border-collapse: collapse
+      border-spacing: 0
+      th, td
+        border: 1px solid #dbdbdb
+        padding: 8px 4px
+    .straight
+      nowrap: nowrap
+    .prime
+      color: #fff
+      background-color: #3273dc
+      word-wrap: break-word
+      word-break:break-all
+      text-align: left
+    .normal
+      color: #fff
+      background-color: #23d160
+      word-wrap: break-word
+      word-break:break-all
+      text-align: left
+    .red
+      color: red
 </style>

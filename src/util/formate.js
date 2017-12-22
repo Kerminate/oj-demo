@@ -15,8 +15,7 @@ function timeContest (time) {
   let s = Math.floor((time - h * 1000 * 60 * 60 - m * 1000 * 60) / 1000)
   let ss = ('0' + s).split('').reverse().join('').substr(0, 2).split('').reverse().join('')
   let mm = ('0' + m).split('').reverse().join('').substr(0, 2).split('').reverse().join('')
-  let hh = ('0' + h).split('').reverse().join('').substr(0, 2).split('').reverse().join('')
-  return hh + ':' + mm + ':' + ss
+  return h + ':' + mm + ':' + ss
 }
 
 export {

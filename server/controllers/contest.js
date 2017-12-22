@@ -27,19 +27,19 @@ const findOne = async (ctx) => {
   const list = doc.list
   const total = list.length
   let res = []
-  const process = list.map(async (pid, index) => {
-    await Problem.findOne({pid}).exec()
+  const process = list.map((pid, index) => {
+    return Problem.findOne({pid}).exec()
       .then((problem) => {
         res[index] = only(problem, 'title pid')
       })
       .then(() => {
-        return Solution.count({pid, module: 2}).exec() // 为什么用mid不用module？
+        return Solution.count({pid, mid: opt}).exec()
       })
       .then((count) => {
         res[index].submit = count
       })
       .then(() => {
-        return Solution.count({pid, module: 2, judge: 3}).exec()
+        return Solution.count({pid, mid: opt, judge: 3}).exec()
       })
       .then((count) => {
         res[index].solve = count
@@ -86,7 +86,7 @@ const ranklist = async (ctx) => {
     res[index].list = prolist
   })
 
-  const process = users.map(async (value, index) => {
+  const process = users.map((value, index) => {
     return Solution.aggregate([
       { $match: {
         mid: cid,

@@ -80,11 +80,11 @@ solutionSchema.plugin(mongoosePaginate)
  * if (s.isAccepted) console.log(`${s.sid} has been Accepted`)
  * else console.log(`Try again to solve it`)
  */
-sloutionScheme.virtual('isAccepted').get(function () {
+solutionSchema.virtual('isAccepted').get(function () {
   return this.judge === config.judge.Accepted
 })
 
-sloutionScheme.virtual('isPending').get(function () {
+solutionSchema.virtual('isPending').get(function () {
   return this.judge === config.judge.Pending
 })
 
