@@ -30,12 +30,14 @@
             </router-link>
           </el-menu-item>
           <el-menu-item index="faq">FAQ</el-menu-item>
-          <el-submenu index="/" v-show="user === 'admin'">
+          <el-submenu index="/">
             <template slot="title">Admin</template>
             <el-menu-item index="admin/problem/add">
               <router-link :to="{ name: 'problemAdd', params: {} }">Create Problems</router-link>
             </el-menu-item>
-            <el-menu-item index="9-2">Create Contests</el-menu-item>
+            <el-menu-item index="admin/contest/add">
+              <router-link :to="{ name: 'contestAdd', params: {} }">Create Contests</router-link>
+            </el-menu-item>
             <el-menu-item index="9-3">User Management</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -44,9 +46,8 @@
         <el-menu class="el-menu-demo head" mode="horizontal">
           <el-button v-show="!user" class="login" type="text" @click="execLogin">Login</el-button>
           <el-button v-show="!user" class="register" type="text" @click="execRegister">Register</el-button>
-          <el-button v-show="user" class="login" type="text">{{ this.user }}</el-button>
+          <el-button v-show="user" class="login" type="text">{{ user }}</el-button>
           <el-button v-show="user" class="register" type="text" @click="userLogout">Logout</el-button>
-          <!-- <el-button v-show="user === 'admin'" class="admin" type="text">admin</el-button> -->
           <login :ifShow="loginDialog"></login>
           <register :ifShow="registerDialog"></register>
         </el-menu>

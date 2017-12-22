@@ -18,6 +18,7 @@ import Submit from '@/views/problem/Submit.vue'
 
 // admin
 import ProblemAdd from '@/views/admin/ProblemAdd.vue'
+import ContestAdd from '@/views/admin/ContestAdd.vue'
 
 // contests
 import ContestList from '@/views/ContestList.vue'
@@ -92,6 +93,11 @@ const routes = [
     path: 'admin/problem/add',
     name: 'problemAdd',
     component: ProblemAdd
+  },
+  {
+    path: 'admin/contest/add',
+    name: 'contestAdd',
+    component: ContestAdd
   },
   {
     path: '/contest',

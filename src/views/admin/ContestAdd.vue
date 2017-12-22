@@ -1,0 +1,109 @@
+<template lang="html">
+  <div class="conadd-wrap">
+    <el-row type="flex" justify="start">
+      <el-col :span="2">Title</el-col>
+      <el-col :span="21">
+        <el-input v-model="form.title" size="small"></el-input>
+      </el-col>
+    </el-row>
+    <el-row  type="flex" justify="start">
+      <el-col :span="2">Start Time</el-col>
+      <el-col :span="2">
+        <el-date-picker
+          v-model="form.start"
+          type="datetime"
+          placeholder="选择日期时间"
+          size="small">
+        </el-date-picker>
+      </el-col>
+    </el-row>
+    <el-row  type="flex" justify="start">
+      <el-col :span="2">End Time</el-col>
+      <el-col :span="2">
+        <el-date-picker
+          v-model="form.end"
+          type="datetime"
+          placeholder="选择日期时间"
+          size="small">
+        </el-date-picker>
+      </el-col>
+    </el-row>
+    <el-row type="flex" justify="start">
+      <el-col :span="2">Type</el-col>
+      <el-select v-model="form.type" placeholder="请选择" size="small">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </el-row>
+    <el-row>
+      <el-col :span="23"><hr></el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="20">
+        <el-input v-model="form.problem" size="small" placeholder="Add a pid"></el-input>
+      </el-col>
+      <el-col :offset="1" :span="2">
+        <el-button type="primary" @click="add" size="small">Add</el-button>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="23"><hr></el-col>
+    </el-row>
+    <el-button type="primary" @click="submit">Submit</el-button>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      form: {
+        title: '',
+        start: '',
+        end: '',
+        type: '',
+        problem: ''
+      },
+      options: [
+        {
+          value: 1,
+          label: 'Public'
+        },
+        {
+          value: 2,
+          label: 'Private'
+        },
+        {
+          value: 3,
+          label: 'Password'
+        }
+      ]
+    }
+  },
+  methods: {
+    add () {
+      //
+    },
+    submit () {
+    //
+    }
+  }
+}
+</script>
+
+<style lang="stylus">
+  .conadd-wrap
+    .el-row
+      margin-bottom: 14px
+      .el-col
+        line-height: 32px
+        text-align: left
+        hr
+          background-color: #dbdbdb
+          border: none
+          height: 1px
+</style>
