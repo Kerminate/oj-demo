@@ -44,12 +44,12 @@
       </el-col>
       <el-col :span="4">
         <el-menu class="el-menu-demo head" mode="horizontal">
-          <el-button v-show="!user" class="login" type="text" @click="execLogin">Login</el-button>
-          <el-button v-show="!user" class="register" type="text" @click="execRegister">Register</el-button>
-          <el-button v-show="user" class="login" type="text">{{ user }}</el-button>
-          <el-button v-show="user" class="register" type="text" @click="userLogout">Logout</el-button>
-          <login :ifShow="loginDialog"></login>
-          <register :ifShow="registerDialog"></register>
+          <el-button v-if="!profile" class="login" type="text" @click="execLogin">Login</el-button>
+          <el-button v-if="!profile" class="register" type="text" @click="execRegister">Register</el-button>
+          <el-button v-if="profile" class="login" type="text">{{ profile.uid }}</el-button>
+          <el-button v-if="profile" class="register" type="text" @click="userLogout">Logout</el-button>
+          <login v-if="loginDialog" :ifShow="loginDialog"></login>
+          <register v-if="registerDialog" :ifShow="registerDialog"></register>
         </el-menu>
       </el-col>
     </el-row>
@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'user',
+      'profile',
       'loginDialog',
       'registerDialog'
     ])

@@ -16,7 +16,7 @@ const getters = {
 // mutations
 const mutations = {
   [types.LOGIN]: (state, payload) => {
-
+    state.profile = payload.user // TODO
   },
   [types.LOGOUT]: (state) => {
     // 登出的时候要清除token
