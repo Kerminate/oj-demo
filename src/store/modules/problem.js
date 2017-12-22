@@ -33,7 +33,7 @@ const mutations = {
 // actions
 const actions = {
   getProblem ({ commit }, payload) {
-    return api.getProblemInfo(payload).then(({ data }) => {
+    return api.problem.findOne(payload).then(({ data }) => {
       commit(types.GET_PROBLEM, data)
     })
   },

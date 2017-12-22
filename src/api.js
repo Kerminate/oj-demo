@@ -8,7 +8,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 const instance = {}
 
 // 对异常的基本处理
-['get', 'post', 'put', 'delete'].forEach((key) => {
+;['get', 'post', 'put', 'delete'].forEach((key) => {
   instance[key] = function (...args) { // 闭包给原函数捕获异常
     return axios[key](...args)
       .catch((err) => {
@@ -126,10 +126,10 @@ const api = {
     create: (data) => instance.post('...', data) // TODO
   },
   problem: {
-    findOne: (data) => instance.post('...', data),
-    find: (data) => instance.post('...', data),
+    findOne: (data) => instance.get(`/problem/${data.pid}`, data),
+    find: (data) => instance.get('...', data),
     create: (data) => instance.post('...', data),
-    update: (data) => instance.post('...', data),
+    update: (data) => instance.put('...', data)
   }
 }
 
