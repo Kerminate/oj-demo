@@ -43,10 +43,22 @@
       <el-col :span="23"><hr></el-col>
     </el-row>
     <el-row>
-      <el-col :span="20">
+      <el-col :span="23">
+        <draggable v-model="form.jobs">
+          <transition-group name="list">
+            <div v-for="(job, index) in form.jobs" :key="index" class="list-item">
+              <div>{{ job.uid }} -- {{ job.title }}</div>
+              <i class="el-icon-error" @click="removeJob(index)"></i>
+            </div>
+          </transition-group>
+        </draggable>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="21">
         <el-input v-model="form.problem" size="small" placeholder="Add a pid"></el-input>
       </el-col>
-      <el-col :offset="1" :span="2">
+      <el-col :span="2">
         <el-button type="primary" @click="add" size="small">Add</el-button>
       </el-col>
     </el-row>
@@ -58,6 +70,9 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -66,7 +81,8 @@ export default {
         start: '',
         end: '',
         type: '',
-        problem: ''
+        problem: '',
+        jobs: []
       },
       options: [
         {
@@ -86,11 +102,27 @@ export default {
   },
   methods: {
     add () {
-      //
+      this.$store.dispatch('getProblem', { pid: this.form.problem })
+        .then((data) => {
+          this.form.jobs.push({ uid: data.pid, title: data.title })
+        }).catch((err) => {
+          this.$message({
+            type: 'info',
+            message: err.message,
+            duration: 2000,
+            showClose: true
+          })
+        })
     },
     submit () {
     //
+    },
+    removeJob (index) {
+      this.form.jobs.splice(index, 1)
     }
+  },
+  components: {
+    draggable
   }
 }
 </script>
@@ -102,8 +134,24 @@ export default {
       .el-col
         line-height: 32px
         text-align: left
-        hr
-          background-color: #dbdbdb
-          border: none
-          height: 1px
+      hr
+        background-color: #dbdbdb
+        border: none
+        height: 1px
+      .el-button
+        margin-left: 20px
+        padding: 8px 15px
+        font-size: 14px
+    .list-item
+      display: flex
+      justify-content: space-between
+      padding: 14px 20px
+      margin-bottom: 14px
+      background-color: #f2f2f2
+    .el-icon-error
+      line-height: 20px
+      color: #c3c2c2
+      cursor: pointer
+      &:hover
+        font-size: 20px
 </style>

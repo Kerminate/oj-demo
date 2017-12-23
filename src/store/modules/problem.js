@@ -35,6 +35,7 @@ const actions = {
   getProblem ({ commit }, payload) {
     return api.problem.findOne(payload).then(({ data }) => {
       commit(types.GET_PROBLEM, data)
+      return data
     })
   },
   getProblemList ({ commit }, payload) {
