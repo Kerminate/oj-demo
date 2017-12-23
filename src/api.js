@@ -114,8 +114,13 @@ const api = {
   getContestInfo (data) {
     return instance.get(`/contest/${data.cid}`, { params: data })
   },
+  // 新增比赛
   createContest (data) {
     return instance.post('/contest/', data)
+  },
+  // 更新比赛
+  updateContest (data) {
+    return instance.put(`/contest/${data.cid}`, data)
   },
   // 获取竞赛排名
   getContestRank (data) {
@@ -130,9 +135,17 @@ const api = {
   },
   problem: {
     findOne: (data) => instance.get(`/problem/${data.pid}`, data),
-    find: (data) => instance.get('...', data),
-    create: (data) => instance.post('...', data),
-    update: (data) => instance.put('...', data)
+    find: (data) => instance.get('/problem/list', { params: data }),
+    create: (data) => instance.post('/problem/', data),
+    update: (data) => instance.put(`/problem/${data.pid}`, data),
+    delete: (data) => instance.delete(`/problem/${data.pid}`, data)
+  },
+  contest: {
+    findOne: (data) => instance.get(`/contest/${data.cid}`, { params: data }),
+    find: (data) => instance.get('/contest/list', { params: data }),
+    create: (data) => instance.post('/contest/', data),
+    update: (data) => instance.put(`/contest/${data.cid}`, data),
+    rank: (data) => instance.get(`/contest/${data.cid}/rank`, { params: data })
   }
 }
 

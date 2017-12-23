@@ -39,7 +39,7 @@ const actions = {
     })
   },
   getProblemList ({ commit }, payload) {
-    return api.getProblems(payload).then(({ data }) => {
+    return api.problem.find(payload).then(({ data }) => {
       commit(types.GET_PROBLEM_LIST, data.res.docs)
       commit(types.GET_SUM_PROBLEM, data.res.total)
     })

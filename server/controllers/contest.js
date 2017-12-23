@@ -202,9 +202,33 @@ const create = async (ctx) => {
   }
 }
 
+// 更新一个比赛
+const update = async (ctx) => {
+  const opt = ctx.request.body
+  const contest = await Contest.findOne({cid: opt.cid}).exec()
+  const fileds = ['title', 'encrypt', 'list', 'argument', 'start', 'end']
+  opt.start = new Date(opt.start).getTime()
+  opt.end = new Date(opt.end).getTime()
+  fileds.forEach((filed) => {
+    contest[filed] = opt[filed]
+  })
+  console.log(contest)
+  try {
+    await contest.save()
+    logger.info(`One problem is updated" ${contest.cid} -- ${contest.title}`)
+  } catch (e) {
+    ctx.throw(400, e.message)
+  }
+
+  ctx.body = {
+    success: true
+  }
+}
+
 module.exports = {
   list,
   findOne,
   ranklist,
-  create
+  create,
+  update
 }

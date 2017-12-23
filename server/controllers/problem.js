@@ -90,10 +90,28 @@ const update = async (ctx) => {
   }
 }
 
+// 删除一道题目
+const del = async (ctx) => {
+  console.log(ctx.params)
+  const pid = ctx.params.pid
+  console.log(pid)
+
+  try {
+    await Problem.deleteOne({pid}).exec()
+    console.log(pid)
+    logger.info(`One Problem is delete ${pid}`)
+  } catch (e) {
+    ctx.throw(400, e.message)
+  }
+
+  ctx.body = {}
+}
+
 module.exports = {
   preload,
   list,
   findOne,
   create,
-  update
+  update,
+  del
 }

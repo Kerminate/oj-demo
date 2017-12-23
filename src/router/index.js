@@ -27,6 +27,7 @@ import ContestOverview from '@/views/contest/ContestOverview.vue'
 import ContestProblem from '@/views/contest/ContestProblem.vue'
 import ContestStatus from '@/views/contest/ContestStatus.vue'
 import ContestRanklist from '@/views/contest/ContestRanklist.vue'
+import ContestEdit from '@/views/contest/ContestEdit.vue'
 
 Vue.use(Router)
 
@@ -127,6 +128,11 @@ const routes = [
         path: 'ranklist',
         name: 'contest.ranklist',
         component: ContestRanklist
+      },
+      {
+        path: 'edit',
+        name: 'contest.edit',
+        component: ContestEdit
       }
     ]
   }

@@ -15,6 +15,7 @@
       <el-tab-pane label="Problem" name="contest.problem"></el-tab-pane>
       <el-tab-pane label="Status" name="contest.status"></el-tab-pane>
       <el-tab-pane label="Ranklist" name="contest.ranklist"></el-tab-pane>
+      <el-tab-pane label="Edit" name="contest.edit"></el-tab-pane>
       <router-view></router-view>
     </el-tabs>
   </div>

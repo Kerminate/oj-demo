@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     submit () {
-      api.updateProblem(this.problem).then(({ data }) => {
+      api.problem.update(this.problem).then(({ data }) => {
         if (data.success) {
           this.$message({
             type: 'success',

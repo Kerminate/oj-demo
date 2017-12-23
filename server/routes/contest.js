@@ -7,5 +7,6 @@ router.get('/list', contest.list)
 router.get('/:cid', contest.findOne)
 router.get('/:cid/rank', contest.ranklist)
 router.post('/', contest.create)
+router.put('/:cid', contest.update)
 
 module.exports = router

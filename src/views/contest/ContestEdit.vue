@@ -3,14 +3,14 @@
     <el-row type="flex" justify="start">
       <el-col :span="2">Title</el-col>
       <el-col :span="21">
-        <el-input v-model="form.title" size="small"></el-input>
+        <el-input v-model="contest.title" size="small"></el-input>
       </el-col>
     </el-row>
     <el-row  type="flex" justify="start">
       <el-col :span="2">Start Time</el-col>
       <el-col :span="2">
         <el-date-picker
-          v-model="form.start"
+          v-model="contest.start"
           type="datetime"
           placeholder="选择日期时间"
           size="small">
@@ -21,7 +21,7 @@
       <el-col :span="2">End Time</el-col>
       <el-col :span="2">
         <el-date-picker
-          v-model="form.end"
+          v-model="contest.end"
           type="datetime"
           placeholder="选择日期时间"
           size="small">
@@ -30,7 +30,7 @@
     </el-row>
     <el-row type="flex" justify="start">
       <el-col :span="2">Type</el-col>
-      <el-select v-model="form.encrypt" placeholder="请选择" size="small">
+      <el-select v-model="contest.encrypt" placeholder="请选择" size="small">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -39,9 +39,9 @@
         </el-option>
       </el-select>
     </el-row>
-    <el-row v-if="form.encrypt === 3">
+    <el-row v-if="contest.encrypt === 3">
       <el-col :span="23">
-        <el-input v-model="form.argument" size="small"></el-input>
+        <el-input v-model="contest.argument" size="small"></el-input>
       </el-col>
     </el-row>
     <el-row>
@@ -49,9 +49,9 @@
     </el-row>
     <el-row>
       <el-col :span="23">
-        <draggable v-model="form.list">
+        <draggable v-model="contest.list">
           <transition-group name="list">
-            <div v-for="(item, index) in form.list" :key="index" class="list-item">
+            <div v-for="(item, index) in contest.list" :key="index" class="list-item">
               <div>{{ item }} -- {{ jobs.get(item) }}</div>
               <i class="el-icon-error" @click="removeJob(index)"></i>
             </div>
@@ -61,7 +61,7 @@
     </el-row>
     <el-row>
       <el-col :span="21">
-        <el-input v-model="form.problem" size="small" placeholder="Add a pid" @keyup.enter.native="add"></el-input>
+        <el-input v-model="contest.problem" size="small" placeholder="Add a pid" @keyup.enter.native="add"></el-input>
       </el-col>
       <el-col :span="2">
         <el-button type="primary" @click="add" size="small">Add</el-button>
@@ -77,19 +77,11 @@
 <script>
 import draggable from 'vuedraggable'
 import api from '@/api'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
     return {
-      form: {
-        title: '',
-        start: '',
-        end: '',
-        encrypt: '',
-        argument: '',
-        problem: '',
-        list: []
-      },
       jobs: new Map(),
       options: [
         {
@@ -107,17 +99,31 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapGetters([
+      'contest',
+      'contestOverview'
+    ])
+  },
+  created () {
+    this.$store.dispatch('getContest', { cid: this.$route.params.cid })
+      .then(() => {
+        this.contestOverview.forEach((item) => {
+          this.jobs.set(item.pid, item.title)
+        })
+      })
+  },
   methods: {
     add () {
-      this.$store.dispatch('getProblem', { pid: this.form.problem })
+      this.$store.dispatch('getProblem', { pid: this.contest.problem })
         .then((data) => {
-          this.form.list.push(data.pid)
+          this.contest.list.push(data.pid)
           this.jobs.set(data.pid, data.title)
         })
-      this.form.problem = ''
+      this.contest.problem = ''
     },
     submit () {
-      api.contest.create(this.form).then(({ data }) => {
+      api.contest.update(this.contest).then(({ data }) => {
         if (data.success) {
           this.$message({
             type: 'success',
@@ -126,18 +132,11 @@ export default {
             showClose: true
           })
           this.$router.push({name: 'contest.overview', params: { cid: data.cid }})
-        } else {
-          this.$message({
-            type: 'info',
-            message: '提交失败',
-            duration: 2000,
-            showClose: true
-          })
         }
       })
     },
     removeJob (index) {
-      this.form.list.splice(index, 1)
+      this.contest.list.splice(index, 1)
     }
   },
   components: {

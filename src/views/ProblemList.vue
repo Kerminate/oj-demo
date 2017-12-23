@@ -64,6 +64,11 @@
           <el-tag size="small" v-for="(item, index) in scope.row.tags" :key="index">{{ item }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="Delete" align="left">
+        <template slot-scope="scope">
+          <el-button type="text" @click="del(scope.row.pid)">delete</el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -72,6 +77,7 @@
 import { mapGetters } from 'vuex'
 import only from 'only'
 import { purify } from '@/util/helper'
+import api from '@/api'
 
 export default {
   data () {
@@ -137,6 +143,33 @@ export default {
     },
     pageChange (val) {
       this.reload({ page: val })
+    },
+    log () {
+      console.log('hi')
+    },
+    del (val) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        api.problem.delete({pid: val})
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!',
+          duration: 2000,
+          showClose: true
+        })
+        this.fetch()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除',
+          duration: 2000,
+          showClose: true
+        })
+      })
     }
   },
   watch: { // 浏览器后退时回退页面

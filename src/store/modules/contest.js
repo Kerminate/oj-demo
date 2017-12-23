@@ -55,13 +55,13 @@ const mutations = {
 // actions
 const actions = {
   updateContestList ({ commit }, payload) {
-    return api.getContestList(payload).then(({ data }) => {
+    return api.contest.find(payload).then(({ data }) => {
       commit(types.UPDATE_CONTEST_LIST, data.res.docs)
       commit(types.UPDATE_SUM_CONTEST, data.total)
     })
   },
   getContest ({ commit }, payload) {
-    return api.getContestInfo(payload).then(({ data }) => {
+    return api.contest.findOne(payload).then(({ data }) => {
       commit(types.GET_CONTEST, data.doc)
       commit(types.GET_CONTEST_OVERVIEW, data.res)
       commit(types.GET_CONTEST_TOTAL_PRO, data.total)
@@ -70,7 +70,7 @@ const actions = {
     })
   },
   getContestRank ({ commit }, payload) {
-    return api.getContestRank(payload).then(({data}) => {
+    return api.contest.rank(payload).then(({data}) => {
       commit(types.GET_CONTEST_RANK, data.res)
       commit(types.GET_CONTEST_PRIME, data.prime)
     })
