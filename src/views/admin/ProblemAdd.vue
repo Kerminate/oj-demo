@@ -24,7 +24,10 @@
     <div class="label">Description</div>
     <el-row>
       <el-col :span="23">
-        <quill-editor ref="myTextEditor" v-model="form.description" :config="editorOption"></quill-editor>
+        <vue-editor id="editor"
+          useCustomImageHandler
+          @imageAdded="handleImageAdded" v-model="form.description">
+        </vue-editor>
       </el-col>
     </el-row>
     <div class="label">Input</div>
@@ -63,10 +66,12 @@
 
 <script>
 import api from '@/api.js'
+import { VueEditor } from 'vue2-editor'
 import { quillEditor } from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+import axios from 'axios'
 
 export default {
   data () {
@@ -89,6 +94,16 @@ export default {
     // onEditorChange ({ editor, html, text }) {
     //   this.content = html
     // },
+    handleImageAdded (file, Editor, cursorLocation) {
+      const formData = new FormData()
+      formData.append('image', file)
+      axios.post('/submit', formData) // TODO
+        .then(({ data }) => {
+          const url = data // Get url from response
+          Editor.insertEmbed(cursorLocation, 'image', url)
+        })
+        .catch((err) => console.log(err))
+    },
     submit () {
       api.problem.create(this.form).then(({ data }) => {
         if (data.success) {
@@ -124,12 +139,14 @@ export default {
     // }
   },
   components: {
-    quillEditor
+    quillEditor,
+    VueEditor
   }
 }
 </script>
 
 <style lang="stylus">
+  // @import "~vue-wysiwyg/dist/vueWysiwyg.css"
   .proadd-wrap
     margin-bottom: 20px
     .el-input

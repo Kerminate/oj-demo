@@ -1,6 +1,8 @@
 const Koa = require('koa')
 const koaLogger = require('koa-logger')
-const bodyparser = require('koa-bodyparser')
+const bodyparser = require('koa-body')
+const staticCache = require('koa-static-cache')
+const path = require('path')
 const session = require('koa-session')
 const router = require('./server/routes')
 const logger = require('./server/utils/logger')
@@ -22,7 +24,18 @@ const CONFIG = {
 
 app.use(session(CONFIG, app))
 
-app.use(bodyparser())
+app.use(bodyparser({
+  formidable: {
+    uploadDir: path.resolve(__dirname, 'server/public/uploads')
+  },
+  multipart: true,
+  urlencoded: true
+}))
+
+app.use(staticCache(path.join(__dirname, 'server/public'), {
+  maxAge: 7 * 24 * 60 * 60 // 7 天不更新，也就是缓存期限
+}))
+
 
 app.use(async (ctx, next) => {
   try {
