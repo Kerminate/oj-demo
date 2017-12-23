@@ -20,3 +20,6 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 # oj-demo
+
+### 遇到的坑
+使用elment-ui 无法给input增加键盘监听事件 只需在后面加上.native 例如@keyup.enter.native="add" 详见[vue的官方教程](https://cn.vuejs.org/v2/guide/components.html#%E7%BB%99%E7%BB%84%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%94%9F%E4%BA%8B%E4%BB%B6)

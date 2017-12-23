@@ -37,6 +37,23 @@ const contestSchema = mongoose.Schema({
 
 contestSchema.plugin(mongoosePaginate)
 
+contestSchema.pre('validate', function (next) {
+  // 验证字段
+  ;['title', 'start', 'end', 'list', 'encrypt'].forEach((item) => {
+    if (typeof this[item] === 'undefined' || this[item] === '') {
+      next(new Error(`Field "${item}" is required to create a contest`))
+    }
+  })
+
+  if (new Date(this.start).getTime() < Date.now()) {
+    next(new Error('The game time should be in the future!'))
+  } else if (new Date(this.start).getTime() >= new Date(this.end).getTime()) {
+    next(new Error('The race end time can not be earlier than the start time!'))
+  } else {
+    next()
+  }
+})
+
 contestSchema.pre('save', function (next) {
   // 保存
   if (this.cid === -1) {

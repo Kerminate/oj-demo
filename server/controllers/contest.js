@@ -3,6 +3,7 @@ const Problem = require('../models/Problem')
 const Solution = require('../models/Solution')
 const User = require('../models/User')
 const only = require('only')
+const logger = require('../utils/logger')
 
 // 返回竞赛列表
 const list = async (ctx) => {
@@ -20,6 +21,7 @@ const list = async (ctx) => {
   }
 }
 
+// 返回一个竞赛
 const findOne = async (ctx) => {
   const opt = parseInt(ctx.query.cid)
   const doc = await Contest.findOne({ cid: opt }).exec()
@@ -60,6 +62,7 @@ const findOne = async (ctx) => {
   }
 }
 
+// 返回比赛排行榜
 const ranklist = async (ctx) => {
   let res = []
   let prime = []
@@ -173,8 +176,35 @@ const ranklist = async (ctx) => {
   }
 }
 
+// 新建一个比赛
+const create = async (ctx) => {
+  const opt = ctx.request.body
+
+  const contest = new Contest(Object.assign(
+    only(opt, 'title encrypt list argument'),
+    { // cid 会自动生成
+      start: new Date(opt.start).getTime(),
+      end: new Date(opt.end).getTime(),
+      create: Date.now()
+    }
+  ))
+
+  try {
+    await contest.save()
+    logger.info(`New problem is created" ${contest.cid} -- ${contest.title}`)
+  } catch (e) {
+    ctx.throw(400, e.message)
+  }
+
+  ctx.body = {
+    success: true,
+    cid: contest.cid
+  }
+}
+
 module.exports = {
   list,
   findOne,
-  ranklist
+  ranklist,
+  create
 }

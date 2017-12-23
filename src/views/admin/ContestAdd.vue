@@ -30,7 +30,7 @@
     </el-row>
     <el-row type="flex" justify="start">
       <el-col :span="2">Type</el-col>
-      <el-select v-model="form.type" placeholder="请选择" size="small">
+      <el-select v-model="form.encrypt" placeholder="请选择" size="small">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -56,7 +56,7 @@
     </el-row>
     <el-row>
       <el-col :span="21">
-        <el-input v-model="form.problem" size="small" placeholder="Add a pid"></el-input>
+        <el-input v-model="form.problem" size="small" placeholder="Add a pid" @keyup.enter.native="add"></el-input>
       </el-col>
       <el-col :span="2">
         <el-button type="primary" @click="add" size="small">Add</el-button>
@@ -71,7 +71,7 @@
 
 <script>
 import draggable from 'vuedraggable'
-import { mapGetters } from 'vuex'
+import api from '@/api'
 
 export default {
   data () {
@@ -80,9 +80,10 @@ export default {
         title: '',
         start: '',
         end: '',
-        type: '',
+        encrypt: '',
         problem: '',
-        jobs: []
+        jobs: [],
+        list: []
       },
       options: [
         {
@@ -105,17 +106,29 @@ export default {
       this.$store.dispatch('getProblem', { pid: this.form.problem })
         .then((data) => {
           this.form.jobs.push({ uid: data.pid, title: data.title })
-        }).catch((err) => {
+          this.form.list.push(data.pid)
+        })
+      this.form.problem = ''
+    },
+    submit () {
+      api.createContest(this.form).then(({ data }) => {
+        if (data.success) {
           this.$message({
-            type: 'info',
-            message: err.message,
+            type: 'success',
+            message: '提交成功',
             duration: 2000,
             showClose: true
           })
-        })
-    },
-    submit () {
-    //
+          this.$router.push({name: 'contest.overview', params: { cid: data.cid }})
+        } else {
+          this.$message({
+            type: 'info',
+            message: '提交失败',
+            duration: 2000,
+            showClose: true
+          })
+        }
+      })
     },
     removeJob (index) {
       this.form.jobs.splice(index, 1)

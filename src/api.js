@@ -114,6 +114,9 @@ const api = {
   getContestInfo (data) {
     return instance.get(`/contest/${data.cid}`, { params: data })
   },
+  createContest (data) {
+    return instance.post('/contest/', data)
+  },
   // 获取竞赛排名
   getContestRank (data) {
     return instance.get(`/contest/${data.cid}/rank`, { params: data })

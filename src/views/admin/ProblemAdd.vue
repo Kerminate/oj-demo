@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import api from '@/api.js'
+import api from '@/api'
 import { quillEditor } from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -107,14 +107,6 @@ export default {
             showClose: true
           })
         }
-      }).catch(err => {
-        console.log(err)
-        this.$message({
-          type: 'info',
-          message: '提交失败',
-          duration: 2000,
-          showClose: true
-        })
       })
     }
   },
