@@ -1,7 +1,7 @@
 const Koa = require('koa')
 const koaLogger = require('koa-logger')
 const bodyparser = require('koa-body')
-const staticCache = require('koa-static-cache')
+const staticServe = require('koa-static')
 const path = require('path')
 const session = require('koa-session')
 const router = require('./server/routes')
@@ -32,7 +32,7 @@ app.use(bodyparser({
   urlencoded: true
 }))
 
-app.use(staticCache(path.join(__dirname, 'server/public'), {
+app.use(staticServe(path.join(__dirname, 'server/public'), {
   maxAge: 7 * 24 * 60 * 60 // 7 天不更新，也就是缓存期限
 }))
 

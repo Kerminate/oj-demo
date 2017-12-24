@@ -14,3 +14,5 @@ notes.md
 *.ntvs*
 *.njsproj
 *.sln
+
+server/public/uploads
