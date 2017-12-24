@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="conin-wrap">
-    <el-card class="box-card">
+    <el-card>
       <el-row>
         <el-col :span="6">Begin: {{ contest.start | timePretty }}</el-col>
         <el-col :span="12" v-if="Date.now() < contest.start">Ready</el-col>
@@ -10,7 +10,7 @@
       </el-row>
       <el-progress :text-inside="true" :stroke-width="18" :percentage="timePercentage"></el-progress>
     </el-card>
-    <el-tabs :value="display" type="border-card" @tab-click="handleClick">
+    <el-tabs :value="display" @tab-click="handleClick">
       <el-tab-pane label="Overview" name="contest.overview"></el-tab-pane>
       <el-tab-pane label="Problem" name="contest.problem"></el-tab-pane>
       <el-tab-pane label="Status" name="contest.status"></el-tab-pane>

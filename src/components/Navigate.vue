@@ -99,7 +99,7 @@ export default {
 
 <style lang="stylus">
   .container
-    box-shadow: 0 2px 3px hsla(0,0%,4%,.1)
+    // box-shadow: 0 2px 3px hsla(0,0%,4%,.1)
     margin-bottom: 30px
     .el-menu--horizontal
       border-bottom: none

@@ -1,9 +1,18 @@
 <template>
   <div id="app">
-    <navigate></navigate>
-    <div class="main">
-      <router-view/>
-    </div>
+    <el-container>
+      <el-header>
+        <navigate></navigate>
+      </el-header>
+      <el-main>
+        <div class="main">
+          <el-card class="box-card">
+            <router-view/>
+          </el-card>
+        </div>
+      </el-main>
+      <el-footer>Footer</el-footer>
+    </el-container>
   </div>
 </template>
 
@@ -27,6 +36,7 @@ export default {
     -moz-osx-font-smoothing: grayscale
     text-align: center
     color: #2c3e50
+    // background: #F2EEF8
     .main
       margin-left: 8%
       margin-right: 8%

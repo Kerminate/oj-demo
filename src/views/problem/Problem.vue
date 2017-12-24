@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="pro-wrap">
-    <el-tabs :value="display" type="border-card" @tab-click="handleClick">
+    <el-tabs :value="display" @tab-click="handleClick">
       <el-tab-pane label="Description" name="problemInfo"></el-tab-pane>
       <el-tab-pane label="Submit" name="submit"></el-tab-pane>
       <el-tab-pane label="Statistics" name="statistics"></el-tab-pane>
