@@ -28,6 +28,11 @@
           <span>{{ type[scope.row.encrypt] }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="Delete" align="left">
+        <template slot-scope="scope">
+          <el-button type="text" @click="del(scope.row.cid)">delete</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       background
@@ -47,6 +52,7 @@ import { mapGetters } from 'vuex'
 import constant from '../util/constant'
 import only from 'only'
 import pickBy from 'lodash.pickby'
+import api from '@/api'
 
 export default {
   data () {
@@ -92,6 +98,30 @@ export default {
     },
     pageChange (val) {
       this.reload({ page: val })
+    },
+    del (val) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        api.contest.delete({cid: val})
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!',
+          duration: 2000,
+          showClose: true
+        })
+        this.fetch()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除',
+          duration: 2000,
+          showClose: true
+        })
+      })
     }
   },
   watch: {

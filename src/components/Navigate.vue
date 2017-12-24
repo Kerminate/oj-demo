@@ -8,7 +8,6 @@
               <p>Home</p>
             </router-link>
           </el-menu-item>
-          <el-menu-item index="news">News</el-menu-item>
           <el-menu-item index="problem">
             <router-link :to="{ name: 'problemList', params: {} }">
               <p>Problems</p>

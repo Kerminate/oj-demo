@@ -221,8 +221,25 @@ const update = async (ctx) => {
   }
 
   ctx.body = {
-    success: true
+    success: true,
+    cid: contest.cid
   }
+}
+
+// 删除一个比赛
+const del = async (ctx) => {
+  console.log(ctx.params)
+  const cid = ctx.params.cid
+  console.log(cid)
+
+  try {
+    await Contest.deleteOne({cid}).exec()
+    logger.info(`One Contest is delete ${cid}`)
+  } catch (e) {
+    ctx.throw(400, e.message)
+  }
+
+  ctx.body = {}
 }
 
 module.exports = {
@@ -230,5 +247,6 @@ module.exports = {
   findOne,
   ranklist,
   create,
-  update
+  update,
+  del
 }

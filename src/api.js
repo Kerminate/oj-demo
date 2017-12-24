@@ -145,7 +145,8 @@ const api = {
     find: (data) => instance.get('/contest/list', { params: data }),
     create: (data) => instance.post('/contest/', data),
     update: (data) => instance.put(`/contest/${data.cid}`, data),
-    rank: (data) => instance.get(`/contest/${data.cid}/rank`, { params: data })
+    rank: (data) => instance.get(`/contest/${data.cid}/rank`, { params: data }),
+    delete: (data) => instance.delete(`/contest/${data.cid}`, data)
   }
 }
 
