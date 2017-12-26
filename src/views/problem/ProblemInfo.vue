@@ -22,12 +22,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters([
+    ...mapGetters('problem', [
       'problem'
     ])
   },
   created () {
-    this.$store.dispatch('getProblem', this.$route.params)
+    this.$store.dispatch('problem/getProblem', this.$route.params)
   }
 }
 </script>

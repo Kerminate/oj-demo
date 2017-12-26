@@ -106,7 +106,7 @@ export default {
     this.fetch()
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('problem', [
       'problemList',
       'sumProblem'
     ]),
@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     fetch () {
-      this.$store.dispatch('getProblemList', this.query)
+      this.$store.dispatch('problem/getProblemList', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       if (query.pageSize) this.pageSize = parseInt(query.pageSize)
