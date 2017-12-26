@@ -16,13 +16,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('solution', [
       'codeDialog',
       'solution'
     ])
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations('solution', {
       closeDialog: 'CLOSE_CODE'
     })
   },

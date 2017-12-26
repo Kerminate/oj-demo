@@ -66,7 +66,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('ranklist', [
       'ranklist',
       'sumRank'
     ]),
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     fetch () {
-      this.$store.dispatch('updateRanklist', this.query)
+      this.$store.dispatch('ranklist/updateRanklist', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 30

@@ -138,12 +138,12 @@ export default {
     this.fetch()
   },
   computed: {
-    ...mapGetters([
-      'solutionList',
-      'sumSolutions',
-      'codeDialog',
-      'contestPro'
-    ]),
+    ...mapGetters({
+      solutionList: 'solution/solutionList',
+      sumSolutions: 'solution/sumSolutions',
+      codeDialog: 'solution/codeDialog',
+      contestPro: 'contest/contestPro'
+    }),
     query () {
       const opt = Object.assign(
         only(this.$route.query, 'page pageSize uid judge language'),
@@ -163,10 +163,10 @@ export default {
       return this.contestPro.indexOf(pid) + 1
     },
     showDialog (solution) {
-      this.$store.commit('SHOW_CODE', solution)
+      this.$store.commit('solution/SHOW_CODE', solution)
     },
     fetch () {
-      this.$store.dispatch('updateSolutionList', this.query)
+      this.$store.dispatch('solution/updateSolutionList', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 30

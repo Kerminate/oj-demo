@@ -100,13 +100,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('contest', [
       'contest',
       'contestOverview'
     ])
   },
   created () {
-    this.$store.dispatch('getContest', { cid: this.$route.params.cid })
+    this.$store.dispatch('contest/getContest', { cid: this.$route.params.cid })
       .then(() => {
         this.contestOverview.forEach((item) => {
           this.jobs.set(item.pid, item.title)
@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     add () {
-      this.$store.dispatch('getProblem', { pid: this.contest.problem })
+      this.$store.dispatch('problem/getProblem', { pid: this.contest.problem })
         .then((data) => {
           this.contest.list.push(data.pid)
           this.jobs.set(data.pid, data.title)

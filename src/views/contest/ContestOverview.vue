@@ -38,13 +38,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('contest', [
       'contest',
       'contestOverview'
     ])
   },
   created () {
-    this.$store.dispatch('getContest', this.$route.params)
+    this.$store.dispatch('contest/getContest', this.$route.params)
   }
 }
 </script>

@@ -35,13 +35,13 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters([
+    ...mapGetters('contest', [
       'contestRank',
       'contestPrime'
     ])
   },
   created () {
-    this.$store.dispatch('getContestRank', this.$route.params)
+    this.$store.dispatch('contest/getContestRank', this.$route.params)
   }
 }
 </script>

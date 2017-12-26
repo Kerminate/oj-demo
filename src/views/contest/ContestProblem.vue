@@ -38,11 +38,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'problem',
-      'contestOverview',
-      'contestTotalPro'
-    ])
+    ...mapGetters({
+      problem: 'problem/problem',
+      contestOverview: 'contest/contestOverview',
+      contestTotalPro: 'contest/contestTotalPro'
+    })
   },
   created () {
     this.fetch()
@@ -50,8 +50,8 @@ export default {
   methods: {
     fetch () {
       this.proIndex = parseInt(this.$route.params.id)
-      this.$store.dispatch('getContest', this.$route.params).then(() => {
-        this.$store.dispatch('getProblem', { pid: this.contestOverview[this.proIndex - 1].pid })
+      this.$store.dispatch('contest/getContest', this.$route.params).then(() => {
+        this.$store.dispatch('problem/getProblem', { pid: this.contestOverview[this.proIndex - 1].pid })
       })
     },
     reload (val) {

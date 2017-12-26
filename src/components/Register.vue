@@ -80,12 +80,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('user', [
       'registerDialog'
     ])
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations('user', {
       execDialog: 'SHOW_REGISTER'
     }),
     resetForm (formName) {
@@ -94,7 +94,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 验证通过
-          this.$store.dispatch('UserRegister', this.regForm).then(data => {
+          this.$store.dispatch('user/register', this.regForm).then(data => {
             if (data.success) {
               this.$message({
                 type: 'success',

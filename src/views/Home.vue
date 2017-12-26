@@ -49,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('news', [
       'newsList'
     ])
   },
@@ -58,7 +58,7 @@ export default {
       page: this.currentPage,
       pageSize: this.pageSize
     }
-    this.$store.dispatch('updateNewsList', opt)
+    this.$store.dispatch('news/updateNewsList', opt)
   }
 }
 </script>

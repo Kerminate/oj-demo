@@ -64,7 +64,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('contest', [
       'contestList',
       'sumContest'
     ]),
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     fetch () {
-      this.$store.dispatch('updateContestList', this.query)
+      this.$store.dispatch('contest/updateContestList', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 20

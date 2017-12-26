@@ -95,7 +95,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('statistics', [
       'statisticsList',
       'countList',
       'sumCharts',
@@ -118,7 +118,7 @@ export default {
         pageSize: this.pageSize,
         pid: this.$route.params.pid
       }
-      this.$store.dispatch('updateStatistics', opt)
+      this.$store.dispatch('statistics/updateStatistics', opt)
     },
     drawLine () {
       let myChart = echarts.init(document.getElementById('myChart'))

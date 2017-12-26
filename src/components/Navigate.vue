@@ -67,16 +67,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'profile',
-      'loginDialog',
-      'registerDialog'
-    ])
+    ...mapGetters({
+      profile: 'profile',
+      loginDialog: 'loginDialog',
+      registerDialog: 'user/registerDialog'
+    })
   },
   methods: {
     ...mapMutations({
       execLogin: 'SHOW_LOGIN',
-      execRegister: 'SHOW_REGISTER',
+      execRegister: 'user/SHOW_REGISTER',
       logout: 'LOGOUT'
     }),
     userLogout () {

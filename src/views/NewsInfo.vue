@@ -12,12 +12,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters([
+    ...mapGetters('news', [
       'news'
     ])
   },
   created () {
-    this.$store.dispatch('updateNew', this.$route.params)
+    this.$store.dispatch('news/updateNew', this.$route.params)
   }
 }
 </script>

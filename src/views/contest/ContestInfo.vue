@@ -31,7 +31,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('contest', [
       'contest'
     ]),
     timePercentage () {
@@ -47,7 +47,7 @@ export default {
   },
   created () {
     this.display = this.$route.name
-    this.$store.dispatch('getContest', this.$route.params)
+    this.$store.dispatch('contest/getContest', this.$route.params)
   },
   methods: {
     handleClick (tab) {

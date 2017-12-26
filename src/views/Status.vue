@@ -137,7 +137,7 @@ export default {
     this.fetch()
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('solution', [
       'solutionList',
       'sumSolutions',
       'codeDialog'
@@ -149,11 +149,11 @@ export default {
   },
   methods: {
     showDialog (solution) {
-      this.$store.commit('SHOW_CODE', solution)
+      this.$store.commit('solution/SHOW_CODE', solution)
     },
     fetch () {
       const query = this.$route.query
-      this.$store.dispatch('updateSolutionList', query)
+      this.$store.dispatch('solution/updateSolutionList', query)
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 30
       this.uid = query.uid
