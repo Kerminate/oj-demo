@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="con-wrap">
-    <el-table :data="contestList" class="eltable">
+    <el-table :data="list" class="eltable">
       <el-table-column label="Cid" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.cid }}</span>
@@ -40,7 +40,7 @@
       @size-change="sizeChange"
       @current-change="pageChange"
       layout="sizes, prev, pager, next, jumper"
-      :total="sumContest"
+      :total="sum"
       :page-sizes="[20, 30, 40, 50]"
       :page-size="pageSize">
     </el-pagination>
@@ -65,8 +65,8 @@ export default {
   },
   computed: {
     ...mapGetters('contest', [
-      'contestList',
-      'sumContest'
+      'list',
+      'sum'
     ]),
     query () {
       const opt = only(this.$route.query, 'page pageSize type content')
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     fetch () {
-      this.$store.dispatch('contest/updateContestList', this.query)
+      this.$store.dispatch('contest/find', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 20

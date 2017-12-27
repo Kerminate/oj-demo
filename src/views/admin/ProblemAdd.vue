@@ -97,11 +97,9 @@ export default {
     handleImageAdded (file, Editor, cursorLocation) {
       const formData = new window.FormData()
       formData.append('image', file)
-      console.log(formData)
       axios.post('/submit', formData) // TODO
         .then(({ data }) => {
           const url = data.url // Get url from response
-          console.log(data)
           Editor.insertEmbed(cursorLocation, 'image', url)
         })
         .catch((err) => console.log(err))

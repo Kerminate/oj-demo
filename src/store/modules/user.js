@@ -5,15 +5,15 @@ const store = {
   namespaced: true,
   state: {
     registerDialog: false,
-    usersList: [],
-    user: {},
+    list: [],
+    one: {},
     solved: [],
     unsolved: []
   },
   getters: {
     registerDialog: state => state.registerDialog,
-    usersList: state => state.usersList,
-    user: state => state.user,
+    list: state => state.list,
+    one: state => state.one,
     solved: state => state.solved,
     unsolved: state => state.unsolved
   },
@@ -22,10 +22,10 @@ const store = {
       state.registerDialog = !state.registerDialog
     },
     [types.UPDATE_USER]: (state, payload) => {
-      state.user = payload
+      state.one = payload
     },
     [types.UPDATE_USERS_LIST]: (state, payload) => {
-      state.usersList = payload
+      state.list = payload
     },
     [types.UPDATE_SOLVED]: (state, payload) => {
       state.solved = payload
@@ -43,7 +43,7 @@ const store = {
         return data
       })
     },
-    updateUser ({ commit }, payload) {
+    find ({ commit }, payload) {
       return api.getUserInfo(payload).then(({ data }) => {
         commit(types.UPDATE_USER, data.info)
         commit(types.UPDATE_SOLVED, data.solved)

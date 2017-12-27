@@ -47,13 +47,13 @@
           @size-change="sizeChange"
           @current-change="pageChange"
           layout=" sizes, prev, pager, next, jumper"
-          :total="sumSolutions"
+          :total="sum"
           :page-sizes="[10, 20, 30, 40]"
           :page-size="pageSize">
         </el-pagination>
       </el-col>
     </el-row>
-    <el-table :data="solutionList" class="eltable">
+    <el-table :data="list" class="eltable">
       <el-table-column label="SID" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.sid }}</span>
@@ -139,17 +139,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      solutionList: 'solution/solutionList',
-      sumSolutions: 'solution/sumSolutions',
+      list: 'solution/list',
+      sum: 'solution/sum',
       codeDialog: 'solution/codeDialog',
-      contestPro: 'contest/contestPro'
+      problems: 'contest/problems'
     }),
     query () {
       const opt = Object.assign(
         only(this.$route.query, 'page pageSize uid judge language'),
         {
           mid: this.$route.params.cid,
-          pid: this.contestPro[this.$route.query.pid - 1]
+          pid: this.problems[this.$route.query.pid - 1]
         }
       )
       return pickBy(
@@ -160,13 +160,13 @@ export default {
   },
   methods: {
     getId (pid) {
-      return this.contestPro.indexOf(pid) + 1
+      return this.problems.indexOf(pid) + 1
     },
     showDialog (solution) {
       this.$store.commit('solution/SHOW_CODE', solution)
     },
     fetch () {
-      this.$store.dispatch('solution/updateSolutionList', this.query)
+      this.$store.dispatch('solution/find', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 30

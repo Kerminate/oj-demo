@@ -3,7 +3,7 @@
     <h3>{{ contest.title }}</h3>
     <p>Start Time:&nbsp;&nbsp;{{ contest.create | timePretty }}</p>
     <p>End Time:&nbsp;&nbsp;{{ contest.end | timePretty }}</p>
-    <el-table :data="contestOverview" class="eltable">
+    <el-table :data="overview" class="eltable">
       <el-table-column label="#" align="left" width="">
         <template slot-scope="scope">
           <i class="el-icon-check" v-show="scope.row.isdone"></i>
@@ -38,13 +38,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('contest', [
-      'contest',
-      'contestOverview'
-    ])
+    ...mapGetters('contest', {
+      contest: 'one',
+      overview: 'overview'
+    })
   },
   created () {
-    this.$store.dispatch('contest/getContest', this.$route.params)
+    this.$store.dispatch('contest/find', this.$route.params)
   }
 }
 </script>

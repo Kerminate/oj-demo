@@ -13,7 +13,7 @@
     </swiper>
     <div class="message">
       <ul>
-        <li v-for="(item, index) in newsList">
+        <li v-for="(item, index) in list">
           <router-link :to="{ name: 'newsInfo', params: { nid: item.nid } }">
             <span>{{ item.title }}</span>
             <i class="el-icon-arrow-right"></i>
@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     ...mapGetters('news', [
-      'newsList'
+      'list'
     ])
   },
   created () {
@@ -58,7 +58,7 @@ export default {
       page: this.currentPage,
       pageSize: this.pageSize
     }
-    this.$store.dispatch('news/updateNewsList', opt)
+    this.$store.dispatch('news/find', opt)
   }
 }
 </script>

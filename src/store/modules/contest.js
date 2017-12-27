@@ -4,59 +4,59 @@ import api from '../../api.js'
 const store = {
   namespaced: true,
   state: {
-    contestList: [],
-    sumContest: 0,
-    contest: {},
-    contestOverview: [],
-    contestTotalPro: 0,
-    contestPro: [],
-    contestRank: [],
-    contestPrime: []
+    list: [],
+    sum: 0,
+    one: {},
+    overview: [],
+    totalProblems: 0,
+    problems: [],
+    ranklist: [],
+    first: []
   },
   getters: {
-    contestList: state => state.contestList,
-    sumContest: state => state.sumContest,
-    contest: state => state.contest,
-    contestOverview: state => state.contestOverview,
-    contestTotalPro: state => state.contestTotalPro,
-    contestPro: state => state.contestPro,
-    contestRank: state => state.contestRank,
-    contestPrime: state => state.contestPrime
+    list: state => state.list,
+    sum: state => state.sum,
+    one: state => state.one,
+    overview: state => state.overview,
+    totalProblems: state => state.totalProblems,
+    problems: state => state.problems,
+    ranklist: state => state.ranklist,
+    first: state => state.first
   },
   mutations: {
     [types.UPDATE_CONTEST_LIST]: (state, payload) => {
-      state.contestList = payload
+      state.list = payload
     },
     [types.UPDATE_SUM_CONTEST]: (state, payload) => {
-      state.sumContest = payload
+      state.sum = payload
     },
     [types.GET_CONTEST]: (state, payload) => {
-      state.contest = payload
+      state.one = payload
     },
     [types.GET_CONTEST_OVERVIEW]: (state, payload) => {
-      state.contestOverview = payload
+      state.overview = payload
     },
     [types.GET_CONTEST_TOTAL_PRO]: (state, payload) => {
-      state.contestTotalPro = payload
+      state.totalProblems = payload
     },
     [types.GET_CONTEST_PRO]: (state, payload) => {
-      state.contestPro = payload
+      state.problems = payload
     },
     [types.GET_CONTEST_RANK]: (state, payload) => {
-      state.contestRank = payload
+      state.ranklist = payload
     },
     [types.GET_CONTEST_PRIME]: (state, payload) => {
-      state.contestPrime = payload
+      state.first = payload
     }
   },
   actions: {
-    updateContestList ({ commit }, payload) {
+    find ({ commit }, payload) {
       return api.contest.find(payload).then(({ data }) => {
         commit(types.UPDATE_CONTEST_LIST, data.res.docs)
         commit(types.UPDATE_SUM_CONTEST, data.total)
       })
     },
-    getContest ({ commit }, payload) {
+    findOne ({ commit }, payload) {
       return api.contest.findOne(payload).then(({ data }) => {
         commit(types.GET_CONTEST, data.doc)
         commit(types.GET_CONTEST_OVERVIEW, data.res)
@@ -65,7 +65,7 @@ const store = {
         return data.res
       })
     },
-    getContestRank ({ commit }, payload) {
+    getRank ({ commit }, payload) {
       return api.contest.rank(payload).then(({data}) => {
         commit(types.GET_CONTEST_RANK, data.res)
         commit(types.GET_CONTEST_PRIME, data.prime)

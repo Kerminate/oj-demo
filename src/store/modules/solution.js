@@ -4,34 +4,34 @@ import api from '../../api.js'
 const store = {
   namespaced: true,
   state: {
-    solutionList: [],
-    solution: {},
-    sumSolutions: 0,
+    list: [],
+    one: {},
+    sum: 0,
     codeDialog: false
   },
   getters: {
-    solutionList: state => state.solutionList,
-    solution: state => state.solution,
-    sumSolutions: state => state.sumSolutions,
+    list: state => state.list,
+    one: state => state.one,
+    sum: state => state.sum,
     codeDialog: state => state.codeDialog
   },
   mutations: {
     [types.UPDATE_SOLUTION_LIST]: (state, payload) => {
-      state.solutionList = payload
+      state.list = payload
     },
     [types.UPDATE_SUM_SOLUTIONS]: (state, payload) => {
-      state.sumSolutions = payload
+      state.sum = payload
     },
     [types.SHOW_CODE]: (state, payload) => {
       state.codeDialog = true
-      state.solution = payload
+      state.one = payload
     },
     [types.CLOSE_CODE]: (state) => {
       state.codeDialog = false
     }
   },
   actions: {
-    updateSolutionList ({ commit }, payload) {
+    find ({ commit }, payload) {
       return api.getSolutions(payload).then(({ data }) => {
         commit(types.UPDATE_SOLUTION_LIST, data.res.docs)
         commit(types.UPDATE_SUM_SOLUTIONS, data.res.total)

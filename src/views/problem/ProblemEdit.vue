@@ -76,12 +76,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('problem', [
-      'problem'
-    ])
+    ...mapGetters('problem', {
+      problem: 'one'
+    })
   },
   created () {
-    this.$store.dispatch('problem/getProblem', { pid: this.$route.params.pid })
+    this.$store.dispatch('problem/findOne', { pid: this.$route.params.pid })
   },
   methods: {
     submit () {

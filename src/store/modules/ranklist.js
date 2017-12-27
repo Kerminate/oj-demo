@@ -4,23 +4,23 @@ import api from '../../api.js'
 const store = {
   namespaced: true,
   state: {
-    ranklist: [],
-    sumRank: 0
+    list: [],
+    sum: 0
   },
   getters: {
-    ranklist: state => state.ranklist,
-    sumRank: state => state.sumRank
+    list: state => state.list,
+    sum: state => state.sum
   },
   mutations: {
     [types.UPDATE_RANKLIST]: (state, payload) => {
-      state.ranklist = payload
+      state.list = payload
     },
     [types.UPDATE_SUM_RANKLIST]: (state, payload) => {
-      state.sumRank = payload
+      state.sum = payload
     }
   },
   actions: {
-    updateRanklist ({ commit }, payload) {
+    find ({ commit }, payload) {
       return api.getRanklist(payload).then(({ data }) => {
         commit(types.UPDATE_RANKLIST, data.res.docs)
         commit(types.UPDATE_SUM_RANKLIST, data.res.total)

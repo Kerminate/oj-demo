@@ -39,14 +39,14 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('user', [
-      'user',
-      'solved',
-      'unsolved'
-    ])
+    ...mapGetters('user', {
+      user: 'one',
+      solved: 'solved',
+      unsolved: 'unsolved'
+    })
   },
   created () {
-    this.$store.dispatch('user/updateUser', this.$route.params)
+    this.$store.dispatch('user/find', this.$route.params)
   }
 }
 </script>

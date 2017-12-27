@@ -28,7 +28,7 @@
       </table>
     </div>
     <div class="right">
-      <el-table :data="statisticsList" class="eltable">
+      <el-table :data="list" class="eltable">
         <el-table-column label="Rank" type="index" :index="indexMethod" align="left" width="70">
         </el-table-column>
         <el-table-column label="Username" align="left" min-width="100">
@@ -96,11 +96,10 @@ export default {
   },
   computed: {
     ...mapGetters('statistics', [
-      'statisticsList',
+      'list',
       'countList',
       'sumCharts',
-      'sumStatis',
-      'statisTable'
+      'sumStatis'
     ])
   },
   created () {
@@ -118,7 +117,7 @@ export default {
         pageSize: this.pageSize,
         pid: this.$route.params.pid
       }
-      this.$store.dispatch('statistics/updateStatistics', opt)
+      this.$store.dispatch('statistics/find', opt)
     },
     drawLine () {
       let myChart = echarts.init(document.getElementById('myChart'))

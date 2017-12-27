@@ -16,10 +16,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('solution', [
-      'codeDialog',
-      'solution'
-    ])
+    ...mapGetters('solution', {
+      codeDialog: 'codeDialog',
+      solution: 'one'
+    })
   },
   methods: {
     ...mapMutations('solution', {

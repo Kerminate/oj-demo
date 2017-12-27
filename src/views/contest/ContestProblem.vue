@@ -7,7 +7,7 @@
         layout="pager"
         :current-page.sync="proIndex"
         @current-change="pageChange"
-        :page-count="contestTotalPro">
+        :page-count="totalProblems">
       </el-pagination>
       </el-col>
     </el-row>
@@ -39,9 +39,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      problem: 'problem/problem',
-      contestOverview: 'contest/contestOverview',
-      contestTotalPro: 'contest/contestTotalPro'
+      problem: 'problem/one',
+      overview: 'contest/overview',
+      totalProblems: 'contest/totalProblems'
     })
   },
   created () {
@@ -50,8 +50,8 @@ export default {
   methods: {
     fetch () {
       this.proIndex = parseInt(this.$route.params.id)
-      this.$store.dispatch('contest/getContest', this.$route.params).then(() => {
-        this.$store.dispatch('problem/getProblem', { pid: this.contestOverview[this.proIndex - 1].pid })
+      this.$store.dispatch('contest/find', this.$route.params).then(() => {
+        this.$store.dispatch('problem/findOne', { pid: this.overview[this.proIndex - 1].pid })
       })
     },
     reload (val) {

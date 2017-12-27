@@ -75,21 +75,6 @@ const api = {
   login (data) {
     return instance.post('/session', data)
   },
-  getProblems (data) {
-    return instance.get('/problem/list', { params: data })
-  },
-  // 获取题目信息
-  getProblemInfo (data) {
-    return instance.get(`/problem/${data.pid}`, { params: data })
-  },
-  // 获取消息列表
-  getNews (data) {
-    return instance.get('/news/list', { params: data })
-  },
-  // 获取消息内容
-  getNewInfo (data) {
-    return instance.get(`/news/${data.pid}`, { params: data })
-  },
   // 获取提交列表
   getSolutions (data) {
     return instance.get('/status/list', { params: data })
@@ -102,34 +87,49 @@ const api = {
   getRanklist (data) {
     return instance.get('/ranklist/list', { params: data })
   },
-  // 增加题目
-  addProblem (data) {
-    return instance.post('/problem/', data)
-  },
-  // 获取竞赛列表信息
-  getContestList (data) {
-    return instance.get('/contest/list', { params: data })
-  },
-  // 获取竞赛信息
-  getContestInfo (data) {
-    return instance.get(`/contest/${data.cid}`, { params: data })
-  },
-  // 新增比赛
-  createContest (data) {
-    return instance.post('/contest/', data)
-  },
-  // 更新比赛
-  updateContest (data) {
-    return instance.put(`/contest/${data.cid}`, data)
-  },
-  // 获取竞赛排名
-  getContestRank (data) {
-    return instance.get(`/contest/${data.cid}/rank`, { params: data })
-  },
-  // 更新题目
-  updateProblem (data) {
-    return instance.put(`/problem/${data.pid}`, data)
-  },
+  // getProblems (data) {
+  //   return instance.get('/problem/list', { params: data })
+  // },
+  // // 获取题目信息
+  // getProblemInfo (data) {
+  //   return instance.get(`/problem/${data.pid}`, { params: data })
+  // },
+  // // 获取消息列表
+  // getNews (data) {
+  //   return instance.get('/news/list', { params: data })
+  // },
+  // // 获取消息内容
+  // getNewInfo (data) {
+  //   return instance.get(`/news/${data.pid}`, { params: data })
+  // },
+  // // 增加题目
+  // addProblem (data) {
+  //   return instance.post('/problem/', data)
+  // },
+  // // 获取竞赛列表信息
+  // getContestList (data) {
+  //   return instance.get('/contest/list', { params: data })
+  // },
+  // // 获取竞赛信息
+  // getContestInfo (data) {
+  //   return instance.get(`/contest/${data.cid}`, { params: data })
+  // },
+  // // 新增比赛
+  // createContest (data) {
+  //   return instance.post('/contest/', data)
+  // },
+  // // 更新比赛
+  // updateContest (data) {
+  //   return instance.put(`/contest/${data.cid}`, data)
+  // },
+  // // 获取竞赛排名
+  // getContestRank (data) {
+  //   return instance.get(`/contest/${data.cid}/rank`, { params: data })
+  // },
+  // // 更新题目
+  // updateProblem (data) {
+  //   return instance.put(`/problem/${data.pid}`, data)
+  // },
   testdata: {
     create: (data) => instance.post('...', data) // TODO
   },
@@ -147,6 +147,10 @@ const api = {
     update: (data) => instance.put(`/contest/${data.cid}`, data),
     rank: (data) => instance.get(`/contest/${data.cid}/rank`, { params: data }),
     delete: (data) => instance.delete(`/contest/${data.cid}`, data)
+  },
+  news: {
+    findOne: (data) => instance.get(`/news/${data.pid}`, { params: data }),
+    find: (data) => instance.get('/news/list', { params: data })
   }
 }
 

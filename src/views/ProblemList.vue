@@ -8,7 +8,7 @@
           @size-change="sizeChange"
           @current-change="pageChange"
           layout=" sizes, prev, pager, next, jumper"
-          :total="sumProblem"
+          :total="sum"
           :page-sizes="[10, 20, 30, 40]"
           :page-size="pageSize">
         </el-pagination>
@@ -30,7 +30,7 @@
         <el-button type="primary" size="small" @click="search" @keyup.enter="search">Search</el-button>
       </el-col>
     </el-row>
-    <el-table :data="problemList" class="eltable">
+    <el-table :data="list" class="eltable">
       <el-table-column label="#" align="left" min-width="30">
         <template slot-scope="scope">
           <i class="el-icon-check" v-show="scope.row.isdone"></i>
@@ -107,8 +107,8 @@ export default {
   },
   computed: {
     ...mapGetters('problem', [
-      'problemList',
-      'sumProblem'
+      'list',
+      'sum'
     ]),
     query () {
       const opt = only(this.$route.query, 'page pageSize type content')
@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     fetch () {
-      this.$store.dispatch('problem/getProblemList', this.query)
+      this.$store.dispatch('problem/find', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       if (query.pageSize) this.pageSize = parseInt(query.pageSize)

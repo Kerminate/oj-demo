@@ -7,18 +7,18 @@
         <th>Nick</th>
         <th>Solve</th>
         <th>Penalty</th>
-        <th v-for="(item, index) in contestPrime">
+        <th v-for="(item, index) in first">
           {{ index + 1 }}
         </th>
       </tr>
-      <tr v-for="(item, index) in contestRank">
+      <tr v-for="(item, index) in ranklist">
         <td>{{ index + 1 }}</td>
         <td>{{ item.uid }}</td>
         <td>{{ item.nick }}</td>
         <td>{{ item.ac }}</td>
         <td class="straight">{{ item.time | timeContest }}</td>
         <template v-for="(item2, index2) in item.list">
-          <td v-if="item2.create > 0" :class="[ contestPrime[index2] === item.uid ? 'prime' : 'normal']">
+          <td v-if="item2.create > 0" :class="[ first[index2] === item.uid ? 'prime' : 'normal']">
             {{ item2.create | timeContest }}<span v-if="item2.submit">({{ item2.submit }})</span>
           </td>
           <td v-if="item2.create === 0" :class="{'red': item2.submit}">
@@ -35,13 +35,13 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters('contest', [
-      'contestRank',
-      'contestPrime'
-    ])
+    ...mapGetters('contest', {
+      ranklist: 'ranklist',
+      first: 'first'
+    })
   },
   created () {
-    this.$store.dispatch('contest/getContestRank', this.$route.params)
+    this.$store.dispatch('contest/getRank', this.$route.params)
   }
 }
 </script>

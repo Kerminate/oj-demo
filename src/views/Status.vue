@@ -47,13 +47,13 @@
           @size-change="sizeChange"
           @current-change="pageChange"
           layout=" sizes, prev, pager, next, jumper"
-          :total="sumSolutions"
+          :total="sum"
           :page-sizes="[10, 20, 30, 40]"
           :page-size="pageSize">
         </el-pagination>
       </el-col>
     </el-row>
-    <el-table :data="solutionList" class="eltable">
+    <el-table :data="list" class="eltable">
       <el-table-column label="SID" align="left">
         <template slot-scope="scope">
           <span>{{ scope.row.sid }}</span>
@@ -138,8 +138,8 @@ export default {
   },
   computed: {
     ...mapGetters('solution', [
-      'solutionList',
-      'sumSolutions',
+      'list',
+      'sum',
       'codeDialog'
     ]),
     query () {
@@ -153,7 +153,7 @@ export default {
     },
     fetch () {
       const query = this.$route.query
-      this.$store.dispatch('solution/updateSolutionList', query)
+      this.$store.dispatch('solution/find', query)
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 30
       this.uid = query.uid

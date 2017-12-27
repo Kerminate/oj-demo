@@ -100,15 +100,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('contest', [
-      'contest',
-      'contestOverview'
-    ])
+    ...mapGetters('contest', {
+      contest: 'one',
+      overview: 'overview'
+    })
   },
   created () {
-    this.$store.dispatch('contest/getContest', { cid: this.$route.params.cid })
+    this.$store.dispatch('contest/find', { cid: this.$route.params.cid })
       .then(() => {
-        this.contestOverview.forEach((item) => {
+        this.overview.forEach((item) => {
           this.jobs.set(item.pid, item.title)
         })
       })

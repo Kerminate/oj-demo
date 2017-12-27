@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="rank-wrap">
-    <el-table :data="ranklist" class="eltable">
+    <el-table :data="list" class="eltable">
       <el-table-column label="Rank" type="index" :index="indexMethod" align="left" width="">
       </el-table-column>
       <el-table-column label="Username" align="left" width="">
@@ -46,7 +46,7 @@
       @size-change="sizeChange"
       @current-change="pageChange"
       layout=" sizes, prev, pager, next, jumper"
-      :total="sumRank"
+      :total="sum"
       :page-sizes="[20, 30, 40, 50]"
       :page-size="pageSize">
     </el-pagination>
@@ -67,8 +67,8 @@ export default {
   },
   computed: {
     ...mapGetters('ranklist', [
-      'ranklist',
-      'sumRank'
+      'list',
+      'sum'
     ]),
     query () {
       const opt = only(this.$route.query, 'page pageSize')
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     fetch () {
-      this.$store.dispatch('ranklist/updateRanklist', this.query)
+      this.$store.dispatch('ranklist/find', this.query)
       const query = this.$route.query
       this.page = parseInt(query.page) || 1
       this.pageSize = parseInt(query.pageSize) || 30

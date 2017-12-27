@@ -31,9 +31,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('contest', [
-      'contest'
-    ]),
+    ...mapGetters('contest', {
+      contest: 'one'
+    }),
     timePercentage () {
       if (Date.now() < this.contest.start) {
         return 0
@@ -47,7 +47,7 @@ export default {
   },
   created () {
     this.display = this.$route.name
-    this.$store.dispatch('contest/getContest', this.$route.params)
+    this.$store.dispatch('contest/findOne', this.$route.params)
   },
   methods: {
     handleClick (tab) {
