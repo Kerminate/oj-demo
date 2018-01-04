@@ -26,18 +26,33 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ### 网站页面展示
 ![](http://or7tt6rug.bkt.clouddn.com/status.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/ranklist.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/problem.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/problemOverview.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/statistics.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/problemEdit.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/contest.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/contestOverview.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/contestProblem.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/contestStatus.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/contestRanklist.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/contestEdit.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/user.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/Home.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/login.png)
+
 ![](http://or7tt6rug.bkt.clouddn.com/register.png)
