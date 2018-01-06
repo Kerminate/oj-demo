@@ -5,6 +5,6 @@ const router = new Router()
 
 router.get('/:uid', user.findOne)
 
-router.post('/register', user.reg)
+router.post('/', user.reg)
 
 module.exports = router

@@ -31,6 +31,7 @@ const findOne = async (ctx) => {
 
 // 注册
 const reg = async (ctx) => {
+  console.log(ctx)
   const user = new User({
     uid: ctx.request.body.uid,
     nick: ctx.request.body.nick,
